@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: @testDataSource.url@
+    max-active: 1
+    max-idle: 1

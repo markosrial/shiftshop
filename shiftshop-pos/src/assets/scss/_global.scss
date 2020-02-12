@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #f4f6f8;
+  height: 100%;
+  font-family:
+          'Roboto',
+          'Oxygen',
+          'Ubuntu',
+          'Fira Sans',
+          -apple-system,
+          sans-serif;
+  min-width: 1280px;
+}
+
+#root {
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+}

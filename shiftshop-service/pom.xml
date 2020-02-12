@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ***************** PARENT POM ***************** -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+    </parent>
+
+
+    <!-- **************** PROJECT INFO **************** -->
+    <groupId>com.shiftshop</groupId>
+    <artifactId>service</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <name>ShiftShop Service</name>
+    <description>Service for ShiftShop System</description>
+
+    <!-- ****************** PROPIERTIES ****************** -->
+    <properties>
+
+        <!-- ============== COMPILER OPTIONS ============== -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+
+        <!-- ============ FLYWAY CONFIGURATION ============ -->
+        <flyway.user>${dataSource.user}</flyway.user>
+        <flyway.password>${dataSource.password}</flyway.password>
+
+        <!-- =========== DEPENDENCIES VERSIONS ============ -->
+        <flyway.version>6.0.8</flyway.version>
+        <mysql.version>8.0.11</mysql.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <jacoco.version>0.8.3</jacoco.version>
+
+    </properties>
+
+    <!-- ******************* PROFILES ******************* -->
+    <profiles>
+
+        <!-- ============ MYSQL DB PROFILE ============ -->
+        <profile>
+            <id>mysql</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <dataSource.baseUrl>jdbc:mysql://localhost/shiftshop</dataSource.baseUrl>
+                <dataSource.urlExtras>?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Europe/Madrid</dataSource.urlExtras>
+                <dataSource.url>${dataSource.baseUrl}${dataSource.urlExtras}</dataSource.url>
+                <testDataSource.url>${dataSource.baseUrl}test${dataSource.urlExtras}</testDataSource.url>
+                <dataSource.user>ss</dataSource.user>
+                <dataSource.password>ss</dataSource.password>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <!-- MySQL connector -->
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>${mysql.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+    </profiles>
+
+    <!-- *************** DEPENDENCIES ***************** -->
+    <dependencies>
+
+        <!-- ================== SPRING ==================== -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- =========== Java JWT DEPENDENCIES =========== -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+
+        <!-- ============= UTILS DEPENDENCIES ============= -->
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <executions>
+                    <execution>
+                        <id>create-tables-for-testing</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                        <configuration>
+                            <url>${testDataSource.url}</url>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>create-tables</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                        <configuration>
+                            <url>${dataSource.url}</url>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>
