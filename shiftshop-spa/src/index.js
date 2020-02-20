@@ -25,10 +25,10 @@ ReactDOM.render(
     <MuiThemeProvider theme={theme}>
         <Provider store={store}>
             <IntlProvider locale={locale} messages={messages}>
-                    <SnackbarProvider anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                                      autoHideDuration={2500}>
-                        <App/>
-                    </SnackbarProvider>
+                <SnackbarProvider anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                                  autoHideDuration={2500}>
+                    <App/>
+                </SnackbarProvider>
             </IntlProvider>
         </Provider>
     </MuiThemeProvider>,
