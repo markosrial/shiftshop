@@ -17,6 +17,9 @@ export default {
 
     'project.app.Dashboard.title': 'Dashboard',
 
+    'project.usuario.Logout.title': 'Exit',
+    'project.usuario.Logout.message': 'Select "Continue" to confirm the close of the current session',
+
     'project.global.button.add': 'Add',
     'project.global.button.accept': 'Accept',
     'project.global.button.cancel': 'Cancel',

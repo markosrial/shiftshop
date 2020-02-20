@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useSnackbar} from 'notistack';
 
 import backend from '../../../backend';
@@ -8,8 +8,10 @@ import users, {LoginPortal} from '../../users';
 import Main from './Main';
 import NetworkErrorMessage from './NetworkErrorMessage';
 
-const App = () => {
+const reauthenticationCallback = dispatch => () => dispatch(users.actions.logout());
 
+const App = () => {
+    const dispatch = useDispatch();
     const loggedIn = useSelector(users.selectors.isLoggedIn);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -24,6 +26,11 @@ const App = () => {
                 preventDuplicate: true,
                 autoHideDuration: 2000,
             }));
+
+        dispatch(
+            users.actions.tryLoginFromServiceToken(
+                () => true,
+                reauthenticationCallback(dispatch)));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

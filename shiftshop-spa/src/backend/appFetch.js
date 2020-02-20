@@ -86,8 +86,6 @@ const handle4xxResponse = async (response, onErrors) => {
         return true;
     }
 
-    console.log(response);
-
     if (!isJson(response)) {
         throw new Error();
     }

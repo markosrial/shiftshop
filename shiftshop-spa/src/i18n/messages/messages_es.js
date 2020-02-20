@@ -17,6 +17,9 @@ export default {
 
     'project.app.Dashboard.title': 'Panel de control',
 
+    'project.usuario.Logout.title': 'Salir',
+    'project.usuario.Logout.message': 'Selecciona "Continuar" para confirmar el cierre de la sesión actual',
+
     'project.global.button.add': 'Añadir',
     'project.global.button.accept': 'Aceptar',
     'project.global.button.cancel': 'Cancelar',

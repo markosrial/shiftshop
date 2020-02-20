@@ -1,7 +1,12 @@
 import {makeStyles} from '@material-ui/core';
 
-export const useStyles = makeStyles(theme => ({
-    root: { },
+const useStyles = makeStyles(theme => ({
+    root: {
+        minHeight: '18em',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
     submitButton: {
         marginTop: theme.spacing(3),
         marginBottom: theme.spacing(2),
@@ -18,3 +23,5 @@ export const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(1)
     }
 }));
+
+export default useStyles;
