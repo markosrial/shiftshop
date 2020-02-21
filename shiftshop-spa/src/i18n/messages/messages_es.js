@@ -15,7 +15,12 @@ export default {
     'project.app.route.records': 'Registros',
     'project.app.route.users': 'Usuarios',
 
-    'project.app.Dashboard.title': 'Panel de control',
+    'project.app.Dashboard.title': 'Panel principal',
+
+    'project.catalog.AddCategory.addButton': 'Nueva',
+    'project.catalog.AddCategory.success': 'Categoría añadida',
+    'project.catalog.AddCategory.title': 'Nueva categoría',
+    'project.catalog.CategoriesPage.title': 'Categorías',
 
     'project.usuario.Logout.title': 'Salir',
     'project.usuario.Logout.message': 'Selecciona "Continuar" para confirmar el cierre de la sesión actual',

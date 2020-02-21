@@ -17,6 +17,11 @@ export default {
 
     'project.app.Dashboard.title': 'Dashboard',
 
+    'project.catalog.AddCategory.addButton': 'New',
+    'project.catalog.AddCategory.success': 'Category added',
+    'project.catalog.AddCategory.title': 'New category',
+    'project.catalog.CategoriesPage.title': 'Categories',
+
     'project.usuario.Logout.title': 'Exit',
     'project.usuario.Logout.message': 'Select "Continue" to confirm the close of the current session',
 

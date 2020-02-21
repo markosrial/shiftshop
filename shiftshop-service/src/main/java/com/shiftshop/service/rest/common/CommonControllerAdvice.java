@@ -1,5 +1,6 @@
 package com.shiftshop.service.rest.common;
 
+import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.common.exceptions.InstancePropertyNotFoundException;
 import com.shiftshop.service.rest.dtos.common.ErrorConversor;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CommonControllerAdvice {
 
+	private final static String DUPLICATE_INSTANCE_PROPERTY_EXCEPTION_CODE = "project.exceptions.DuplicateInstancePropertyException";
 	private final static String INSTANCE_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.InstanceNotFoundException";
 	private final static String INSTANCE_PROPERTY_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.InstancePropertyNotFoundException";
 
@@ -36,6 +38,13 @@ public class CommonControllerAdvice {
 
 		return new ErrorsDto(fieldErrors);
 
+	}
+
+	@ExceptionHandler(DuplicateInstancePropertyException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	@ResponseBody
+	public ErrorsDto handleDuplicateInstancePropertyException(DuplicateInstancePropertyException exception, Locale locale) {
+		return errorConversor.toErrorsDtoFromInstancePropertyException(exception, DUPLICATE_INSTANCE_PROPERTY_EXCEPTION_CODE, locale);
 	}
 
 	@ExceptionHandler(InstanceNotFoundException.class)
