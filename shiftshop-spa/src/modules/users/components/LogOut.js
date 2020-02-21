@@ -37,7 +37,7 @@ const LogOut = () => {
 
     return (
         <div>
-            <Button className={classes.logoutButton} color="inherit" onClick={openDialog}>
+            <Button className={classes.logoutButton} color="inherit" variant="outlined" onClick={openDialog}>
                 <ExitToApp/>
                 <Hidden xsDown>
                     <span className={classes.logoutText}>

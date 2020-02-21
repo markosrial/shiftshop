@@ -38,4 +38,5 @@ describe('LoginForm snapshot', () => {
         expect(loginForm.toJSON()).toMatchSnapshot();
 
     });
+
 });

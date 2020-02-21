@@ -11,15 +11,10 @@ const useStyles = makeStyles(theme => ({
         fontFamily: 'Righteous',
         color: theme.palette.light.main
     },
-    logo: {
-        padding: theme.spacing(1),
-        maxWidth: '5rem'
-    },
     logoutButton: {
         fontWeight: theme.typography.fontWeightBold,
         marginLeft: theme.spacing(1)
-    },
-    logoutText: {marginLeft: theme.spacing(1)}
+    }
 }));
 
 export default useStyles;

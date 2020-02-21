@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {Suspense, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {LinearProgress} from '@material-ui/core';
 
 import useStyles from '../styles/Main';
 
@@ -8,6 +9,13 @@ import TopBar from './TopBar';
 import SideBar from './SideBar';
 import Dashboard from './Dashboard';
 import users, {Role} from '../../users';
+
+/*const CategoriesPage = React.lazy(() => {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(import('../../catalog/components/CategoriesPage')), 5000);
+    });
+});*/
+const CategoriesPage = React.lazy(() => import('../../catalog/components/CategoriesPage'));
 
 const Main = () => {
     const classes = useStyles();
@@ -26,12 +34,17 @@ const Main = () => {
                 <div className={classes.container}>
                     <SideBar className={classes.sideBar} sidebarActive={sidebarActive} closeSidebar={handleSidebarClose}/>
                     <div className={classes.content}>
-                        <Switch>
-                            <Route exact path="/" component={Dashboard}/>
-                            { users.selectors.hasRole(user, [Role.MANAGER])
-                                && <Route exact path="/staff/users" component={Dashboard}/> }
-                            <Route component={Dashboard}/>
-                        </Switch>
+                        <Suspense fallback={<LinearProgress className={classes.loading} color="secondary"/>}>
+                            <div className={classes.innerContent}>
+                                <Switch>
+                                    <Route exact path="/" component={Dashboard}/>
+                                    <Route exact path="/catalog/categories" component={CategoriesPage}/>
+                                    { users.selectors.hasRole(user, [Role.MANAGER])
+                                        && <Route exact path="/staff/users" component={Dashboard}/> }
+                                    <Route component={Dashboard}/>
+                                </Switch>
+                            </div>
+                        </Suspense>
                     </div>
                 </div>
             </BrowserRouter>
