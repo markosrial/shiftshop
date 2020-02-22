@@ -7,6 +7,7 @@ import {Error} from '@material-ui/icons';
 import useStyles from '../styles/LoginForm';
 
 import * as actions from '../actions';
+import catalog from '../../catalog';
 import {formValidator} from '../../../utils';
 
 const reauthenticationCallback = dispatch => () => dispatch(actions.logout());
@@ -48,7 +49,7 @@ const LoginForm = () => {
         setIsLogging(true);
 
         dispatch(actions.login(username, password,
-            () => true,
+            () => dispatch(catalog.actions.findAllCategories()),
             errors => _isMounted.current && setErrors(errors),
             () => _isMounted.current && setIsLogging(false),
             reauthenticationCallback(dispatch)

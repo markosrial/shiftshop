@@ -20,6 +20,8 @@ export default {
     'project.catalog.AddCategory.addButton': 'New',
     'project.catalog.AddCategory.success': 'Category added',
     'project.catalog.AddCategory.title': 'New category',
+    'project.catalog.CategoriesList.emptyCategories': 'Here will appear the added categories',
+    'project.catalog.CategoriesList.title': 'Categories list',
     'project.catalog.CategoriesPage.title': 'Categories',
 
     'project.usuario.Logout.title': 'Exit',

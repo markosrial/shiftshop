@@ -21,12 +21,14 @@ const useStyles = makeStyles(theme => ({
         zIndex: 3,
         flex: '0 0'
     },
-    content: { flex: '1 1' },
+    content: {
+        flex: '1 1',
+        overflowY: 'auto'
+    },
     innerContent: {
         maxWidth: '100%',
         margin: '0 auto',
         padding: theme.spacing(3),
-        overflowY: 'auto',
     },
     loading: { height: theme.spacing(1) }
 }));

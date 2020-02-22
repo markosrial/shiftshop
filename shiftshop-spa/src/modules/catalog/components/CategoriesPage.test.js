@@ -10,10 +10,11 @@ import CategoriesPage from './CategoriesPage';
 import {Role} from '../../users';
 
 jest.mock('./AddCategory', () => () => (<mockAddCategory/>));
+jest.mock('./CategoriesList', () => () => (<mockCategoriesList/>));
 
 const {messages} = initReactIntl();
 
-describe('CategoryPage snapshot', () => {
+describe('CategoriesPage snapshot', () => {
 
     const middlewares = [];
     const mockStore = configureStore(middlewares);

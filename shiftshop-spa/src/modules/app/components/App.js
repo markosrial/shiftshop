@@ -4,6 +4,7 @@ import {useSnackbar} from 'notistack';
 
 import backend from '../../../backend';
 
+import catalog from '../../catalog';
 import users, {LoginPortal} from '../../users';
 import Main from './Main';
 import NetworkErrorMessage from './NetworkErrorMessage';
@@ -29,7 +30,7 @@ const App = () => {
 
         dispatch(
             users.actions.tryLoginFromServiceToken(
-                () => true,
+                () => dispatch(catalog.actions.findAllCategories()),
                 reauthenticationCallback(dispatch)));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

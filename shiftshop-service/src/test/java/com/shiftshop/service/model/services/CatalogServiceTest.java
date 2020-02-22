@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -46,9 +47,16 @@ public class CatalogServiceTest {
         Category category2 = createCategory(CATEGORY_NAME + "2");
 
         assertEquals(category1, categoryDao.findByNameIgnoreCase(categoryName1).get());
-        assertEquals(category1, categoryDao.findById(category1.getId()).get());
+        assertEquals(category1, catalogService.findCategoryById(category1.getId()));
 
-        assertEquals(Arrays.asList(category1, category2), categoryDao.findAll(Sort.by(Sort.Direction.ASC, "name")));
+        assertEquals(Arrays.asList(category1, category2), catalogService.findAllCategories());
+
+    }
+
+    @Test(expected = InstanceNotFoundException.class)
+    public void testFindCategoryNonExistentId() throws InstanceNotFoundException {
+
+        catalogService.findCategoryById(NON_EXISTENT_ID);
 
     }
 

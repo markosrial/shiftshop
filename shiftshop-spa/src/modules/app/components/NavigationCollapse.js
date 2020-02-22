@@ -31,7 +31,7 @@ const NavigationCollapse = ({title, icon, route, children, checkActive, checkPer
                         color="inherit"/>)}
             </Button>
             <Collapse in={open}>
-                <List>
+                <List className={classes.list}>
                     {children.map(({title, route, permissions}) =>
                         (checkPermissions(permissions) &&
                             <NavigationItem key={title} title={title} route={route} checkActive={checkActive}/>)

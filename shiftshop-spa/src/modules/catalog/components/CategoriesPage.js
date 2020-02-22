@@ -6,6 +6,7 @@ import {FormattedMessage} from 'react-intl';
 import useStyles from '../styles/CategoriesPage';
 
 import AddCategory from './AddCategory';
+import CategoriesList from './CategoriesList';
 
 import users, {Role} from '../../users';
 
@@ -31,7 +32,9 @@ const CategoriesPage = () => {
                     </Grid>}
             </Grid>
             <Grid className={classes.grid} container spacing={2}>
-                {/* Page content */}
+                <Grid item md={8} xs={12}>
+                    <CategoriesList/>
+                </Grid>
             </Grid>
         </div>
     );
