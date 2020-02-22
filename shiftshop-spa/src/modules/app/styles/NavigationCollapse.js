@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
         textTransform: 'none',
         width: '100%'
     },
+    list: {padding: theme.spacing(0)},
     icon: {
         color: theme.palette.icon,
         display: 'flex',

@@ -5,8 +5,9 @@ import javax.validation.constraints.Size;
 
 public class InsertCategoryParamsDto {
 
-
     private String name;
+
+    public InsertCategoryParamsDto() {}
 
     @NotNull
     @Size(min=1, max=30)
