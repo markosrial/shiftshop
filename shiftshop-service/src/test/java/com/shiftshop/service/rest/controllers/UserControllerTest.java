@@ -127,6 +127,22 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(loginParams)))
                 .andExpect(status().isNotFound());
+
+        // Not active user
+
+        User userInserted = userDao.findByUserName(user.getUserDto().getUserName()).get();
+        userInserted.setActive(false);
+        userDao.save(userInserted);
+
+        loginParams = new LoginParamsDto();
+        loginParams.setUserName(user.getUserDto().getUserName());
+        loginParams.setPassword(PASSWORD);
+
+        mockMvc.perform(post("/users/login" )
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(loginParams)))
+                .andExpect(status().isNotFound());
     }
 
     @Test

@@ -25,6 +25,13 @@ mysql -u root
     exit
 ```
 
+***Database migration:***
+
+```
+cd shiftshop-service
+mvn flyway:migrate@create-tables
+```
+
 ***Execution:***
 
 ```

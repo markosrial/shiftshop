@@ -18,7 +18,7 @@ export const login = (userName, password, onSuccess, onErrors, atFinally, reauth
         atFinally
     );
 
-export const tryLoginFromServiceToken = (onSuccess, reauthenticationCallback) => {
+export const tryLoginFromServiceToken = (onSuccess, atFinally, reauthenticationCallback) => {
 
     const serviceToken = getServiceToken();
 
@@ -31,7 +31,8 @@ export const tryLoginFromServiceToken = (onSuccess, reauthenticationCallback) =>
 
     appFetch('/users/loginFromServiceToken', config('POST'),
         authenticatedUser => onSuccess(authenticatedUser),
-        () => removeServiceToken()
+        () => removeServiceToken(),
+        atFinally
     );
 
 };

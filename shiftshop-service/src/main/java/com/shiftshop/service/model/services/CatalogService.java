@@ -14,4 +14,6 @@ public interface CatalogService {
 
     List<Category> findAllCategories();
 
+    Category updateCategory(Long id, String name) throws DuplicateInstancePropertyException, InstanceNotFoundException;
+
 }

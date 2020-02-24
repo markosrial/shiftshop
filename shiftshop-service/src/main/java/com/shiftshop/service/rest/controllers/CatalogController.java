@@ -22,9 +22,6 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
 
-    @Autowired
-    private MessageSource messageSource;
-
     @PostMapping("/categories")
     public CategoryDto addCategory(@Validated @RequestBody InsertCategoryParamsDto params)
             throws DuplicateInstancePropertyException {
@@ -39,6 +36,12 @@ public class CatalogController {
     @GetMapping("/categories")
     public List<CategoryDto> getCategories() {
         return toCategoryDtos(catalogService.findAllCategories());
+    }
+
+    @PutMapping("/categories/{id}")
+    public CategoryDto updateCategory(@PathVariable Long id, @Validated @RequestBody InsertCategoryParamsDto params)
+            throws DuplicateInstancePropertyException, InstanceNotFoundException {
+        return toCategoryDto(catalogService.updateCategory(id, params.getName()));
     }
 
 }

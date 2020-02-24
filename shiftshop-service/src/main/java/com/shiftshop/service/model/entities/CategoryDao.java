@@ -8,4 +8,6 @@ public interface CategoryDao extends PagingAndSortingRepository<Category, Long> 
 
     Optional<Category> findByNameIgnoreCase(String name);
 
+    Optional<Category> findByNameIgnoreCaseAndIdIsNot(String name, Long id);
+
 }

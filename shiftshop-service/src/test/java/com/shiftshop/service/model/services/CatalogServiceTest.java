@@ -8,15 +8,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -65,6 +64,39 @@ public class CatalogServiceTest {
 
         createCategory("category");
         createCategory("cAteGory");
+
+    }
+
+    @Test
+    public void testUpdateCategory() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = createCategory(CATEGORY_NAME);
+
+        // Update with no changes
+        category = catalogService.updateCategory(category.getId(), category.getName());
+        assertEquals(StringUtils.capitalize(CATEGORY_NAME), category.getName());
+
+        // Update with new name
+        String newName = CATEGORY_NAME + "X";
+        category = catalogService.updateCategory(category.getId(), newName);
+        assertEquals(StringUtils.capitalize(newName), category.getName());
+
+    }
+
+    @Test(expected = InstanceNotFoundException.class)
+    public void testUpdateCategoryNonExistentId() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        catalogService.updateCategory(NON_EXISTENT_ID, CATEGORY_NAME);
+
+    }
+
+    @Test(expected = DuplicateInstancePropertyException.class)
+    public void testUpdateCategoryDuplicatedName() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category1 = createCategory(CATEGORY_NAME + "1");
+        Category category2 = createCategory(CATEGORY_NAME + "2");
+
+        catalogService.updateCategory(category1.getId(), category2.getName());
 
     }
 

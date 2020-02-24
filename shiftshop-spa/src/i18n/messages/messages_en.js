@@ -22,7 +22,10 @@ export default {
     'project.catalog.AddCategory.title': 'New category',
     'project.catalog.CategoriesList.emptyCategories': 'Here will appear the added categories',
     'project.catalog.CategoriesList.title': 'Categories list',
+    'project.catalog.CategoriesListItem.modifyTooltip': 'Modify category',
     'project.catalog.CategoriesPage.title': 'Categories',
+    'project.catalog.EditCategory.success': 'Category modified',
+    'project.catalog.EditCategory.title': 'Modify category',
 
     'project.usuario.Logout.title': 'Exit',
     'project.usuario.Logout.message': 'Select "Continue" to confirm the close of the current session',

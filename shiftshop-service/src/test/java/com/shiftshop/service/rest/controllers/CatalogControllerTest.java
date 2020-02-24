@@ -82,6 +82,8 @@ public class CatalogControllerTest {
         return createAuthenticatedUser(userName, roles);
     }
 
+    /* Test categories section from controller */
+
     @Test
     public void testPostCategories_Ok() throws Exception {
 
@@ -176,6 +178,64 @@ public class CatalogControllerTest {
         mockMvc.perform(get("/catalog/categories/a")
                 .header("Authorization", "Bearer " + user.getServiceToken()))
                 .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testPutCategories_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+        Category category = catalogService.addCategory("test");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        InsertCategoryParamsDto params = new InsertCategoryParamsDto();
+        params.setName("newTest");
+
+        mockMvc.perform(put("/catalog/categories/" + category.getId())
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(params)))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void testPutCategories_BadRequest() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+        Category category = catalogService.addCategory("test");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        InsertCategoryParamsDto params = new InsertCategoryParamsDto();
+        params.setName("");
+
+        mockMvc.perform(put("/catalog/categories/" + category.getId())
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(params)))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testPutCategories_Conflict() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+        Category category1 = catalogService.addCategory("test1");
+        Category category2 = catalogService.addCategory("test2");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        InsertCategoryParamsDto params = new InsertCategoryParamsDto();
+        params.setName(category2.getName());
+
+        mockMvc.perform(put("/catalog/categories/" + category1.getId())
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(params)))
+                .andExpect(status().isConflict());
 
     }
 
