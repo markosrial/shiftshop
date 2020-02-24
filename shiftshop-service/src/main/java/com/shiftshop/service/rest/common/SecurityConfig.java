@@ -4,6 +4,7 @@ import com.shiftshop.service.model.entities.User.RoleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -27,13 +28,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.cors().and().csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.addFilter(new JwtFilter(authenticationManager(), jwtGenerator))
-			.authorizeRequests()
-			.antMatchers("/users/login").permitAll()
-			.antMatchers("/users/loginFromServiceToken").permitAll()
-			.antMatchers("/catalog/**").hasAnyRole(MANAGER, ADMIN, SALESMAN)
-			.antMatchers("/**").hasRole(MANAGER);
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.addFilter(new JwtFilter(authenticationManager(), jwtGenerator))
+				.authorizeRequests()
+				.antMatchers("/users/login").permitAll()
+				.antMatchers("/users/loginFromServiceToken").permitAll()
+				.antMatchers(HttpMethod.POST, "/catalog/categories").hasRole(ADMIN)
+				.antMatchers(HttpMethod.PUT, "/catalog/categories").hasRole(ADMIN)
+				.antMatchers("/catalog/**").hasAnyRole(MANAGER, ADMIN, SALESMAN)
+				.antMatchers("/**").hasRole(MANAGER);
 
 	}
 

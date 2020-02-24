@@ -61,4 +61,19 @@ public class CatalogServiceImpl implements CatalogService {
 
     }
 
+    @Override
+    public Category updateCategory(Long id, String name) throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = findCategoryById(id);
+
+        if (categoryDao.findByNameIgnoreCaseAndIdIsNot(name, category.getId()).isPresent()) {
+            throw new DuplicateInstancePropertyException("project.entities.category", "project.entities.props.name", name);
+        }
+
+        category.setName(StringUtils.capitalize(name));
+
+        return category;
+
+    }
+
 }

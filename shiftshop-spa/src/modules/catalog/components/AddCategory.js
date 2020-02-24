@@ -76,7 +76,10 @@ const AddCategory = () => {
                         variant: 'success',
                         autoHideDuration: 1500,
                     });
-                _isMounted.current && setName('');
+                if (_isMounted.current) {
+                    setName('');
+                    setOpen(false);
+                }
             },
             errors => {
                 if (_isMounted.current) {
@@ -114,7 +117,7 @@ const AddCategory = () => {
                     <DialogContent dividers>
                         {errors && <Alert className={classes.alert} message={errors} backendError onClose={closeErrors}
                                           variant="error"/>}
-                        <TextField margin="dense" variant="outlined" fullWidth autoFocus
+                        <TextField margin="dense" variant="outlined" fullWidth autoFocus disabled={adding}
                                    label={<FormattedMessage id="project.global.field.name"/>} value={name}
                                    onChange={handleChangeName} required/>
                     </DialogContent>

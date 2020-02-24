@@ -18,7 +18,7 @@ export const login = (userName, password, onSuccess, onErrors, atFinally, reauth
     );
 
 
-export const tryLoginFromServiceToken = (onSuccess, reauthenticationCallback) => dispatch =>
+export const tryLoginFromServiceToken = (onSuccess, atFinally, reauthenticationCallback) => dispatch =>
     backend.userService.tryLoginFromServiceToken(
         authenticatedUser => {
             if (authenticatedUser) {
@@ -26,6 +26,7 @@ export const tryLoginFromServiceToken = (onSuccess, reauthenticationCallback) =>
                 onSuccess();
             }
         },
+        atFinally,
         reauthenticationCallback
     );
 
