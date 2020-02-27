@@ -28,3 +28,9 @@ export const updateCategory = (id, data, onSuccess, onError, atFinally) => dispa
         },
         onError,
         atFinally);
+
+export const addProduct = (product, onSuccess, onError, atFinally) =>
+    backend.catalogService.addProduct(product,
+        product => onSuccess(product),
+        onError,
+        atFinally);

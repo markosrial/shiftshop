@@ -2,14 +2,17 @@ package com.shiftshop.service.rest.controllers;
 
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
+import com.shiftshop.service.model.entities.Product;
 import com.shiftshop.service.model.services.CatalogService;
 import com.shiftshop.service.rest.dtos.catalog.CategoryDto;
 import com.shiftshop.service.rest.dtos.catalog.InsertCategoryParamsDto;
+import com.shiftshop.service.rest.dtos.catalog.InsertProductParamsDto;
+import com.shiftshop.service.rest.dtos.catalog.ProductInsertedDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.RoundingMode;
 import java.util.List;
 
 import static com.shiftshop.service.rest.dtos.catalog.CategoryConversor.toCategoryDto;
@@ -44,4 +47,17 @@ public class CatalogController {
         return toCategoryDto(catalogService.updateCategory(id, params.getName()));
     }
 
+    @PostMapping("/products")
+    public ProductInsertedDto addProduct(@Validated({InsertProductParamsDto.AddValidations.class}) @RequestBody InsertProductParamsDto params)
+            throws DuplicateInstancePropertyException, InstanceNotFoundException  {
+
+        Product product = catalogService.addProduct(
+                params.getName(),
+                params.getProviderPrice().setScale(2, RoundingMode.DOWN),
+                params.getSalePrice().setScale(2, RoundingMode.DOWN),
+                params.getCategoryId());
+
+        return new ProductInsertedDto(product.getId(), product.getName());
+
+    }
 }

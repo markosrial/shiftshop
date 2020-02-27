@@ -76,10 +76,7 @@ const AddCategory = () => {
                         variant: 'success',
                         autoHideDuration: 1500,
                     });
-                if (_isMounted.current) {
-                    setName('');
-                    setOpen(false);
-                }
+                _isMounted.current && setName('');
             },
             errors => {
                 if (_isMounted.current) {

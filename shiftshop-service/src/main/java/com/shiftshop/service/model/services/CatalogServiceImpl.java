@@ -2,14 +2,19 @@ package com.shiftshop.service.model.services;
 
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
+import com.shiftshop.service.model.common.utils.UUIDGenerator;
 import com.shiftshop.service.model.entities.Category;
 import com.shiftshop.service.model.entities.CategoryDao;
+import com.shiftshop.service.model.entities.Product;
+import com.shiftshop.service.model.entities.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +24,13 @@ import java.util.Optional;
 public class CatalogServiceImpl implements CatalogService {
 
     @Autowired
+    private UUIDGenerator uuidGenerator;
+
+    @Autowired
     private CategoryDao categoryDao;
+
+    @Autowired
+    private ProductDao productDao;
 
     @Override
     public Category addCategory(String name) throws DuplicateInstancePropertyException {
@@ -73,6 +84,28 @@ public class CatalogServiceImpl implements CatalogService {
         category.setName(StringUtils.capitalize(name));
 
         return category;
+
+    }
+
+    @Override
+    public Product addProduct(String name, BigDecimal providerPrice, BigDecimal salePrice, Long categoryId)
+            throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = findCategoryById(categoryId);
+
+        if (productDao.findByNameIgnoreCase(name).isPresent()) {
+            throw new DuplicateInstancePropertyException("project.entities.product", "project.entities.props.name", name);
+        }
+
+        Product product = new Product(StringUtils.capitalize(name),
+                providerPrice.setScale(2, RoundingMode.DOWN),
+                salePrice.setScale(2, RoundingMode.DOWN),
+                category);
+
+        product.setBarcode(uuidGenerator.randomId());
+        product.setActive(true);
+
+        return productDao.save(product);
 
     }
 

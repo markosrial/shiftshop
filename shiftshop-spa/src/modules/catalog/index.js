@@ -4,5 +4,6 @@ import reducer from './reducer';
 import * as selectors from './selectors';
 
 export {default as CategoriesPage} from './components/CategoriesPage';
+export {default as ProductsPage} from './components/ProductsPage';
 
 export default {actions, actionTypes, reducer, selectors};
