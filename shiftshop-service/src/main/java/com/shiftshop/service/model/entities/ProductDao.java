@@ -4,7 +4,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
-public interface ProductDao extends PagingAndSortingRepository<Product, Long> {
+public interface ProductDao extends PagingAndSortingRepository<Product, Long>, CustomizedProductDao {
 
     Optional<Product> findByNameIgnoreCase(String name);
 

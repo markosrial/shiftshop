@@ -31,6 +31,10 @@ spring:
       use-sql-comments: true
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  flyway:
+    url: @dataSource.url@
+    user: @dataSource.user@
+    password: @dataSource.password@
 server:
   error:
     include-stacktrace: never

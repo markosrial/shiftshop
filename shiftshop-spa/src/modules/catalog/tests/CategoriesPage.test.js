@@ -6,51 +6,52 @@ import {IntlProvider} from 'react-intl';
 
 import {initReactIntl} from "../../../i18n";
 
-import ProductsPage from './ProductsPage';
+import CategoriesPage from '../components/CategoriesPage';
 import {Role} from '../../users';
 
-jest.mock('./AddProduct', () => () => (<mockAddProduct/>));
+jest.mock('../components/AddCategory', () => () => (<mockAddCategory/>));
+jest.mock('../components/CategoriesList', () => () => (<mockCategoriesList/>));
 
 const {messages} = initReactIntl();
 
-describe('ProductsPage snapshot', () => {
+describe('CategoriesPage snapshot', () => {
 
     const middlewares = [];
     const mockStore = configureStore(middlewares);
 
-    const createProductsPage = store => {
+    const createCategoriesPage = store => {
 
         return renderer.create(
             <Provider store={store}>
                 <IntlProvider locale='en' messages={messages}>
-                    <ProductsPage/>
+                    <CategoriesPage/>
                 </IntlProvider>
             </Provider>
         );
 
     };
 
-    test('Without addProduct', () => {
+    test('Without addCategory', () => {
 
         // Initialize mockstore with empty state
         const initialState = {users: {user: {username: 'user', roles: [Role.SALESMAN]}}};
         const store = mockStore(initialState);
 
-        const productsPage = createProductsPage(store);
+        const categoriesPage = createCategoriesPage(store);
 
-        expect(productsPage.toJSON()).toMatchSnapshot();
+        expect(categoriesPage.toJSON()).toMatchSnapshot();
 
     });
 
-    test('With addProduct', () => {
+    test('With addCategory', () => {
 
         // Initialize mockstore with empty state
         const initialState = {users: {user: {username: 'user', roles: [Role.ADMIN]}}};
         const store = mockStore(initialState);
 
-        const productsPage = createProductsPage(store);
+        const categoriesPage = createCategoriesPage(store);
 
-        expect(productsPage.toJSON()).toMatchSnapshot();
+        expect(categoriesPage.toJSON()).toMatchSnapshot();
 
     });
 

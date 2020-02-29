@@ -21,10 +21,10 @@ exports[`CategoriesList snapshot Categories has elements 1`] = `
     className="MuiDivider-root"
   />
   <div
-    className="MuiCardContent-root makeStyles-content-2"
+    className="MuiCardContent-root makeStyles-content-1"
   >
     <ul
-      className="MuiList-root makeStyles-list-3 MuiList-padding"
+      className="MuiList-root makeStyles-list-2 MuiList-padding"
     >
       <hr
         className="MuiDivider-root"
@@ -60,18 +60,18 @@ exports[`CategoriesList snapshot Categories is empty 1`] = `
     className="MuiDivider-root"
   />
   <div
-    className="MuiCardContent-root makeStyles-content-2"
+    className="MuiCardContent-root makeStyles-content-1"
   >
     <div
-      className="makeStyles-emptyPlaceholder-4"
+      className="makeStyles-emptyPlaceholder-3"
     >
       <img
         alt="No items"
-        className="makeStyles-image-5"
+        className="makeStyles-image-4"
         src="empty.png"
       />
       <h6
-        className="MuiTypography-root makeStyles-emptyText-6 MuiTypography-subtitle2"
+        className="MuiTypography-root makeStyles-emptyText-5 MuiTypography-subtitle2"
       >
         Here will appear the added categories
       </h6>

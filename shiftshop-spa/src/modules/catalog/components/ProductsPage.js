@@ -4,12 +4,13 @@ import {Grid, Typography} from '@material-ui/core';
 
 import useStyles from '../styles/ProductsPage';
 
-import AddProduct from './AddProduct';
 import users, {Role} from '../../users';
 import {useSelector} from 'react-redux';
+import AddProduct from './AddProduct';
+import ProductsSearch from './ProductsSearch';
 
 const ProductsPage = () => {
-    
+
     const classes = useStyles();
 
     const user = useSelector(users.selectors.getUser);
@@ -31,7 +32,9 @@ const ProductsPage = () => {
                     </Grid>}
             </Grid>
             <Grid className={classes.grid} container spacing={2}>
-                {/* Products search */}
+                <Grid item md={10} xs={12}>
+                    <ProductsSearch/>
+                </Grid>
             </Grid>
         </div>
     );

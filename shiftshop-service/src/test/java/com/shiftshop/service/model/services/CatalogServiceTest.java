@@ -2,10 +2,7 @@ package com.shiftshop.service.model.services;
 
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
-import com.shiftshop.service.model.entities.Category;
-import com.shiftshop.service.model.entities.CategoryDao;
-import com.shiftshop.service.model.entities.Product;
-import com.shiftshop.service.model.entities.ProductDao;
+import com.shiftshop.service.model.entities.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 
+import static java.util.List.of;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -135,6 +134,135 @@ public class CatalogServiceTest {
 
         createProduct(PRODUCT_NAME, category.getId());
         createProduct(PRODUCT_NAME, category.getId());
+
+    }
+
+    @Test
+    public void testFindProductsByCategory() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category1 = createCategory(CATEGORY_NAME + "1");
+        Category category2 = createCategory(CATEGORY_NAME + "2");
+
+        Product product1 = createProduct(PRODUCT_NAME + "1", category1.getId());
+        createProduct(PRODUCT_NAME + "2", category2.getId());
+        createProduct(PRODUCT_NAME + "3", category2.getId());
+
+        Block<Product> expectedBlock = new Block<>(Arrays.asList(product1), false);
+        assertEquals(expectedBlock, catalogService.findProducts(category1.getId(), "prod", null,
+                null, null, 0, 3));
+
+    }
+
+    @Test
+    public void testFindProductsByKeywordsInOrder() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = createCategory(CATEGORY_NAME);
+
+        Product product1 = createProduct("Product 1", category.getId());
+        Product product2 = createProduct("Product X", category.getId());
+        createProduct("another", category.getId());
+
+        // Test case sensitive
+        Block<Product> expectedBlock = new Block<>(Arrays.asList(product1, product2), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, "PrOd", null,
+                null, null, 0, 2));
+
+        // Test multiple keywords
+        expectedBlock = new Block<>(Arrays.asList(product2), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, "Prod X", null,
+                null, null, 0, 3));
+
+    }
+
+    @Test
+    public void testFindProductsByOrderTypeAndOrder() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = createCategory(CATEGORY_NAME);
+
+        Product product1 = createProduct("product 1", category.getId());
+        Product product2 = createProduct("X Product", category.getId());
+        Product product3 = createProduct("another", category.getId());
+
+        Block<Product> expectedBlock = new Block<>(Arrays.asList(product3, product1, product2), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+                Product.ProductOrderType.name.getType(), null, 0, 3));
+
+        expectedBlock = new Block<>(Arrays.asList(product1, product2, product3), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+                Product.ProductOrderType.creationDate.getType(), OrderAscDesc.ASC.name(), 0, 3));
+
+        expectedBlock = new Block<>(Arrays.asList(product3, product2, product1), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+                Product.ProductOrderType.creationDate.getType(), OrderAscDesc.DESC.name(), 0, 3));
+
+        expectedBlock = new Block<>(Arrays.asList(product3, product1, product2), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+                Product.ProductOrderType.name.getType(), OrderAscDesc.ASC.name(), 0, 3));
+
+        expectedBlock = new Block<>(Arrays.asList(product2, product1, product3), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+                Product.ProductOrderType.name.getType(), OrderAscDesc.DESC.name(), 0, 3));
+
+    }
+
+    @Test
+    public void testFindNoProducts() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = createCategory(CATEGORY_NAME);
+
+        createProduct(PRODUCT_NAME, category.getId());
+
+        Block<Product> expectedBlock = new Block<>(new ArrayList<>(), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, "non-existent", null,
+                null, null, 0, 1));
+
+    }
+
+    @Test
+    public void testFindProductsByPages() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = createCategory(CATEGORY_NAME);
+
+        Product product1 = createProduct(PRODUCT_NAME + "1", category.getId());
+        Product product2 = createProduct(PRODUCT_NAME + "2", category.getId());
+        Product product3 = createProduct(PRODUCT_NAME + "3", category.getId());
+
+        Block<Product> expectedBlock = new Block<>(Arrays.asList(product1, product2), true);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+                null, null, 0, 2));
+
+        expectedBlock = new Block<>(of(product3), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+                null, null, 1, 2));
+
+        expectedBlock = new Block<>(new ArrayList<>(), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+                null, null, 2, 2));
+
+    }
+
+    @Test
+    public void testSetActiveAndFindOnlyActiveProducts() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = createCategory(CATEGORY_NAME);
+
+        Product product1 = createProduct(PRODUCT_NAME + "1", category.getId());
+        Product product2 = createProduct(PRODUCT_NAME + "2", category.getId());
+        Product product3 = createProduct(PRODUCT_NAME + "3", category.getId());
+
+        product2.setActive(false);
+        productDao.save(product2);
+
+        Block<Product> expectedBlock = new Block<>(Arrays.asList(product1, product3), false);
+        assertEquals(expectedBlock, catalogService.findProducts(category.getId(), null, true,
+                null, null, 0, 3));
+
+        product2.setActive(true);
+        productDao.save(product2);
+
+        expectedBlock = new Block<>(Arrays.asList(product1, product2, product3), false);
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, true,
+                null, null, 0, 3));
 
     }
 

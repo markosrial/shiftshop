@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -304,6 +305,40 @@ public class CatalogControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(productParams)))
                 .andExpect(status().isConflict());
+
+    }
+
+    @Test
+    public void testGetProducts_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+        Category category = catalogService.addCategory("test");
+        catalogService.addProduct("product1", new BigDecimal(0.1), new BigDecimal(5), category.getId());
+        catalogService.addProduct("product2", new BigDecimal(0.1), new BigDecimal(5), category.getId());
+        catalogService.addProduct("product3", new BigDecimal(0.1), new BigDecimal(5), category.getId());
+
+        // Get all products setting query params
+        mockMvc.perform(get("/catalog/products")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("categoryId", category.getId().toString())
+                .param("keywords","prod")
+                .param("onlyActive", "")
+                .param("order", "")
+                .param("inverse", ""))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items.length()").value(3));
+
+        // Get only 1 product
+        mockMvc.perform(get("/catalog/products")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("keywords","1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items.length()").value(1));
+
+        // Get without query params
+        mockMvc.perform(get("/catalog/products")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isOk());
 
     }
 

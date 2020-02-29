@@ -6,52 +6,52 @@ import {IntlProvider} from 'react-intl';
 
 import {initReactIntl} from "../../../i18n";
 
-import CategoriesPage from './CategoriesPage';
+import ProductsPage from '../components/ProductsPage';
 import {Role} from '../../users';
 
-jest.mock('./AddCategory', () => () => (<mockAddCategory/>));
-jest.mock('./CategoriesList', () => () => (<mockCategoriesList/>));
+jest.mock('../components/AddProduct', () => () => (<mockAddProduct/>));
+jest.mock('../components/ProductsSearch', () => () => (<mockProductsSearch/>));
 
 const {messages} = initReactIntl();
 
-describe('CategoriesPage snapshot', () => {
+describe('ProductsPage snapshot', () => {
 
     const middlewares = [];
     const mockStore = configureStore(middlewares);
 
-    const createCategoriesPage = store => {
+    const createProductsPage = store => {
 
         return renderer.create(
             <Provider store={store}>
                 <IntlProvider locale='en' messages={messages}>
-                    <CategoriesPage/>
+                    <ProductsPage/>
                 </IntlProvider>
             </Provider>
         );
 
     };
 
-    test('Without addCategory', () => {
+    test('Without addProduct', () => {
 
         // Initialize mockstore with empty state
         const initialState = {users: {user: {username: 'user', roles: [Role.SALESMAN]}}};
         const store = mockStore(initialState);
 
-        const categoriesPage = createCategoriesPage(store);
+        const productsPage = createProductsPage(store);
 
-        expect(categoriesPage.toJSON()).toMatchSnapshot();
+        expect(productsPage.toJSON()).toMatchSnapshot();
 
     });
 
-    test('With addCategory', () => {
+    test('With addProduct', () => {
 
         // Initialize mockstore with empty state
         const initialState = {users: {user: {username: 'user', roles: [Role.ADMIN]}}};
         const store = mockStore(initialState);
 
-        const categoriesPage = createCategoriesPage(store);
+        const productsPage = createProductsPage(store);
 
-        expect(categoriesPage.toJSON()).toMatchSnapshot();
+        expect(productsPage.toJSON()).toMatchSnapshot();
 
     });
 

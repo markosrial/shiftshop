@@ -25,11 +25,11 @@ mysql -u root
     exit
 ```
 
-***Database migration:***
+***Database clean (Don't use on production!):***
 
 ```
-cd shiftshop-service
-mvn flyway:migrate@create-tables
+Test: mvn flyway:clean@clean-test-db
+Dev: mvn flyway:clean@clean-db
 ```
 
 ***Execution:***

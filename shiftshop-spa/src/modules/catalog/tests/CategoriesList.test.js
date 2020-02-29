@@ -6,37 +6,51 @@ import {IntlProvider} from 'react-intl';
 
 import {initReactIntl} from "../../../i18n";
 
-import CategorySelector from './CategorySelector';
+import CategoriesList from '../components/CategoriesList';
+
+jest.mock('../components/CategoriesListItem', () => () => (<mockCategoriesListItem/>));
 
 const {messages} = initReactIntl();
 
-describe('CategorySelector snapshot', () => {
+describe('CategoriesList snapshot', () => {
 
     const middlewares = [];
     const mockStore = configureStore(middlewares);
 
+    const emptyCategories = {catalog: {categories: []}};
     const someCategories = {catalog: {categories: [{id: 1, name: 'CategoryA'}, {id: 2, name: 'CategoryB'}]}};
 
-    const createCategorySelector = (store, props) => {
+    const createCategoriesList = store => {
 
         return renderer.create(
             <Provider store={store}>
                 <IntlProvider locale='en' messages={messages}>
-                    <CategorySelector{...props}/>
+                    <CategoriesList/>
                 </IntlProvider>
             </Provider>
         );
 
     };
 
-    test('Categories has elements and first is selected', () => {
+    test('Categories is empty', () => {
+
+        // Initialize mockstore with empty state
+        const store = mockStore(emptyCategories);
+
+        const categoriesList = createCategoriesList(store);
+
+        expect(categoriesList.toJSON()).toMatchSnapshot();
+
+    });
+
+    test('Categories has elements', () => {
 
         // Initialize mockstore with empty state
         const store = mockStore(someCategories);
 
-        const categorySelector = createCategorySelector(store, {selectedCategory: 1, allCategories: true, handleSelectedCategory: jest.fn()});
+        const categoriesList = createCategoriesList(store);
 
-        expect(categorySelector.toJSON()).toMatchSnapshot();
+        expect(categoriesList.toJSON()).toMatchSnapshot();
 
     });
 
