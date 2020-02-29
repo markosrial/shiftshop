@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductsPage snapshot With addProduct 1`] = `
+<div>
+  <div
+    className="MuiGrid-root makeStyles-header-3 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <span
+        className="MuiTypography-root MuiTypography-overline"
+      >
+        Catalog
+      </span>
+      <h3
+        className="MuiTypography-root MuiTypography-h3"
+      >
+        Products
+      </h3>
+    </div>
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <mockAddProduct />
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-grid-2 MuiGrid-container MuiGrid-spacing-xs-2"
+  />
+</div>
+`;
+
+exports[`ProductsPage snapshot Without addProduct 1`] = `
+<div>
+  <div
+    className="MuiGrid-root makeStyles-header-3 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <span
+        className="MuiTypography-root MuiTypography-overline"
+      >
+        Catalog
+      </span>
+      <h3
+        className="MuiTypography-root MuiTypography-h3"
+      >
+        Products
+      </h3>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-grid-2 MuiGrid-container MuiGrid-spacing-xs-2"
+  />
+</div>
+`;

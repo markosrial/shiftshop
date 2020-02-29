@@ -8,6 +8,7 @@ import com.shiftshop.service.model.services.CatalogService;
 import com.shiftshop.service.model.services.IncorrectLoginException;
 import com.shiftshop.service.model.services.UserNotActiveException;
 import com.shiftshop.service.rest.dtos.catalog.InsertCategoryParamsDto;
+import com.shiftshop.service.rest.dtos.catalog.InsertProductParamsDto;
 import com.shiftshop.service.rest.dtos.user.AuthenticatedUserDto;
 import com.shiftshop.service.rest.dtos.user.LoginParamsDto;
 import org.junit.Test;
@@ -36,7 +37,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 public class CatalogControllerTest {
 
-    private final Long NON_EXISTENT_ID = new Long(-1);
     private final static String PASSWORD = "password";
 
     @Autowired
@@ -235,6 +235,74 @@ public class CatalogControllerTest {
                 .header("Authorization", "Bearer " + user.getServiceToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(params)))
+                .andExpect(status().isConflict());
+
+    }
+
+    @Test
+    public void testPostProducts_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+        Category category = catalogService.addCategory("test");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        InsertProductParamsDto productParams = new InsertProductParamsDto();
+        productParams.setName("product");
+        productParams.setProviderPrice(new BigDecimal(0.1));
+        productParams.setSalePrice(new BigDecimal(5));
+        productParams.setCategoryId(category.getId());
+
+        mockMvc.perform(post("/catalog/products")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(productParams)))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void testPostProducts_BadRequest() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+        Category category = catalogService.addCategory("test");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        InsertProductParamsDto productParams = new InsertProductParamsDto();
+        productParams.setName("");
+        productParams.setProviderPrice(new BigDecimal(0.1));
+        productParams.setSalePrice(new BigDecimal(5));
+        productParams.setCategoryId(category.getId());
+
+
+        mockMvc.perform(post("/catalog/products")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(productParams)))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testPostProducts_Conflict() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+        Category category = catalogService.addCategory("test");
+        catalogService.addProduct("product", new BigDecimal(0.1), new BigDecimal(5), category.getId());
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        InsertProductParamsDto productParams = new InsertProductParamsDto();
+        productParams.setName("product");
+        productParams.setProviderPrice(new BigDecimal(0.1));
+        productParams.setSalePrice(new BigDecimal(5));
+        productParams.setCategoryId(category.getId());
+
+        mockMvc.perform(post("/catalog/products")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(productParams)))
                 .andExpect(status().isConflict());
 
     }

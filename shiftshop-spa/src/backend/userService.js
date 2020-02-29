@@ -24,6 +24,7 @@ export const tryLoginFromServiceToken = (onSuccess, atFinally, reauthenticationC
 
     if (!serviceToken) {
         onSuccess();
+        atFinally();
         return;
     }
 
