@@ -3,7 +3,7 @@
 exports[`ProductsPage snapshot With addProduct 1`] = `
 <div>
   <div
-    className="MuiGrid-root makeStyles-header-3 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+    className="MuiGrid-root makeStyles-header-2 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
   >
     <div
       className="MuiGrid-root MuiGrid-item"
@@ -26,15 +26,21 @@ exports[`ProductsPage snapshot With addProduct 1`] = `
     </div>
   </div>
   <div
-    className="MuiGrid-root makeStyles-grid-2 MuiGrid-container MuiGrid-spacing-xs-2"
-  />
+    className="MuiGrid-root makeStyles-grid-1 MuiGrid-container MuiGrid-spacing-xs-2"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-10"
+    >
+      <mockProductsSearch />
+    </div>
+  </div>
 </div>
 `;
 
 exports[`ProductsPage snapshot Without addProduct 1`] = `
 <div>
   <div
-    className="MuiGrid-root makeStyles-header-3 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+    className="MuiGrid-root makeStyles-header-2 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
   >
     <div
       className="MuiGrid-root MuiGrid-item"
@@ -52,7 +58,13 @@ exports[`ProductsPage snapshot Without addProduct 1`] = `
     </div>
   </div>
   <div
-    className="MuiGrid-root makeStyles-grid-2 MuiGrid-container MuiGrid-spacing-xs-2"
-  />
+    className="MuiGrid-root makeStyles-grid-1 MuiGrid-container MuiGrid-spacing-xs-2"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-10"
+    >
+      <mockProductsSearch />
+    </div>
+  </div>
 </div>
 `;

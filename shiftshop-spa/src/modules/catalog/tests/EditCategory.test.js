@@ -7,7 +7,7 @@ import {IntlProvider} from 'react-intl';
 
 import {initReactIntl} from "../../../i18n";
 
-import EditCategory from './EditCategory';
+import EditCategory from '../components/EditCategory';
 
 const {messages} = initReactIntl();
 

@@ -5,7 +5,7 @@ exports[`CategorySelector snapshot Categories has elements and first is selected
   className="MuiFormControl-root"
 >
   <label
-    className="MuiFormLabel-root MuiInputLabel-root makeStyles-placeholder-2 MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
+    className="MuiFormLabel-root MuiInputLabel-root makeStyles-placeholder-1 MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
     data-shrink={true}
     id="categorySelector"
   >

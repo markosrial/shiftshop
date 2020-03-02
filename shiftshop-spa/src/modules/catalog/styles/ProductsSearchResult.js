@@ -1,14 +1,7 @@
 import {makeStyles} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
-    content: {
-        padding: 0,
-        paddingBottom: theme.spacing(1) + 'px !important'
-    },
-    list : {
-        padding: 0,
-        marginBottom: 0
-    },
+    spinner: {marginTop: theme.spacing(3),},
     emptyPlaceholder: {
         padding: theme.spacing(1),
         textAlign: 'center'
@@ -18,7 +11,8 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]: {maxHeight: '20rem'},
         [theme.breakpoints.up('md')]: {maxHeight: '25rem',},
     },
-    emptyText: {fontStyle: 'italic'}
+    emptyText: {fontStyle: 'italic'},
+    products: {marginTop: theme.spacing(2)}
 }));
 
 export default useStyles;

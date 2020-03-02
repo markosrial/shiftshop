@@ -34,3 +34,38 @@ export const addProduct = (product, onSuccess, onError, atFinally) =>
         product => onSuccess(product),
         onError,
         atFinally);
+
+
+export const changeSearchFilter = (searchFilter) => ({
+    type: actionTypes.CHANGE_SEARCH_FILTERS,
+    searchFilter
+});
+
+export const resetSearchFilter = () => ({
+    type: actionTypes.RESET_SEARCH_FILTERS
+});
+
+
+const findProductsCompleted = productsSearch => ({
+    type: actionTypes.FIND_PRODUCTS_COMPLETED,
+    productsSearch
+});
+
+export const findProducts = (criteria, atFinally) => dispatch => {
+
+    dispatch(clearProductsSearch());
+
+    backend.catalogService.findProducts(criteria,
+        result => dispatch(findProductsCompleted({criteria, result})),
+        atFinally);
+
+};
+
+export const previousFindProductsPage = (criteria, atFinally) =>
+    findProducts({...criteria, page: criteria.page-1}, atFinally);
+
+export const nextFindProductsPage = (criteria, atFinally) =>
+    findProducts({...criteria, page: criteria.page+1}, atFinally);
+
+const clearProductsSearch = () => ({type: actionTypes.CLEAR_PRODUCTS_SEARCH});
+

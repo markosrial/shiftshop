@@ -10,6 +10,45 @@ import java.time.LocalDateTime;
 @Entity
 public class Product {
 
+    public enum ProductOrderType {
+
+        name("name"),
+        creationDate("creationTimestamp");
+
+        private String type;
+
+        ProductOrderType(String type) {
+            this.type = type;
+        }
+
+        public static ProductOrderType fromString(String type) {
+
+            if (type == null) {
+                return ProductOrderType.getDefault();
+            }
+
+            switch (type) {
+                case "date":
+                case "creationDate":
+                case "creationTimestamp":
+                    return ProductOrderType.creationDate;
+                case "name":
+                default:
+                    return ProductOrderType.name;
+            }
+
+        }
+
+        public static ProductOrderType getDefault() {
+            return name;
+        }
+
+        public String getType() {
+            return this.type;
+        }
+
+    }
+
     private Long id;
     private String name;
     private BigDecimal providerPrice;

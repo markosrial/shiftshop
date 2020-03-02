@@ -6,7 +6,7 @@ import {IntlProvider} from 'react-intl';
 
 import {initReactIntl} from "../../../i18n";
 
-import LoginForm from './LoginForm';
+import LoginForm from '../components/LoginForm';
 
 const {messages} = initReactIntl();
 

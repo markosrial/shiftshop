@@ -15,3 +15,31 @@ export const updateCategory = (id, category, onSuccess, onError, atFinally) =>
 
 export const addProduct = (product, onSuccess, onError, atFinally) =>
     appFetch('/catalog/products', config('POST', product), onSuccess, onError, atFinally);
+
+export const findProducts = ({categoryId, keywords, orderBy, order, onlyActive, page}, onSuccess, atFinally) => {
+
+    let path = `/catalog/products?page=${page}`;
+
+    if (categoryId) {
+        path += `&categoryId=${categoryId}`;
+    }
+
+    if (keywords && keywords.trim() !== '') {
+        path += `&keywords=${keywords.trim()}`;
+    }
+
+    if (orderBy && orderBy !== '') {
+        path += `&orderBy=${orderBy}`;
+    }
+
+    if (order && order !== '') {
+        path += `&order=${order}`;
+    }
+
+    if (onlyActive) {
+        path += `&onlyActive=true`;
+    }
+
+    appFetch(path, config('GET'), onSuccess, null, atFinally);
+};
+
