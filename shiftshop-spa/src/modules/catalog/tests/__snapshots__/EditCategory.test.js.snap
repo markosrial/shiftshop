@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`EditCategory snapshot EditCategory with null category 1`] = `null`;
-
-exports[`EditCategory snapshot EditCategory with null onClose 1`] = `null`;

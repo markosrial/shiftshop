@@ -3,8 +3,8 @@ package com.shiftshop.service.model.common.exceptions;
 @SuppressWarnings("serial")
 public abstract class InstanceException extends Exception {
 
-    private String name;
-    private Object key;
+    private final String name;
+    private final Object key;
 
     public InstanceException(String name, Object key) {
 

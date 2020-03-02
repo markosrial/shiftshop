@@ -25,8 +25,8 @@ import static com.shiftshop.service.rest.dtos.user.UserConversor.toAuthenticated
 @RequestMapping("/users")
 public class UserController {
 
-	private final static String INCORRECT_LOGIN_EXCEPTION_CODE = "project.exceptions.IncorrectLoginException";
-	private final static String USER_NOT_ACTIVE_EXCEPTION_CODE = "project.exceptions.UserNotActiveException";
+	private static final String INCORRECT_LOGIN_EXCEPTION_CODE = "project.exceptions.IncorrectLoginException";
+	private static final String USER_NOT_ACTIVE_EXCEPTION_CODE = "project.exceptions.UserNotActiveException";
 
 	@Autowired
 	private ErrorConversor errorConversor;

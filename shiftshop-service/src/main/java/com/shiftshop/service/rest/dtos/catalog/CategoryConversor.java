@@ -9,11 +9,11 @@ public class CategoryConversor {
 
 	private CategoryConversor() {}
 
-	public final static CategoryDto toCategoryDto(Category category) {
+	public static final CategoryDto toCategoryDto(Category category) {
 		return new CategoryDto(category.getId(), category.getName());
 	}
 
-	public final static List<CategoryDto> toCategoryDtos(List<Category> categories) {
+	public static final List<CategoryDto> toCategoryDtos(List<Category> categories) {
 		return categories.stream().map(c -> toCategoryDto(c)).collect(Collectors.toList());
 	}
 

@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CommonControllerAdvice {
 
-	private final static String DUPLICATE_INSTANCE_PROPERTY_EXCEPTION_CODE = "project.exceptions.DuplicateInstancePropertyException";
-	private final static String INSTANCE_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.InstanceNotFoundException";
-	private final static String INSTANCE_PROPERTY_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.InstancePropertyNotFoundException";
+	private static final String DUPLICATE_INSTANCE_PROPERTY_EXCEPTION_CODE = "project.exceptions.DuplicateInstancePropertyException";
+	private static final String INSTANCE_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.InstanceNotFoundException";
+	private static final String INSTANCE_PROPERTY_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.InstancePropertyNotFoundException";
 
 	@Autowired
 	private ErrorConversor errorConversor;

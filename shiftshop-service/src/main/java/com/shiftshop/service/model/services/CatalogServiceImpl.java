@@ -2,6 +2,7 @@ package com.shiftshop.service.model.services;
 
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
+import com.shiftshop.service.model.common.utils.MessageConstants;
 import com.shiftshop.service.model.common.utils.UUIDGenerator;
 import com.shiftshop.service.model.entities.*;
 import com.shiftshop.service.model.entities.Product.ProductOrderType;
@@ -37,7 +38,8 @@ public class CatalogServiceImpl implements CatalogService {
         String categoryName = name;
 
         if (categoryDao.findByNameIgnoreCase(categoryName).isPresent()) {
-            throw new DuplicateInstancePropertyException("project.entities.category", "project.entities.props.name", name);
+            throw new DuplicateInstancePropertyException(MessageConstants.ENTITIES_CATEGORY,
+                    MessageConstants.ENTITIES_PROPS_NAME, name);
         }
 
         return categoryDao.save(new Category(StringUtils.capitalize(categoryName)));
@@ -51,7 +53,7 @@ public class CatalogServiceImpl implements CatalogService {
         Optional<Category> category = categoryDao.findById(id);
 
         if (!category.isPresent()) {
-            throw new InstanceNotFoundException("project.entities.category", id);
+            throw new InstanceNotFoundException(MessageConstants.ENTITIES_CATEGORY, id);
         }
 
         return category.get();
@@ -77,7 +79,8 @@ public class CatalogServiceImpl implements CatalogService {
         Category category = findCategoryById(id);
 
         if (categoryDao.findByNameIgnoreCaseAndIdIsNot(name, category.getId()).isPresent()) {
-            throw new DuplicateInstancePropertyException("project.entities.category", "project.entities.props.name", name);
+            throw new DuplicateInstancePropertyException(MessageConstants.ENTITIES_CATEGORY,
+                    MessageConstants.ENTITIES_PROPS_NAME, name);
         }
 
         category.setName(StringUtils.capitalize(name));
@@ -93,7 +96,8 @@ public class CatalogServiceImpl implements CatalogService {
         Category category = findCategoryById(categoryId);
 
         if (productDao.findByNameIgnoreCase(name).isPresent()) {
-            throw new DuplicateInstancePropertyException("project.entities.product", "project.entities.props.name", name);
+            throw new DuplicateInstancePropertyException(MessageConstants.ENTITIES_PRODUCT,
+                    MessageConstants.ENTITIES_PROPS_NAME, name);
         }
 
         Product product = new Product(StringUtils.capitalize(name),

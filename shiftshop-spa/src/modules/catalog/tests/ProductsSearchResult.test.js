@@ -17,8 +17,8 @@ describe('ProductsSearchResult snapshot', () => {
     const middlewares = [];
     const mockStore = configureStore(middlewares);
 
-    const isSearching = {searching: true};
-    const isNotSearching = {searching: false};
+    const isSearching = {searching: true, startSearch: jest.fn(), stopSearch: jest.fn()};
+    const isNotSearching = {searching: false, startSearch: jest.fn(), stopSearch: jest.fn()};
 
 
     const createProductsSearchResult = (store, props) => {

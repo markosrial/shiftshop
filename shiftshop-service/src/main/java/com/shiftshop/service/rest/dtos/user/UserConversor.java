@@ -8,12 +8,12 @@ public class UserConversor {
 
 	private UserConversor() {}
 
-	public final static UserDto toUserDto(User user) {
+	public static final UserDto toUserDto(User user) {
 		return new UserDto(user.getId(), user.getUserName(),
 				user.getRoles().stream().map(role -> role.name()).collect(Collectors.toSet()));
 	}
 
-	public final static AuthenticatedUserDto toAuthenticatedUserDto(String serviceToken, User user) {
+	public static final AuthenticatedUserDto toAuthenticatedUserDto(String serviceToken, User user) {
 		return new AuthenticatedUserDto(serviceToken, toUserDto(user));
 	}
 

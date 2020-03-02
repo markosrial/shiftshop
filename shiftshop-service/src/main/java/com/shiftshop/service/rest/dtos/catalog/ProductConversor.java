@@ -9,12 +9,12 @@ public class ProductConversor {
 
     private ProductConversor() {}
 
-    public final static ProductSummaryDto toProductSummaryDto(Product product) {
+    public static final ProductSummaryDto toProductSummaryDto(Product product) {
         return new ProductSummaryDto(product.getId(), product.getName(),
                 product.getSalePrice(), product.getCategory().getId());
     }
 
-    public final static List<ProductSummaryDto> toProductSummaryDtos(List<Product> products) {
+    public static final List<ProductSummaryDto> toProductSummaryDtos(List<Product> products) {
         return products.stream().map(p -> toProductSummaryDto(p)).collect(Collectors.toList());
     }
 

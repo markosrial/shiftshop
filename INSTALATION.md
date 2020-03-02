@@ -6,7 +6,7 @@ Necessary artifacts:
 
 - **shiftshop-service.jar**
 - **shiftshop-spa.zip**
-- **shiftshop.msi** (*Windows*), **shiftshop-pos.deb** (*Linux*) or **shiftshop-pos.zip** (*MacOs*)
+- **shiftshop.exe** (*Windows*), **shiftshop-pos.deb** (*Linux*) or **shiftshop-pos.zip** (*MacOs*)
 
 [TOC]
 ______
