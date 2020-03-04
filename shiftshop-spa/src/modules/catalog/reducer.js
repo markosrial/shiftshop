@@ -13,6 +13,7 @@ const initialState = {
         onlyActive: true
     },
     productsSearch: null,
+    product: null,
 };
 
 const categories = (state = initialState.categories, action) => {
@@ -60,10 +61,25 @@ const productsSearch = (state = initialState.productsSearch, action) => {
 
 };
 
+const product  = (state = initialState.product, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.GET_PRODUCT_COMPLETED:
+            return action.product;
+
+        default:
+            return state;
+
+    }
+
+};
+
 const reducer = combineReducers({
     categories,
     searchFilter,
     productsSearch,
+    product
 });
 
 export default reducer;

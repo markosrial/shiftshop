@@ -123,7 +123,7 @@ public class CatalogServiceTest {
         Category category = createCategory(CATEGORY_NAME);
         Product product = createProduct(PRODUCT_NAME, category.getId());
 
-        assertEquals(product, productDao.findById(product.getId()).get());
+        assertEquals(product, catalogService.findProductById(product.getId()));
 
     }
 
@@ -135,6 +135,11 @@ public class CatalogServiceTest {
         createProduct(PRODUCT_NAME, category.getId());
         createProduct(PRODUCT_NAME, category.getId());
 
+    }
+
+    @Test(expected = InstanceNotFoundException.class)
+    public void testFindProductByNonExistentId() throws InstanceNotFoundException {
+        catalogService.findProductById(NON_EXISTENT_ID);
     }
 
     @Test

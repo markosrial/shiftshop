@@ -21,6 +21,8 @@ public interface CatalogService {
     Product addProduct(String name, BigDecimal providerPrice, BigDecimal salePrice, Long categoryId)
             throws DuplicateInstancePropertyException, InstanceNotFoundException;
 
+    Product findProductById(Long id) throws InstanceNotFoundException;
+
     Block<Product> findProducts(Long categoryId, String keywords, Boolean onlyActive,
                                 String orderType, String order, int page, int size);
 }

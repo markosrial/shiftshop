@@ -114,6 +114,19 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     @Transactional(readOnly = true)
+    public Product findProductById(Long id) throws InstanceNotFoundException {
+
+        Optional<Product> product = productDao.findById(id);
+
+        if (!product.isPresent()) {
+            throw new InstanceNotFoundException("project.entities.product", id);
+        }
+
+        return product.get();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Block<Product> findProducts(Long categoryId, String keywords, Boolean onlyActive,
                                        String orderType, String order, int page, int size) {
 

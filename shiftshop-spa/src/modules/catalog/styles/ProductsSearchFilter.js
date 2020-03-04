@@ -1,10 +1,8 @@
 import {colors, makeStyles} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
-    drawer: {
-        minWidth: theme.spacing(30),
-    },
     content: {
+        width: theme.spacing(30),
         display: 'flex',
         flexDirection: 'column',
         height: '100%',

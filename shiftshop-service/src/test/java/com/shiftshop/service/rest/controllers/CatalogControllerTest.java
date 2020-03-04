@@ -2,6 +2,7 @@ package com.shiftshop.service.rest.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shiftshop.service.model.entities.Category;
+import com.shiftshop.service.model.entities.Product;
 import com.shiftshop.service.model.entities.User;
 import com.shiftshop.service.model.entities.UserDao;
 import com.shiftshop.service.model.services.CatalogService;
@@ -83,6 +84,15 @@ public class CatalogControllerTest {
         return createAuthenticatedUser(userName, roles);
     }
 
+    private AuthenticatedUserDto createAuthenticatedSalesmanUser(String userName)
+            throws IncorrectLoginException, UserNotActiveException {
+
+        Set<User.RoleType> roles = new HashSet<>();
+        roles.add(User.RoleType.SALESMAN);
+
+        return createAuthenticatedUser(userName, roles);
+    }
+
     /* Test categories section from controller */
 
     @Test
@@ -142,6 +152,17 @@ public class CatalogControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(params)))
                 .andExpect(status().isConflict());
+
+    }
+
+    @Test
+    public void testPostCategories_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedSalesmanUser("salesman");
+
+        this.mockMvc.perform(post("/catalog/categories" )
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
 
     }
 
@@ -241,6 +262,20 @@ public class CatalogControllerTest {
     }
 
     @Test
+    public void testPutCategories_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedSalesmanUser("salesman");
+        Category category = catalogService.addCategory("test");
+
+        this.mockMvc.perform(put("/catalog/categories/"+category.getId())
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
+
+    }
+
+    /* Test product section from controller */
+
+    @Test
     public void testPostProducts_Ok() throws Exception {
 
         AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
@@ -306,6 +341,49 @@ public class CatalogControllerTest {
                 .content(mapper.writeValueAsBytes(productParams)))
                 .andExpect(status().isConflict());
 
+    }
+
+    @Test
+    public void testPostProducts_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedSalesmanUser("salesman");
+
+        this.mockMvc.perform(post("/catalog/products" )
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    public void testGetProduct_Ok() throws Exception {
+
+        AuthenticatedUserDto admin = createAuthenticatedAdminUser("admin");
+        AuthenticatedUserDto salesman = createAuthenticatedSalesmanUser("salesman");
+
+        Category category = catalogService.addCategory("test");
+        Product product = catalogService.addProduct("product", new BigDecimal(0.1), new BigDecimal(5), category.getId());
+
+        // Product with providerPrice
+        mockMvc.perform(get("/catalog/products/" + product.getId())
+                .header("Authorization", "Bearer " + admin.getServiceToken()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.providerPrice").exists());
+
+        // Product without providerPrice
+        mockMvc.perform(get("/catalog/products/" + product.getId())
+                .header("Authorization", "Bearer " + salesman.getServiceToken()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.providerPrice").doesNotExist());
+    }
+
+    @Test
+    public void testGetProduct_NotFound() throws Exception {
+
+        AuthenticatedUserDto admin = createAuthenticatedAdminUser("admin");
+
+        mockMvc.perform(get("/catalog/products/0")
+                .header("Authorization", "Bearer " + admin.getServiceToken()))
+                .andExpect(status().isNotFound());
     }
 
     @Test

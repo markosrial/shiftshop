@@ -6,10 +6,11 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(1),
         textAlign: 'center'
     },
+    imageBox:{padding: theme.spacing(3)},
     image: {
         maxWidth: '100%',
-        [theme.breakpoints.down('sm')]: {maxHeight: '20rem'},
-        [theme.breakpoints.up('md')]: {maxHeight: '25rem',},
+        [theme.breakpoints.down('sm')]: {maxHeight: '15rem'},
+        [theme.breakpoints.up('md')]: {maxHeight: '20rem',},
     },
     emptyText: {fontStyle: 'italic'},
     products: {marginTop: theme.spacing(2)}

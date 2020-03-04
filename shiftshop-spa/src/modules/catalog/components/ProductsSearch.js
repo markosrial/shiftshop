@@ -4,6 +4,8 @@ import {FormattedMessage} from 'react-intl';
 import {Card, CardContent, CardHeader, Divider, IconButton} from '@material-ui/core';
 import {FilterList} from '@material-ui/icons';
 
+import useStyles from '../styles/ProductSearch';
+
 import ProductsSearchBar from './ProductsSearchBar';
 import ProductsSearchFilter from './ProductsSearchFilter';
 import ProductsSearchResult from './ProductsSearchResult';
@@ -12,6 +14,8 @@ import * as selectors from '../selectors';
 import * as actions from '../actions';
 
 const ProductsSearch = () => {
+
+    const classes = useStyles();
 
     const dispatch = useDispatch();
     const searchFilter = useSelector(selectors.getSearchFilter);
@@ -53,7 +57,7 @@ const ProductsSearch = () => {
     return (
         <Card>
             <CardHeader title={<FormattedMessage id="project.catalog.ProductsSearch.title"/>}
-                        action={<IconButton size="medium" onClick={() => setFilterOpen(true)}><FilterList/></IconButton>}/>
+                        action={<IconButton size="medium" className={classes.filterButton} onClick={() => setFilterOpen(true)}><FilterList/></IconButton>}/>
             <Divider/>
             <CardContent>
                 <ProductsSearchBar keywords={keywords} handleChangeKeywords={handleChangeKeywords}

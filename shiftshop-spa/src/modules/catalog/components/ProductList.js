@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import {useHistory, Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
@@ -39,6 +40,10 @@ const ProductList = ({products, criteria, startSearch, stopSearch}) => {
     const searchFilter = useSelector(selectors.getSearchFilter);
     const categories = useSelector(selectors.getCategories);
 
+    const history = useHistory();
+
+    const productDetails = id => () => history.push(`/catalog/products/${id}`);
+
     const handlePrevious = () => {
         startSearch();
         dispatch(actions.previousFindProductsPage({
@@ -71,13 +76,17 @@ const ProductList = ({products, criteria, startSearch, stopSearch}) => {
                         <TableBody>
                             {products.items.map(product => (
                                 <TableRow key={product.id}>
-                                    <TableCell align="left">{product.name}</TableCell>
+                                    <TableCell align="left">
+                                        <Link to={`/catalog/products/${product.id}`}>
+                                            {product.name}
+                                        </Link>
+                                    </TableCell>
                                     <TableCell align="left">
                                         <Chip label={selectors.getCategoryName(categories,product.categoryId)} size="small"/>
                                     </TableCell>
                                     <TableCell align="right">{product.salePrice}&nbsp;€</TableCell>
                                     <TableCell align="center">
-                                        <IconButton size="small" onClick={() => console.log("hi")}>
+                                        <IconButton size="small" onClick={productDetails(product.id)}>
                                             <Visibility/>
                                         </IconButton>
                                     </TableCell>
@@ -98,9 +107,10 @@ const ProductList = ({products, criteria, startSearch, stopSearch}) => {
             <Hidden smUp>
                 {products.items.map(product => (
                     <Card key={product.id} className={classes.card}>
-                        <CardHeader className={classes.header} title={product.name}
+                        <CardHeader className={classes.header}
+                                    title={<Link to={`/catalog/products/${product.id}`}>{product.name}</Link>}
                                     subheader={cardSubheader(categories, product.categoryId)}
-                                    action={<IconButton><Visibility/></IconButton>}/>
+                                    action={<IconButton onClick={productDetails(product.id)}><Visibility/></IconButton>}/>
                         <Divider/>
                         <CardContent className={classes.content}>
                             <Box display="flex">
