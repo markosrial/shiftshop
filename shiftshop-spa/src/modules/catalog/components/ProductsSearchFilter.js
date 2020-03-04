@@ -48,7 +48,7 @@ const ProductsSearchFilter = ({filterOpen, closeFilter}) => {
     };
 
     return (
-        <Drawer className={classes.drawer} anchor="right" open={filterOpen} onClose={closeFilter} variant="temporary">
+        <Drawer anchor="right" open={filterOpen} onClose={closeFilter} variant="temporary">
             <div className={classes.content}>
                 <div className={classes.header}>
                     <Button onClick={closeFilter} size="small">

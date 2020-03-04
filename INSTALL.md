@@ -154,6 +154,7 @@ In our case the LAN DNS name is "*home*", so all request to our machine will go 
 
 ```
   server {
+    
     listen 80;
     listen [::]:80;
 
@@ -166,20 +167,15 @@ In our case the LAN DNS name is "*home*", so all request to our machine will go 
       proxy_set_header  X-Forwarded-Port   $server_port;
       proxy_pass        http://localhost:6565;
     }
-  }
-
-  server {
-    listen 80;
-    listen [::]:80;
-
-    server_name shiftshop.* shiftshop;
-
-    root /var/shiftshop/spa/build;
-    index index.html index.htm;
 
     location / {
       try_files $uri /index.html =404;
+              
+      root /var/shiftshop/spa/build;
+      index index.html index.htm;      
+      
     }
+
   }
 ```
 

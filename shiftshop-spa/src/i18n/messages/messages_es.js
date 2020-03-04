@@ -30,6 +30,10 @@ export default {
     'project.catalog.CategorySelector.allCategories': 'Todas',
     'project.catalog.EditCategory.success': 'Categoría editada',
     'project.catalog.EditCategory.title': 'Editar categoría',
+    'project.catalog.Product.title': 'Datos',
+    'project.catalog.ProductPage.title': 'Producto',
+    'project.catalog.ProductResult.notFound': 'Producto no encontrado',
+    'project.catalog.ProductResult.backToProducts': 'Volver a la página de productos',
     'project.catalog.ProductsPage.title': 'Productos',
     'project.catalog.ProductsSearch.error': 'Error al realizar la búsqueda',
     'project.catalog.ProductsSearch.title': 'Buscar productos',
@@ -41,6 +45,7 @@ export default {
     'project.catalog.ProductsSearchFilter.label.desc': 'Descendente',
     'project.catalog.ProductsSearchFilter.label.name': 'Nombre',
     'project.catalog.ProductsSearchFilter.label.onlyActive': 'Sólo activos',
+    'project.catalog.ProductsSearchResult.emptySearch': 'Esto está muy vacío. Prueba a buscar algo!',
     'project.catalog.ProductsSearchResult.emptyProducts': 'No se encontraron productos',
 
     'project.usuario.Logout.title': 'Salir',
@@ -59,6 +64,7 @@ export default {
     'project.global.button.signout': 'Cerrar sesión',
     'project.global.field.category': 'Categoría',
     'project.global.field.actions': 'Acciones',
+    'project.global.field.barcode': 'Código de barras',
     'project.global.field.date': 'Fecha',
     'project.global.field.keywords': 'Palabras clave',
     'project.global.field.name': 'Nombre',
@@ -66,6 +72,9 @@ export default {
     'project.global.field.providerPrice': 'Precio de proveedor',
     'project.global.field.salePrice': 'Precio de venta',
     'project.global.field.salePrice.short': 'PVP',
+    'project.global.field.state': 'Estado',
+    'project.global.field.state.active': 'Activo',
+    'project.global.field.state.inactive': 'Inactivo',
     'project.global.field.username': 'Usuario',
 
 }

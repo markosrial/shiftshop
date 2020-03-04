@@ -30,6 +30,10 @@ export default {
     'project.catalog.CategorySelector.allCategories': 'All',
     'project.catalog.EditCategory.success': 'Category modified',
     'project.catalog.EditCategory.title': 'Modify category',
+    'project.catalog.Product.title': 'Data',
+    'project.catalog.ProductPage.title': 'Product',
+    'project.catalog.ProductResult.notFound': 'Product not found',
+    'project.catalog.ProductResult.backToProducts': 'Back to products page',
     'project.catalog.ProductsPage.title': 'Products',
     'project.catalog.ProductsSearch.error': 'Search attempt failed',
     'project.catalog.ProductsSearch.title': 'Search products',
@@ -41,6 +45,7 @@ export default {
     'project.catalog.ProductsSearchFilter.label.desc': 'Descending',
     'project.catalog.ProductsSearchFilter.label.name': 'Name',
     'project.catalog.ProductsSearchFilter.label.onlyActive': 'Only active',
+    'project.catalog.ProductsSearchResult.emptySearch': 'This is too empty. Try to search something!',
     'project.catalog.ProductsSearchResult.emptyProducts': 'No products were found',
 
     'project.usuario.Logout.title': 'Exit',
@@ -59,6 +64,7 @@ export default {
     'project.global.button.signout': 'Sign Out',
     'project.global.field.category': 'Category',
     'project.global.field.actions': 'Actions',
+    'project.global.field.barcode': 'Barcode',
     'project.global.field.date': 'Date',
     'project.global.field.keywords': 'Keywords',
     'project.global.field.name': 'Name',
@@ -66,6 +72,9 @@ export default {
     'project.global.field.providerPrice': 'Provider price',
     'project.global.field.salePrice': 'Sale price',
     'project.global.field.salePrice.short': 'PVP',
+    'project.global.field.state': 'State',
+    'project.global.field.state.active': 'Active',
+    'project.global.field.state.inactive': 'Inactive',
     'project.global.field.username': 'Username',
 
 }

@@ -17,6 +17,7 @@ import users, {Role} from '../../users';
 });*/
 const CategoriesPage = React.lazy(() => import('../../catalog/components/CategoriesPage'));
 const ProductsPage = React.lazy(() => import('../../catalog/components/ProductsPage'));
+const ProductPage = React.lazy(() => import('../../catalog/components/ProductPage'));
 
 const Main = () => {
     const classes = useStyles();
@@ -41,6 +42,7 @@ const Main = () => {
                                     <Route exact path="/" component={Dashboard}/>
                                     <Route exact path="/catalog/categories" component={CategoriesPage}/>
                                     <Route exact path="/catalog/products" component={ProductsPage}/>
+                                    <Route exact path="/catalog/products/:id" component={ProductPage}/>
                                     { users.selectors.hasRole(user, [Role.MANAGER])
                                         && <Route exact path="/staff/users" component={Dashboard}/> }
                                     <Route component={Dashboard}/>

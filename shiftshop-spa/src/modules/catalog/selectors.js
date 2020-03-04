@@ -21,3 +21,4 @@ export const getSearchFilter = state => getModuleState(state).searchFilter;
 
 export const getProductsSearch = state => getModuleState(state).productsSearch;
 
+export const getProduct = state => getModuleState(state).product;

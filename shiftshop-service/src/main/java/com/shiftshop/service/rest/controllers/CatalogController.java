@@ -8,6 +8,7 @@ import com.shiftshop.service.model.services.CatalogService;
 import com.shiftshop.service.rest.dtos.catalog.*;
 import com.shiftshop.service.rest.dtos.common.BlockDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +16,10 @@ import javax.validation.constraints.Min;
 import java.math.RoundingMode;
 import java.util.List;
 
+import static com.shiftshop.service.rest.common.RolesChecker.getRolesFromAuthentication;
 import static com.shiftshop.service.rest.dtos.catalog.CategoryConversor.toCategoryDto;
 import static com.shiftshop.service.rest.dtos.catalog.CategoryConversor.toCategoryDtos;
-import static com.shiftshop.service.rest.dtos.catalog.ProductConversor.toProductSummaryDtos;
+import static com.shiftshop.service.rest.dtos.catalog.ProductConversor.*;
 
 @RestController
 @RequestMapping("/catalog")
@@ -62,13 +64,19 @@ public class CatalogController {
 
     }
 
+    @GetMapping("/products/{id}")
+    public ProductDto getProductById(@PathVariable Long id, Authentication authentication)
+            throws InstanceNotFoundException {
+        return toProductDto(catalogService.findProductById(id), getRolesFromAuthentication(authentication));
+    }
+
     @GetMapping("/products")
     public BlockDto<ProductSummaryDto> findProducts(
             @RequestParam(required = false) Long categoryId, @RequestParam(required = false) String keywords,
             @RequestParam(required = false) String orderBy, @RequestParam(required = false) String order,
             @RequestParam(defaultValue = "true", required = false) Boolean onlyActive,
             @RequestParam(defaultValue = "0", required = false) @Min(0) int page,
-            @RequestParam(defaultValue = "20", required = false) @Min(0) int size) {
+            @RequestParam(defaultValue = "15", required = false) @Min(0) int size) {
 
         Block<Product> productBlock = catalogService.findProducts(categoryId, keywords, onlyActive, orderBy, order, page, size);
 

@@ -4,7 +4,7 @@ const useStyles = makeStyles(theme => ({
     card: {marginBottom: theme.spacing(1)},
     header: {
         backgroundColor: theme.palette.light.main,
-        padding: theme.spacing(1, 2),
+        padding: theme.spacing(1, 2)
     },
     content: {
         padding: theme.spacing(1, 2),

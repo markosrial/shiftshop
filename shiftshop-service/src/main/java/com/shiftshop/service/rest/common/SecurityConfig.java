@@ -34,9 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/login").permitAll()
 				.antMatchers("/users/loginFromServiceToken").permitAll()
 				.antMatchers(HttpMethod.POST, "/catalog/categories").hasRole(ADMIN)
-				.antMatchers(HttpMethod.PUT, "/catalog/categories").hasRole(ADMIN)
+				.antMatchers(HttpMethod.PUT, "/catalog/categories/*").hasRole(ADMIN)
 				.antMatchers(HttpMethod.POST, "/catalog/products").hasRole(ADMIN)
-				.antMatchers(HttpMethod.PUT, "/catalog/products").hasRole(ADMIN)
+				.antMatchers(HttpMethod.PUT, "/catalog/products/*").hasRole(ADMIN)
 				.antMatchers("/catalog/**").authenticated()
 				.antMatchers("/**").hasRole(MANAGER);
 
