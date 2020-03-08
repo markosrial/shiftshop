@@ -14,7 +14,11 @@ const useStyles = makeStyles(theme => ({
         fontStyle: 'italic',
         fontWeight: 500
     },
-    backToProducts: {marginTop: theme.spacing(2)}
+    backToProducts: {marginTop: theme.spacing(2)},
+    editButton: {backgroundColor: theme.palette.light.main},
+    actions: {
+        justifyContent: 'flex-end'
+    }
 }));
 
 export default useStyles;

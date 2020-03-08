@@ -5,7 +5,6 @@ import {ArrowDropDown, ArrowDropUp, ArrowRight} from '@material-ui/icons';
 
 import useStyles from '../styles/ProductROIChip';
 
-
 const ProductROIChip = ({ROI}) => {
 
     const classes = useStyles();

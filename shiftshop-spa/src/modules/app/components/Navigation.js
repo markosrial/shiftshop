@@ -6,11 +6,11 @@ import {List} from '@material-ui/core';
 
 import useStyles from '../styles/Navigation'
 
+import users from '../../users';
 import NavigationRoutes from '../constants/NavigationRoutes';
 import NavigationCollapse from './NavigationCollapse';
 import NavigationItem from './NavigationItem';
 
-import users from '../../users';
 
 const Navigation = () => {
     const classes = useStyles();
@@ -19,7 +19,7 @@ const Navigation = () => {
     const user = useSelector(users.selectors.getUser);
 
     const checkActive = route => (pathname === route || pathname.startsWith(route + "/"));
-    const checkPermissions = permissions => users.selectors.hasRole(user, permissions);
+    const checkPermissions = roles => users.selectors.hasRole(user, roles);
 
     return (
         NavigationRoutes.map(({title, items, permissions}) => (

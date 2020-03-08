@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
@@ -17,11 +17,9 @@ import {Add, AddBox} from '@material-ui/icons';
 
 import useStyles from '../styles/AddCategory';
 
-import {Alert} from '../../common';
-import ErrorContent from '../../common/components/ErrorContent';
-
 import * as actions from '../actions';
 import {formValidator} from '../../../utils';
+import {Alert, ErrorContent} from '../../common';
 
 const AddCategory = () => {
     const classes = useStyles();
@@ -31,9 +29,7 @@ const AddCategory = () => {
 
     const _isMounted = useRef(true);
     useEffect(() => {
-        return () => {
-            _isMounted.current = false
-        }
+        return () => _isMounted.current = false
     }, []);
 
     const [name, setName] = useState('');
@@ -49,14 +45,14 @@ const AddCategory = () => {
     const openDialog = () => setOpen(true);
     const closeDialog = () => setOpen(false);
 
-    const checkValid = () => formValidator.isNotEmpty(name);
+    const isValidName = useMemo(() => formValidator.isNotEmpty(name), [name]);
 
     const handleSubmit = e => {
 
         e.preventDefault();
         closeErrors();
 
-        if (checkValid() && !adding) {
+        if (isValidName && !adding) {
             addCategory();
         }
     };
@@ -122,7 +118,7 @@ const AddCategory = () => {
                         <Button variant="contained" color="secondary" onClick={closeDialog} disableElevation>
                             <FormattedMessage id="project.global.button.close"/>
                         </Button>
-                        <Button variant="contained" color="primary" type="submit" disabled={!checkValid() || adding} disableElevation>
+                        <Button variant="contained" color="primary" type="submit" disabled={!isValidName || adding} disableElevation>
                             {adding && <CircularProgress className={classes.buttonProgress} size={24}/>}
                             <FormattedMessage id="project.global.button.add"/>
                         </Button>

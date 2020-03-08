@@ -30,6 +30,8 @@ export default {
     'project.catalog.CategorySelector.allCategories': 'All',
     'project.catalog.EditCategory.success': 'Category modified',
     'project.catalog.EditCategory.title': 'Modify category',
+    'project.catalog.EditProduct.success': 'Product modified',
+    'project.catalog.EditProduct.title': 'Modify product',
     'project.catalog.Product.title': 'Data',
     'project.catalog.ProductPage.title': 'Product',
     'project.catalog.ProductResult.notFound': 'Product not found',
@@ -45,7 +47,7 @@ export default {
     'project.catalog.ProductsSearchFilter.label.desc': 'Descending',
     'project.catalog.ProductsSearchFilter.label.name': 'Name',
     'project.catalog.ProductsSearchFilter.label.onlyActive': 'Only active',
-    'project.catalog.ProductsSearchResult.emptySearch': 'This is too empty. Try to search something!',
+    'project.catalog.ProductsSearchResult.emptySearch': 'This is too empty, try to search something!',
     'project.catalog.ProductsSearchResult.emptyProducts': 'No products were found',
 
     'project.usuario.Logout.title': 'Exit',
@@ -53,6 +55,7 @@ export default {
 
     'project.global.button.add': 'Add',
     'project.global.button.accept': 'Accept',
+    'project.global.button.back': 'Back',
     'project.global.button.cancel': 'Cancel',
     'project.global.button.close': 'Close',
     'project.global.button.continue': 'Continue',

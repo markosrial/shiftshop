@@ -1,9 +1,6 @@
 package com.shiftshop.service.rest.dtos.catalog;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class InsertProductParamsDto {
@@ -15,6 +12,7 @@ public class InsertProductParamsDto {
     private String name;
     private BigDecimal providerPrice;
     private BigDecimal salePrice;
+    private String barcode;
     private Long categoryId;
 
     @NotNull(groups = {AddValidations.class})
@@ -36,6 +34,13 @@ public class InsertProductParamsDto {
     public BigDecimal getSalePrice() { return salePrice; }
 
     public void setSalePrice(BigDecimal salePrice) { this.salePrice = salePrice; }
+
+    @Size(min = 8, max = 26, groups = {UpdateValidations.class})
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", groups = {UpdateValidations.class},
+            message = "{project.entities.patterns.barcode}")
+    public String getBarcode() { return barcode; }
+
+    public void setBarcode(String barcode) { this.barcode = barcode; }
 
     @NotNull(groups = {AddValidations.class})
     public Long getCategoryId() {

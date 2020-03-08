@@ -83,4 +83,16 @@ public class CatalogController {
         return new BlockDto<>(toProductSummaryDtos(productBlock.getItems()), productBlock.getExistMoreItems());
 
     }
+
+    @PutMapping("/products/{id}")
+    public ProductDto updateProduct(@PathVariable Long id,
+                                    @Validated({InsertProductParamsDto.UpdateValidations.class}) @RequestBody InsertProductParamsDto params,
+                                    Authentication authentication)
+            throws DuplicateInstancePropertyException, InstanceNotFoundException {
+        return toProductDto(
+                catalogService.updateProduct(id, params.getName(), params.getProviderPrice(),
+                        params.getSalePrice(), params.getBarcode(), params.getCategoryId()),
+                getRolesFromAuthentication(authentication));
+    }
+
 }

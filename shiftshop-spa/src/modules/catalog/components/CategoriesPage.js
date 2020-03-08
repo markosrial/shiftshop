@@ -5,15 +5,15 @@ import {FormattedMessage} from 'react-intl';
 
 import useStyles from '../styles/CategoriesPage';
 
+import users, {Role} from '../../users';
 import AddCategory from './AddCategory';
 import CategoriesList from './CategoriesList';
-
-import users, {Role} from '../../users';
 
 const CategoriesPage = () => {
     const classes = useStyles();
 
-    const user = useSelector(users.selectors.getUser);
+    const user = useSelector(users.selectors.getUser)
+    const hasRole = roles => users.selectors.hasRole(user, roles);
 
     return (
         <div>
@@ -26,7 +26,7 @@ const CategoriesPage = () => {
                         <FormattedMessage id="project.catalog.CategoriesPage.title"/>
                     </Typography>
                 </Grid>
-                {users.selectors.hasRole(user, [Role.ADMIN]) &&
+                {hasRole([Role.ADMIN]) &&
                     <Grid item>
                         <AddCategory/>
                     </Grid>}

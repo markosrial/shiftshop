@@ -1,16 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {Button, Typography} from '@material-ui/core';
+import {Button, Card, CardContent, CardHeader, Divider, IconButton, Typography} from '@material-ui/core';
+import {Edit} from '@material-ui/icons';
 
 import {notFound} from '../../../assets/images';
 import useStyles from '../styles/ProductResult';
 
-import Product from './Product';
+import users, {Role} from '../../users';
+import ProductDetails from './ProductDetails';
+import EditProduct from './EditProduct';
 
 const ProductResult = ({product}) => {
     const classes = useStyles();
+
+    const user = useSelector(users.selectors.getUser);
+    const hasRole = roles => users.selectors.hasRole(user, roles);
+
+    const [open, setOpen] = useState(false);
 
     const history = useHistory();
 
@@ -30,7 +39,19 @@ const ProductResult = ({product}) => {
     }
 
     return (
-        <Product product={product}/>
+        <Card>
+            <CardHeader title={<FormattedMessage id="project.catalog.Product.title"/>}
+                        action={hasRole([Role.ADMIN])
+                            && <IconButton className={classes.editButton} size="medium"
+                                           onClick={() => setOpen(true)}>
+                                <Edit/>
+                            </IconButton>}/>
+            <Divider/>
+            <CardContent>
+                <ProductDetails product={product}/>
+            </CardContent>
+            {open && <EditProduct product={product} onClose={() => setOpen(false)}/>}
+        </Card>
     );
 
 };

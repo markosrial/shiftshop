@@ -25,7 +25,7 @@ const ProductsSearchBar = ({keywords, category, handleChangeKeywords, handleChan
                        value={keywords} onChange={handleChangeKeywords}
                        variant="outlined" margin="dense" fullWidth/>
             <Button className={classes.searchButton} size="medium" variant="contained" color="primary"
-                    onClick={onSearch} disabled={searching}>
+                    type="submit" disabled={searching}>
                 <Search fontSize="small"/><Hidden smUp>&nbsp;<FormattedMessage id="project.global.button.search"/></Hidden>
             </Button>
         </form>

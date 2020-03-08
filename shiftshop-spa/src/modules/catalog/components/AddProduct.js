@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import {
@@ -16,11 +16,10 @@ import {Add, AddBox} from '@material-ui/icons';
 
 import useStyles from '../styles/AddProduct';
 
-import {Alert, ErrorContent, PriceInput} from '../../common';
-import CategorySelector from './CategorySelector';
-
 import * as actions from '../actions';
 import {formValidator} from '../../../utils';
+import {Alert, ErrorContent, PriceInput} from '../../common';
+import CategorySelector from './CategorySelector';
 
 const AddProduct = () => {
     const classes = useStyles();
@@ -29,9 +28,7 @@ const AddProduct = () => {
 
     const _isMounted = useRef(true);
     useEffect(() => {
-        return () => {
-            _isMounted.current = false
-        }
+        return () => _isMounted.current = false
     }, []);
 
     const [name, setName] = useState('');
@@ -60,19 +57,19 @@ const AddProduct = () => {
         }
     };
 
-    const checkValid = () => {
-        return formValidator.isNotEmpty(name)
-            && formValidator.isCategorySelected(category)
-            && formValidator.isValidPrice(providerPrice)
-            && formValidator.isValidPrice(salePrice)
-    };
+    const isValidName = useMemo(() => formValidator.isNotEmpty(name), [name]);
+    const isValidCategory = useMemo(() => formValidator.isCategorySelected(category), [category]);
+    const isValidProviderPrice = useMemo(() => formValidator.isValidPrice(providerPrice), [providerPrice]);
+    const isValidSalePrice = useMemo(() => formValidator.isValidPrice(salePrice), [salePrice]);
+
+    const checkValid = isValidName && isValidCategory && isValidProviderPrice && isValidSalePrice;
 
     const handleSubmit = e => {
 
         e.preventDefault();
         closeErrors();
 
-        if (checkValid() && !adding) {
+        if (checkValid && !adding) {
             addProduct();
         }
     };
@@ -136,17 +133,17 @@ const AddProduct = () => {
                         {errors &&
                             <Alert className={classes.alert} message={errors} variant="error"
                                    backendError onClose={closeErrors}/>}
-                        <TextField margin="dense" variant="outlined" fullWidth disabled={adding}
+                        <TextField margin="dense" variant="outlined" fullWidth disabled={adding} autoFocus
                                    label={<FormattedMessage id="project.global.field.name"/>} value={name} required
                                    onChange={handleChangeName}/>
-                        <CategorySelector className={classes.input} selectedCategory={category} handleSelectedCategory={handleChangeCategory}
+                        <CategorySelector selectedCategory={category} handleSelectedCategory={handleChangeCategory}
                                           variant="outlined" margin="dense" fullWidth disabled={adding} required/>
-                        <TextField className={classes.input} label={<FormattedMessage id="project.global.field.providerPrice"/>}
+                        <TextField label={<FormattedMessage id="project.global.field.providerPrice"/>}
                                    type="text" margin="dense" variant="outlined" disabled={adding}
                                    value={providerPrice} onChange={handleChangeProviderPrice} fullWidth required
                                    InputProps={{inputComponent: PriceInput,
                                        inputProps: { decimalScale: 2, fixedDecimalScale: true }}}/>
-                        <TextField className={classes.input} label={<FormattedMessage id="project.global.field.salePrice"/>}
+                        <TextField label={<FormattedMessage id="project.global.field.salePrice"/>}
                                    type="text" margin="dense" variant="outlined" disabled={adding}
                                    value={salePrice} onChange={handleChangeSalePrice} fullWidth required
                                    InputProps={{inputComponent: PriceInput,
@@ -156,7 +153,7 @@ const AddProduct = () => {
                         <Button variant="contained" color="secondary" onClick={closeDialog} disableElevation>
                             <FormattedMessage id="project.global.button.close"/>
                         </Button>
-                        <Button variant="contained" color="primary" type="submit" disabled={!checkValid() || adding} disableElevation>
+                        <Button variant="contained" color="primary" type="submit" disabled={!checkValid || adding} disableElevation>
                             {adding && <CircularProgress className={classes.buttonProgress} size={24}/>}
                             <FormattedMessage id="project.global.button.add"/>
                         </Button>

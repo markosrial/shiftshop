@@ -20,7 +20,6 @@ describe('ProductsSearchResult snapshot', () => {
     const isSearching = {searching: true, startSearch: jest.fn(), stopSearch: jest.fn()};
     const isNotSearching = {searching: false, startSearch: jest.fn(), stopSearch: jest.fn()};
 
-
     const createProductsSearchResult = (store, props) => {
 
         return renderer.create(

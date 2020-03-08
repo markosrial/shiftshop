@@ -10,8 +10,6 @@ import users, {LoginPortal} from '../../users';
 import Main from './Main';
 import NetworkErrorMessage from './NetworkErrorMessage';
 
-const reauthenticationCallback = dispatch => () => dispatch(users.actions.logout());
-
 const App = () => {
     const dispatch = useDispatch();
     const loggedIn = useSelector(users.selectors.isLoggedIn);
@@ -36,7 +34,7 @@ const App = () => {
             users.actions.tryLoginFromServiceToken(
                 () => dispatch(catalog.actions.findAllCategories()),
                 () => setLogging(false),
-                reauthenticationCallback(dispatch)));
+                () => dispatch(users.actions.logout())));
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

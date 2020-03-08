@@ -47,3 +47,6 @@ export const findProducts = ({categoryId, keywords, orderBy, order, onlyActive, 
 
 export const findProductById = (id, onSuccess, atFinally) =>
     appFetch(`/catalog/products/${id}`, config('GET'), onSuccess, null, atFinally);
+
+export const updateProduct = (id, data, onSuccess, onError, atFinally) =>
+    appFetch(`/catalog/products/${id}`, config('PUT', data), onSuccess, onError, atFinally);
