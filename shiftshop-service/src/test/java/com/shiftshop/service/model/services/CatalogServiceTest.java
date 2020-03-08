@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,6 +31,7 @@ public class CatalogServiceTest {
     private final String PRODUCT_NAME = "product";
     private final BigDecimal PROV_PRICE = new BigDecimal(5.25);
     private final BigDecimal SALE_PRICE = new BigDecimal(21.95);
+    private final String BARCODE = "ABCD1234";
 
     @Autowired
     private CategoryDao categoryDao;
@@ -268,6 +270,56 @@ public class CatalogServiceTest {
         expectedBlock = new Block<>(Arrays.asList(product1, product2, product3), false);
         assertEquals(expectedBlock, catalogService.findProducts(null, null, true,
                 null, null, 0, 3));
+
+    }
+
+    @Test
+    public void testUpdateProduct() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = createCategory(CATEGORY_NAME);
+
+        Product product = createProduct(PRODUCT_NAME, category.getId());
+
+        Product updProduct = catalogService.updateProduct(product.getId(), null, null, null, null, null);
+
+        assertEquals(product, updProduct);
+
+        // Update with all changes
+        String newName = PRODUCT_NAME + "X";
+        BigDecimal newProviderPrice = PROV_PRICE.add(new BigDecimal(1L)).setScale(2, RoundingMode.DOWN);
+        BigDecimal newSalePrice = SALE_PRICE.add(new BigDecimal(1L)).setScale(2, RoundingMode.DOWN);
+        String newBarcode = BARCODE + "X";
+        Category newCategory = createCategory(CATEGORY_NAME + "X");
+
+        updProduct = catalogService.updateProduct(updProduct.getId(), newName, newProviderPrice, newSalePrice, newBarcode, newCategory.getId());
+
+        assertEquals(StringUtils.capitalize(newName), updProduct.getName());
+        assertEquals(newProviderPrice, updProduct.getProviderPrice());
+        assertEquals(newSalePrice, updProduct.getSalePrice());
+        assertEquals(newBarcode, updProduct.getBarcode());
+        assertEquals(newCategory, updProduct.getCategory());
+
+    }
+
+    @Test(expected = DuplicateInstancePropertyException.class)
+    public void testUpdateProductDuplicatedName() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = createCategory(CATEGORY_NAME);
+        Product product1 = createProduct(PRODUCT_NAME + "1", category.getId());
+        Product product2 = createProduct(PRODUCT_NAME + "2", category.getId());
+
+        catalogService.updateProduct(product1.getId(), product2.getName(), null, null, null,null);
+
+    }
+
+    @Test(expected = DuplicateInstancePropertyException.class)
+    public void testUpdateProductDuplicatedBarcode() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Category category = createCategory(CATEGORY_NAME);
+        Product product1 = createProduct(PRODUCT_NAME + "1", category.getId());
+        Product product2 = createProduct(PRODUCT_NAME + "2", category.getId());
+
+        catalogService.updateProduct(product1.getId(), product2.getName(), null, null, product2.getBarcode(),null);
 
     }
 

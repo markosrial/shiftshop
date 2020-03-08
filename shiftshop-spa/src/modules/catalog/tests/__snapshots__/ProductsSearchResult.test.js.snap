@@ -4,20 +4,43 @@ exports[`ProductsSearchResult snapshot Empty items in productsSearch 1`] = `
 <div
   className="makeStyles-emptyPlaceholder-2"
 >
-  <img
-    alt="No products"
-    className="makeStyles-image-3"
-    src="empty.png"
-  />
-  <h6
-    className="MuiTypography-root makeStyles-emptyText-4 MuiTypography-subtitle2"
+  <div
+    className="MuiBox-root MuiBox-root-60 makeStyles-imageBox-3"
+  >
+    <img
+      alt="No products"
+      className="makeStyles-image-4"
+      src="emptyBox.svg"
+    />
+  </div>
+  <p
+    className="MuiTypography-root makeStyles-emptyText-5 MuiTypography-body1"
   >
     No products were found
-  </h6>
+  </p>
 </div>
 `;
 
-exports[`ProductsSearchResult snapshot Not initialized productsSearch 1`] = `null`;
+exports[`ProductsSearchResult snapshot Not initialized productsSearch 1`] = `
+<div
+  className="makeStyles-emptyPlaceholder-2"
+>
+  <div
+    className="MuiBox-root MuiBox-root-29 makeStyles-imageBox-3"
+  >
+    <img
+      alt="No searchs yet"
+      className="makeStyles-image-4"
+      src="search.svg"
+    />
+  </div>
+  <p
+    className="MuiTypography-root makeStyles-emptyText-5 MuiTypography-body1"
+  >
+    This is too empty, try to search something!
+  </p>
+</div>
+`;
 
 exports[`ProductsSearchResult snapshot Searching products 1`] = `
 <div
@@ -37,7 +60,7 @@ exports[`ProductsSearchResult snapshot Searching products 1`] = `
 
 exports[`ProductsSearchResult snapshot Some items in productsSearch 1`] = `
 <div
-  className="makeStyles-products-5"
+  className="makeStyles-products-6"
 >
   <mockProductList />
 </div>

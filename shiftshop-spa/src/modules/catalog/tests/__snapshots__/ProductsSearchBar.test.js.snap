@@ -64,7 +64,6 @@ exports[`ProductsSearchBar snapshot Disabled search 1`] = `
     className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-searchButton-4 MuiButton-containedPrimary Mui-disabled Mui-disabled"
     disabled={true}
     onBlur={[Function]}
-    onClick={[MockFunction]}
     onDragLeave={[Function]}
     onFocus={[Function]}
     onKeyDown={[Function]}
@@ -76,7 +75,7 @@ exports[`ProductsSearchBar snapshot Disabled search 1`] = `
     onTouchMove={[Function]}
     onTouchStart={[Function]}
     tabIndex={-1}
-    type="button"
+    type="submit"
   >
     <span
       className="MuiButton-label"
@@ -161,7 +160,6 @@ exports[`ProductsSearchBar snapshot With values and enabled search 1`] = `
     className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-searchButton-4 MuiButton-containedPrimary"
     disabled={false}
     onBlur={[Function]}
-    onClick={[MockFunction]}
     onDragLeave={[Function]}
     onFocus={[Function]}
     onKeyDown={[Function]}
@@ -173,7 +171,7 @@ exports[`ProductsSearchBar snapshot With values and enabled search 1`] = `
     onTouchMove={[Function]}
     onTouchStart={[Function]}
     tabIndex={0}
-    type="button"
+    type="submit"
   >
     <span
       className="MuiButton-label"

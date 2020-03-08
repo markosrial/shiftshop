@@ -25,4 +25,8 @@ public interface CatalogService {
 
     Block<Product> findProducts(Long categoryId, String keywords, Boolean onlyActive,
                                 String orderType, String order, int page, int size);
+
+    Product updateProduct(Long id, String name, BigDecimal providerPrice, BigDecimal salePrice,
+                          String barcode, Long categoryId)
+            throws DuplicateInstancePropertyException, InstanceNotFoundException;
 }

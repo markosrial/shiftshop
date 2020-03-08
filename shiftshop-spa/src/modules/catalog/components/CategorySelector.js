@@ -1,16 +1,20 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {Fragment,useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
-import {FormControl, InputLabel, MenuItem, Select} from '@material-ui/core';
+import {Box, FormControl, InputLabel, MenuItem, Select} from '@material-ui/core';
 
 import useStyles from '../styles/CategorySelector';
 
 import * as selectors from '../selectors';
 
-const CategorySelector = ({selectedCategory, handleSelectedCategory, allCategories, ...extra}) => {
+const CategorySelector = ({selectedCategory, handleSelectedCategory, previous, allCategories, empty, ...extra}) => {
 
     const classes = useStyles();
+
+    const categories = useSelector(selectors.getCategories);
+
+    const previousCategory = selectors.getCategoryName(categories, previous);
 
     /* Necessary -> outlined select  */
     const inputLabel = useRef(null);
@@ -18,19 +22,17 @@ const CategorySelector = ({selectedCategory, handleSelectedCategory, allCategori
     useEffect(() => {
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
-    /* */
-
-    const categories = useSelector(selectors.getCategories);
 
     return (
         <FormControl {...extra}>
             <InputLabel className={classes.placeholder} ref={inputLabel} id="categorySelector" shrink={allCategories || selectedCategory !== ''}>
-                <FormattedMessage id="project.global.field.category"/>
+                <Box display="inline"><FormattedMessage id="project.global.field.category"/>{previousCategory && <Fragment> ({previousCategory})</Fragment>}</Box>
             </InputLabel>
             <Select labelId="categorySelector" labelWidth={labelWidth}
                     value={selectedCategory} onChange={handleSelectedCategory}
                     displayEmpty={allCategories} notched={allCategories || selectedCategory !== ''}>
-                {allCategories && <MenuItem key={0} value=""><FormattedMessage id="project.catalog.CategorySelector.allCategories"/></MenuItem>}
+                {empty && <MenuItem value="">&nbsp;</MenuItem>}
+                {!empty && allCategories && <MenuItem value=""><FormattedMessage id="project.catalog.CategorySelector.allCategories"/></MenuItem>}
                 {categories && categories.map(category =>
                     <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
                 )}

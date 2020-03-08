@@ -119,7 +119,7 @@ public class CatalogServiceImpl implements CatalogService {
         Optional<Product> product = productDao.findById(id);
 
         if (!product.isPresent()) {
-            throw new InstanceNotFoundException("project.entities.product", id);
+            throw new InstanceNotFoundException(MessageConstants.ENTITIES_PRODUCT, id);
         }
 
         return product.get();
@@ -134,6 +134,46 @@ public class CatalogServiceImpl implements CatalogService {
                 ProductOrderType.fromString(orderType), OrderAscDesc.fromString(order), page, size);
 
         return new Block<>(slice.getContent(), slice.hasNext());
+
+    }
+
+    @Override
+    public Product updateProduct(Long id, String name, BigDecimal providerPrice, BigDecimal salePrice,
+                                 String barcode, Long categoryId)
+            throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        Product product = findProductById(id);
+
+        if (categoryId != null) {
+            Category category = findCategoryById(categoryId);
+            product.setCategory(category);
+        }
+
+        if (name != null) {
+            if (productDao.findByNameIgnoreCaseAndIdIsNot(name, id).isPresent()) {
+                throw new DuplicateInstancePropertyException(MessageConstants.ENTITIES_PRODUCT,
+                        MessageConstants.ENTITIES_PROPS_NAME, name);
+            }
+            product.setName(StringUtils.capitalize(name));
+        }
+
+        if (barcode != null) {
+            if (productDao.findByBarcodeAndIdIsNot(barcode, id).isPresent()) {
+                throw new DuplicateInstancePropertyException(MessageConstants.ENTITIES_PRODUCT,
+                        MessageConstants.ENTITIES_PROPS_BARCODE, barcode);
+            }
+            product.setBarcode(barcode.toUpperCase());
+        }
+
+        if (providerPrice != null) {
+            product.setProviderPrice(providerPrice.setScale(2, RoundingMode.DOWN));
+        }
+
+        if (salePrice != null) {
+            product.setSalePrice(salePrice.setScale(2, RoundingMode.DOWN));
+        }
+
+        return product;
 
     }
 

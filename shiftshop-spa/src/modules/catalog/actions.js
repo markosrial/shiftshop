@@ -78,3 +78,12 @@ export const getProduct = (id, atFinally) => dispatch =>
     backend.catalogService.findProductById(id,
         product => dispatch(getProductSuccess(product)),
         atFinally);
+
+export const updateProduct = (id, data, onSuccess, onError, atFinally) => dispatch =>
+    backend.catalogService.updateProduct(id, data,
+        product => {
+            onSuccess(product.name);
+            dispatch(getProductSuccess(product));
+        },
+        onError,
+        atFinally);

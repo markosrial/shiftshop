@@ -16,10 +16,7 @@ import {
 import useStyles from '../styles/EditCategory';
 
 import * as actions from '../actions';
-
-import {Alert} from '../../common';
-import ErrorContent from '../../common/components/ErrorContent';
-
+import {Alert, ErrorContent} from '../../common';
 
 const EditCategory = ({category, onClose}) => {
     const classes = useStyles();
@@ -29,18 +26,16 @@ const EditCategory = ({category, onClose}) => {
 
     const _isMounted = useRef(true);
     useEffect(() => {
-        return () => {
-            _isMounted.current = false
-        }
+        return () => _isMounted.current = false
     }, []);
 
-    const [newName, setNewName] = useState('');
+    const [name, setName] = useState('');
     const [updating, setUpdating] = useState(false);
     const [errors, setErrors] = useState(null);
 
     const closeErrors = () => setErrors(null);
 
-    const checkValid = (newName.trim() !== '');
+    const checkValid = name.trim() !== '';
 
     const handleSubmit = e => {
 
@@ -61,7 +56,7 @@ const EditCategory = ({category, onClose}) => {
         dispatch(
             actions.updateCategory(
                 category.id,
-                {name: newName.trim()},
+                {name: name.trim()},
                 _ => {
                     enqueueSnackbar(<FormattedMessage id="project.catalog.EditCategory.success"/>,
                         {
@@ -96,7 +91,7 @@ const EditCategory = ({category, onClose}) => {
         <Dialog open maxWidth="xs" fullWidth onClose={onClose}>
             <DialogTitle>
                 <Typography component="span" variant="h5">
-                    <FormattedMessage id="project.catalog.EditCategory.title"/>: {category.name}
+                    <FormattedMessage id="project.catalog.EditCategory.title"/>: <i>{category.name}</i>
                 </Typography>
             </DialogTitle>
             <form onSubmit={e => handleSubmit(e)} noValidate>
@@ -104,7 +99,7 @@ const EditCategory = ({category, onClose}) => {
                     {errors && <Alert className={classes.alert} variant="error" message={errors} onClose={closeErrors} backendError/>}
                     <TextField autoFocus margin="dense" type="text" variant="outlined" fullWidth
                                label={<FormattedMessage id="project.global.field.name"/>}
-                               value={newName} onChange={e => setNewName(e.target.value)}/>
+                               value={name} onChange={e => setName(e.target.value)}/>
                 </DialogContent>
                 <DialogActions>
                     <Button variant="contained" size="small" color="default" onClick={onClose} disableElevation>

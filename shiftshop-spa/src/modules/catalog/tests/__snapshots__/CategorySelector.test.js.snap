@@ -9,7 +9,12 @@ exports[`CategorySelector snapshot Categories has elements and first is selected
     data-shrink={true}
     id="categorySelector"
   >
-    Category
+    <div
+      className="MuiBox-root MuiBox-root-27"
+    >
+      Category
+      
+    </div>
   </label>
   <div
     className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"

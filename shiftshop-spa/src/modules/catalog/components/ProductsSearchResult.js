@@ -4,11 +4,11 @@ import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import {Box, LinearProgress, Typography} from '@material-ui/core';
 
+import {emptyBox, search} from '../../../assets/images';
 import useStyles from '../styles/ProductsSearchResult';
 
 import * as selectors from '../selectors';
 import ProductList from './ProductList';
-import {emptyBox, search} from '../../../assets/images';
 
 const ProductsSearchResult = ({searching, startSearch, stopSearch}) => {
     const classes = useStyles();

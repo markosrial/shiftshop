@@ -19,6 +19,9 @@ describe('ProductsPage snapshot', () => {
     const middlewares = [];
     const mockStore = configureStore(middlewares);
 
+    const salesmanUser = {users: {user: {username: 'user', roles: [Role.SALESMAN]}}};
+    const adminUser = {users: {user: {username: 'user', roles: [Role.ADMIN]}}};
+
     const createProductsPage = store => {
 
         return renderer.create(
@@ -34,7 +37,7 @@ describe('ProductsPage snapshot', () => {
     test('Without addProduct', () => {
 
         // Initialize mockstore with empty state
-        const initialState = {users: {user: {username: 'user', roles: [Role.SALESMAN]}}};
+        const initialState = salesmanUser;
         const store = mockStore(initialState);
 
         const productsPage = createProductsPage(store);
@@ -46,7 +49,7 @@ describe('ProductsPage snapshot', () => {
     test('With addProduct', () => {
 
         // Initialize mockstore with empty state
-        const initialState = {users: {user: {username: 'user', roles: [Role.ADMIN]}}};
+        const initialState = adminUser;
         const store = mockStore(initialState);
 
         const productsPage = createProductsPage(store);

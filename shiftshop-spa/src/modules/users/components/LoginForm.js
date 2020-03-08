@@ -10,16 +10,12 @@ import * as actions from '../actions';
 import catalog from '../../catalog';
 import {formValidator} from '../../../utils';
 
-const reauthenticationCallback = dispatch => () => dispatch(actions.logout());
-
 const LoginForm = () => {
     const classes = useStyles();
 
     const _isMounted = useRef(true);
     useEffect(() => {
-        return () => {
-            _isMounted.current = false
-        }
+        return () => _isMounted.current = false
     }, []);
 
     const dispatch = useDispatch();
@@ -52,7 +48,7 @@ const LoginForm = () => {
             () => dispatch(catalog.actions.findAllCategories()),
             errors => _isMounted.current && setErrors(errors),
             () => _isMounted.current && setIsLogging(false),
-            reauthenticationCallback(dispatch)
+            () => dispatch(actions.logout())
         ));
 
     };

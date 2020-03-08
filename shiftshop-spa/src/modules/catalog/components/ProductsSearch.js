@@ -6,12 +6,11 @@ import {FilterList} from '@material-ui/icons';
 
 import useStyles from '../styles/ProductSearch';
 
+import * as actions from '../actions';
+import * as selectors from '../selectors';
 import ProductsSearchBar from './ProductsSearchBar';
 import ProductsSearchFilter from './ProductsSearchFilter';
 import ProductsSearchResult from './ProductsSearchResult';
-
-import * as selectors from '../selectors';
-import * as actions from '../actions';
 
 const ProductsSearch = () => {
 
@@ -22,9 +21,7 @@ const ProductsSearch = () => {
 
     const _isMounted = useRef(true);
     useEffect(() => {
-        return () => {
-            _isMounted.current = false
-        }
+        return () => _isMounted.current = false
     }, []);
 
     const [category, setCategory] = useState('');
@@ -44,7 +41,7 @@ const ProductsSearch = () => {
         setSearching(true);
 
         const criteria = {
-            categoryId: category !== '' ? category:null,
+            categoryId: category !== '' ? category : null,
             keywords: keywords.trim(),
             page: 0,
             ...searchFilter
@@ -57,7 +54,10 @@ const ProductsSearch = () => {
     return (
         <Card>
             <CardHeader title={<FormattedMessage id="project.catalog.ProductsSearch.title"/>}
-                        action={<IconButton size="medium" className={classes.filterButton} onClick={() => setFilterOpen(true)}><FilterList/></IconButton>}/>
+                        action={<IconButton size="medium" className={classes.filterButton}
+                                            onClick={() => setFilterOpen(true)}>
+                            <FilterList/>
+                        </IconButton>}/>
             <Divider/>
             <CardContent>
                 <ProductsSearchBar keywords={keywords} handleChangeKeywords={handleChangeKeywords}

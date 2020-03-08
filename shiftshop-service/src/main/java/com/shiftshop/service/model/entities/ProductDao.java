@@ -8,4 +8,8 @@ public interface ProductDao extends PagingAndSortingRepository<Product, Long>, C
 
     Optional<Product> findByNameIgnoreCase(String name);
 
+    Optional<Product> findByNameIgnoreCaseAndIdIsNot(String name, Long id);
+
+    Optional<Product> findByBarcodeAndIdIsNot(String name, Long id);
+
 }

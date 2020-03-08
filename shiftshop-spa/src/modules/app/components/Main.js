@@ -5,16 +5,11 @@ import {LinearProgress} from '@material-ui/core';
 
 import useStyles from '../styles/Main';
 
+import users, {Role} from '../../users';
 import TopBar from './TopBar';
 import SideBar from './SideBar';
 import Dashboard from './Dashboard';
-import users, {Role} from '../../users';
 
-/*const CategoriesPage = React.lazy(() => {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(import('../../catalog/components/CategoriesPage')), 5000);
-    });
-});*/
 const CategoriesPage = React.lazy(() => import('../../catalog/components/CategoriesPage'));
 const ProductsPage = React.lazy(() => import('../../catalog/components/ProductsPage'));
 const ProductPage = React.lazy(() => import('../../catalog/components/ProductPage'));
@@ -23,6 +18,7 @@ const Main = () => {
     const classes = useStyles();
 
     const user = useSelector(users.selectors.getUser);
+    const hasRole = roles => users.selectors.hasRole(user, roles);
 
     const [sidebarActive, setSidebarActive] = useState(false);
 
@@ -39,13 +35,13 @@ const Main = () => {
                         <Suspense fallback={<LinearProgress className={classes.loading} color="secondary"/>}>
                             <div className={classes.innerContent}>
                                 <Switch>
-                                    <Route exact path="/" component={Dashboard}/>
-                                    <Route exact path="/catalog/categories" component={CategoriesPage}/>
-                                    <Route exact path="/catalog/products" component={ProductsPage}/>
-                                    <Route exact path="/catalog/products/:id" component={ProductPage}/>
-                                    { users.selectors.hasRole(user, [Role.MANAGER])
-                                        && <Route exact path="/staff/users" component={Dashboard}/> }
-                                    <Route component={Dashboard}/>
+                                    <Route exact path="/"><Dashboard/></Route>
+                                    <Route exact path="/catalog/categories"><CategoriesPage/></Route>
+                                    <Route exact path="/catalog/products"><ProductsPage/></Route>
+                                    <Route exact path="/catalog/products/:id"><ProductPage/></Route>
+                                    { hasRole([Role.MANAGER])
+                                        && <Route exact path="/staff/users"><Dashboard/></Route> }
+                                    <Route><Dashboard/></Route>
                                 </Switch>
                             </div>
                         </Suspense>

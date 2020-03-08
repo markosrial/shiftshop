@@ -19,6 +19,9 @@ describe('CategoriesPage snapshot', () => {
     const middlewares = [];
     const mockStore = configureStore(middlewares);
 
+    const salesmanUser = {users: {user: {username: 'user', roles: [Role.SALESMAN]}}};
+    const adminUser = {users: {user: {username: 'user', roles: [Role.ADMIN]}}};
+
     const createCategoriesPage = store => {
 
         return renderer.create(
@@ -34,7 +37,7 @@ describe('CategoriesPage snapshot', () => {
     test('Without addCategory', () => {
 
         // Initialize mockstore with empty state
-        const initialState = {users: {user: {username: 'user', roles: [Role.SALESMAN]}}};
+        const initialState = salesmanUser;
         const store = mockStore(initialState);
 
         const categoriesPage = createCategoriesPage(store);
@@ -46,7 +49,7 @@ describe('CategoriesPage snapshot', () => {
     test('With addCategory', () => {
 
         // Initialize mockstore with empty state
-        const initialState = {users: {user: {username: 'user', roles: [Role.ADMIN]}}};
+        const initialState = adminUser;
         const store = mockStore(initialState);
 
         const categoriesPage = createCategoriesPage(store);

@@ -6,21 +6,19 @@ import {Card, CardContent, CardHeader, Divider, List, Typography} from '@materia
 import useStyles from '../styles/CategoriesList';
 import {emptyPlaceholder} from '../../../assets/images';
 
-import CategoriesListItem from './CategoriesListItem';
-import EditCategory from './EditCategory';
-
 import * as selectors from '../selectors';
 import users, {Role} from '../../users';
+import CategoriesListItem from './CategoriesListItem';
+import EditCategory from './EditCategory';
 
 const CategoriesList = () => {
     const classes = useStyles();
 
     const user = useSelector(users.selectors.getUser);
+    const isEditAllowed = users.selectors.hasRole(user,[Role.ADMIN]);
 
     const [editCategory, setEditCategory] = useState(null);
     const categories = useSelector(selectors.getCategories);
-
-    const isEditAllowed = users.selectors.hasRole(user, [Role.ADMIN]);
 
     const cleanEdit = () => setEditCategory(null);
 

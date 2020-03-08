@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {useHistory, Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
@@ -27,9 +27,9 @@ import useStyles from '../styles/ProductList';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 
-const cardSubheader = (categories, categoryId) =>
+const cardSubheader = categoryName =>
     <Box fontStyle="italic" fontWeight="fontWeightMedium" >
-        {selectors.getCategoryName(categories, categoryId)}
+        {categoryName}
     </Box>;
 
 const ProductList = ({products, criteria, startSearch, stopSearch}) => {
@@ -39,6 +39,7 @@ const ProductList = ({products, criteria, startSearch, stopSearch}) => {
 
     const searchFilter = useSelector(selectors.getSearchFilter);
     const categories = useSelector(selectors.getCategories);
+    const getCategoryName = id => selectors.getCategoryName(categories, id);
 
     const history = useHistory();
 
@@ -82,7 +83,7 @@ const ProductList = ({products, criteria, startSearch, stopSearch}) => {
                                         </Link>
                                     </TableCell>
                                     <TableCell align="left">
-                                        <Chip label={selectors.getCategoryName(categories,product.categoryId)} size="small"/>
+                                        <Chip label={getCategoryName(product.categoryId)} size="small"/>
                                     </TableCell>
                                     <TableCell align="right">{product.salePrice}&nbsp;€</TableCell>
                                     <TableCell align="center">
@@ -109,7 +110,7 @@ const ProductList = ({products, criteria, startSearch, stopSearch}) => {
                     <Card key={product.id} className={classes.card}>
                         <CardHeader className={classes.header}
                                     title={<Link to={`/catalog/products/${product.id}`}>{product.name}</Link>}
-                                    subheader={cardSubheader(categories, product.categoryId)}
+                                    subheader={cardSubheader(getCategoryName(product.categoryId))}
                                     action={<IconButton onClick={productDetails(product.id)}><Visibility/></IconButton>}/>
                         <Divider/>
                         <CardContent className={classes.content}>
