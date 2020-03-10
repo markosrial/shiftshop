@@ -25,6 +25,13 @@ mysql -u root
     exit
 ```
 
+***Database clean (Don't use on production!):***
+
+```
+Test: mvn flyway:clean@clean-test-db
+Dev: mvn flyway:clean@clean-db
+```
+
 ***Execution:***
 
 ```

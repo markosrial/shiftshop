@@ -1,4 +1,4 @@
-const BACKEND_URL = 'http://localhost:8080';
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const SERVICE_TOKEN_NAME = 'serviceToken';
 
 let networkErrorCallback;
@@ -85,8 +85,6 @@ const handle4xxResponse = async (response, onErrors) => {
         reauthenticationCallback();
         return true;
     }
-
-    console.log(response);
 
     if (!isJson(response)) {
         throw new Error();

@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CategoriesPage snapshot With addCategory 1`] = `
+<div>
+  <div
+    className="MuiGrid-root makeStyles-header-2 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <span
+        className="MuiTypography-root MuiTypography-overline"
+      >
+        Catalog
+      </span>
+      <h3
+        className="MuiTypography-root MuiTypography-h3"
+      >
+        Categories
+      </h3>
+    </div>
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <mockAddCategory />
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-grid-1 MuiGrid-container MuiGrid-spacing-xs-2"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8"
+    >
+      <mockCategoriesList />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`CategoriesPage snapshot Without addCategory 1`] = `
+<div>
+  <div
+    className="MuiGrid-root makeStyles-header-2 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-flex-end MuiGrid-justify-xs-space-between"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <span
+        className="MuiTypography-root MuiTypography-overline"
+      >
+        Catalog
+      </span>
+      <h3
+        className="MuiTypography-root MuiTypography-h3"
+      >
+        Categories
+      </h3>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-grid-1 MuiGrid-container MuiGrid-spacing-xs-2"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8"
+    >
+      <mockCategoriesList />
+    </div>
+  </div>
+</div>
+`;

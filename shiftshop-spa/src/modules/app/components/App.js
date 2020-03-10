@@ -1,16 +1,21 @@
-import React, {Fragment, useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import React, {Fragment, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {useSnackbar} from 'notistack';
+import {LinearProgress} from '@material-ui/core';
 
 import backend from '../../../backend';
 
+import catalog from '../../catalog';
 import users, {LoginPortal} from '../../users';
 import Main from './Main';
 import NetworkErrorMessage from './NetworkErrorMessage';
 
 const App = () => {
-
+    const dispatch = useDispatch();
     const loggedIn = useSelector(users.selectors.isLoggedIn);
+
+    const [logging, setLogging] = useState(true);
+
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
@@ -24,14 +29,24 @@ const App = () => {
                 preventDuplicate: true,
                 autoHideDuration: 2000,
             }));
+
+        dispatch(
+            users.actions.tryLoginFromServiceToken(
+                () => dispatch(catalog.actions.findAllCategories()),
+                () => setLogging(false),
+                () => dispatch(users.actions.logout())));
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <Fragment>
-            {loggedIn && <Main/>}
-            {!loggedIn && <LoginPortal/>}
+        logging
+        ? <LinearProgress color="secondary"/>
+        : <Fragment>
+                {loggedIn && <Main/>}
+                {!loggedIn && <LoginPortal/>}
         </Fragment>
+
     );
 };
 

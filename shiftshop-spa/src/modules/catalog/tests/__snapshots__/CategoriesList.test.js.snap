@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CategoriesList snapshot Categories has elements 1`] = `
+<div
+  className="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
+>
+  <div
+    className="MuiCardHeader-root"
+  >
+    <div
+      className="MuiCardHeader-content"
+    >
+      <span
+        className="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
+      >
+        Categories list
+      </span>
+    </div>
+  </div>
+  <hr
+    className="MuiDivider-root"
+  />
+  <div
+    className="MuiCardContent-root makeStyles-content-1"
+  >
+    <ul
+      className="MuiList-root makeStyles-list-2 MuiList-padding"
+    >
+      <hr
+        className="MuiDivider-root"
+      />
+      <mockCategoriesListItem />
+      <hr
+        className="MuiDivider-root"
+      />
+      <mockCategoriesListItem />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`CategoriesList snapshot Categories is empty 1`] = `
+<div
+  className="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
+>
+  <div
+    className="MuiCardHeader-root"
+  >
+    <div
+      className="MuiCardHeader-content"
+    >
+      <span
+        className="MuiTypography-root MuiCardHeader-title MuiTypography-h5 MuiTypography-displayBlock"
+      >
+        Categories list
+      </span>
+    </div>
+  </div>
+  <hr
+    className="MuiDivider-root"
+  />
+  <div
+    className="MuiCardContent-root makeStyles-content-1"
+  >
+    <div
+      className="makeStyles-emptyPlaceholder-3"
+    >
+      <img
+        alt="No items"
+        className="makeStyles-image-4"
+        src="empty.png"
+      />
+      <h6
+        className="MuiTypography-root makeStyles-emptyText-5 MuiTypography-subtitle2"
+      >
+        Here will appear the added categories
+      </h6>
+    </div>
+  </div>
+</div>
+`;

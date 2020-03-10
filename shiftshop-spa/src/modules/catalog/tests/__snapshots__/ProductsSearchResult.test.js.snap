@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProductsSearchResult snapshot Empty items in productsSearch 1`] = `
+<div
+  className="makeStyles-emptyPlaceholder-2"
+>
+  <div
+    className="MuiBox-root MuiBox-root-60 makeStyles-imageBox-3"
+  >
+    <img
+      alt="No products"
+      className="makeStyles-image-4"
+      src="emptyBox.svg"
+    />
+  </div>
+  <p
+    className="MuiTypography-root makeStyles-emptyText-5 MuiTypography-body1"
+  >
+    No products were found
+  </p>
+</div>
+`;
+
+exports[`ProductsSearchResult snapshot Not initialized productsSearch 1`] = `
+<div
+  className="makeStyles-emptyPlaceholder-2"
+>
+  <div
+    className="MuiBox-root MuiBox-root-29 makeStyles-imageBox-3"
+  >
+    <img
+      alt="No searchs yet"
+      className="makeStyles-image-4"
+      src="search.svg"
+    />
+  </div>
+  <p
+    className="MuiTypography-root makeStyles-emptyText-5 MuiTypography-body1"
+  >
+    This is too empty, try to search something!
+  </p>
+</div>
+`;
+
+exports[`ProductsSearchResult snapshot Searching products 1`] = `
+<div
+  className="MuiLinearProgress-root MuiLinearProgress-colorPrimary makeStyles-spinner-1 MuiLinearProgress-indeterminate"
+  role="progressbar"
+>
+  <div
+    className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
+    style={Object {}}
+  />
+  <div
+    className="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
+    style={Object {}}
+  />
+</div>
+`;
+
+exports[`ProductsSearchResult snapshot Some items in productsSearch 1`] = `
+<div
+  className="makeStyles-products-6"
+>
+  <mockProductList />
+</div>
+`;

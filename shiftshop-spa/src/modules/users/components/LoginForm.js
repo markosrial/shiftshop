@@ -4,9 +4,10 @@ import {FormattedMessage} from 'react-intl';
 import {Button, Typography, CircularProgress, TextField} from '@material-ui/core';
 import {Error} from '@material-ui/icons';
 
-import {useStyles} from './LoginFormStyles';
+import useStyles from '../styles/LoginForm';
 
 import * as actions from '../actions';
+import catalog from '../../catalog';
 import {formValidator} from '../../../utils';
 
 const LoginForm = () => {
@@ -14,9 +15,7 @@ const LoginForm = () => {
 
     const _isMounted = useRef(true);
     useEffect(() => {
-        return () => {
-            _isMounted.current = false
-        }
+        return () => _isMounted.current = false
     }, []);
 
     const dispatch = useDispatch();
@@ -25,8 +24,6 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [isLogging, setIsLogging] = useState(false);
     const [errors, setErrors] = useState(null);
-
-    const form = useRef(null);
 
     const checkValid = () => {
         return formValidator.isNotEmpty(username)
@@ -47,12 +44,17 @@ const LoginForm = () => {
 
         setIsLogging(true);
 
-        dispatch(actions.login(username, password));
+        dispatch(actions.login(username, password,
+            () => dispatch(catalog.actions.findAllCategories()),
+            errors => _isMounted.current && setErrors(errors),
+            () => _isMounted.current && setIsLogging(false),
+            () => dispatch(actions.logout())
+        ));
 
     };
 
     return (
-        <form ref={form} className={classes.root} onSubmit={e => handleSubmit(e)} noValidate>
+        <form className={classes.root} onSubmit={e => handleSubmit(e)} noValidate>
             <TextField label={<FormattedMessage id="project.global.field.username"/>} value={username} margin="normal"
                        variant="outlined" onChange={e => setUsername(e.target.value)} required fullWidth/>
             <TextField label={<FormattedMessage id="project.global.field.password"/>} value={password} margin="normal"

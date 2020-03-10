@@ -1,6 +1,6 @@
 import {colors, makeStyles} from '@material-ui/core';
 
-export const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
     root: {
         minHeight: '100%',
         backgroundImage: `linear-gradient(315deg, ${colors.deepPurple[400]} 0%, ${colors.indigo[800]} 100%)`,
@@ -50,3 +50,5 @@ export const useStyles = makeStyles(theme => ({
     },
     divider: {margin: theme.spacing(3, 0)},
 }));
+
+export default useStyles;

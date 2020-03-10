@@ -8,6 +8,9 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
+    "makeLinux": "electron-forge make --platform=linux --arch=x64",
+    "makeWindows": "electron-forge make --platform=win32 --arch=x64",
+    "makeMacOs": "electron-forge make --platform=darwin --arch=x64",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
   },
@@ -35,10 +38,6 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
           "config": {}
         }
       ],

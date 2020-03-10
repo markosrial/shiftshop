@@ -3,7 +3,7 @@ import {Card, CardContent, CardMedia, Divider, Typography} from '@material-ui/co
 import {LockOpenTwoTone} from '@material-ui/icons';
 
 import {loginCard} from '../../../assets/images';
-import {useStyles} from './LoginPortalStyles';
+import useStyles from '../styles/LoginPortal';
 
 import LoginForm from './LoginForm';
 

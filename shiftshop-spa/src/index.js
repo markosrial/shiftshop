@@ -5,6 +5,8 @@ import {MuiThemeProvider} from '@material-ui/core';
 import {SnackbarProvider} from 'notistack';
 import {IntlProvider} from 'react-intl';
 
+import 'react-app-polyfill/stable';
+
 import './assets/scss/index.scss';
 import theme from './theme';
 
@@ -12,7 +14,6 @@ import {App} from './modules/app';
 
 import configureStore from './store';
 import {initReactIntl} from "./i18n";
-import './polyfills';
 import * as serviceWorker from './serviceWorker';
 
 /* Configure store. */
@@ -25,10 +26,10 @@ ReactDOM.render(
     <MuiThemeProvider theme={theme}>
         <Provider store={store}>
             <IntlProvider locale={locale} messages={messages}>
-                    <SnackbarProvider anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                                      autoHideDuration={2500}>
-                        <App/>
-                    </SnackbarProvider>
+                <SnackbarProvider anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                                  autoHideDuration={2500}>
+                    <App/>
+                </SnackbarProvider>
             </IntlProvider>
         </Provider>
     </MuiThemeProvider>,
