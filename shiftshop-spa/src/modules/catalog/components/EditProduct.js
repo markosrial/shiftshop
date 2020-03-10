@@ -128,18 +128,18 @@ const EditProduct = ({product, onClose}) => {
                            value={name} onChange={handleChangeName}/>
                 <CategorySelector selectedCategory={category} handleSelectedCategory={handleChangeCategory} previous={product.categoryId}
                                   variant="outlined" margin="dense" fullWidth empty disabled={updating}/>
-                <TextField label={<Box><FormattedMessage id="project.global.field.providerPrice"/> ({product.providerPrice.toFixed(2)} €)</Box>}
+                <TextField label={<Box whiteSpace="nowrap"><FormattedMessage id="project.global.field.providerPrice"/> ({product.providerPrice.toFixed(2)} €)</Box>}
                            type="text" margin="dense" variant="outlined" disabled={updating}
                            value={providerPrice} onChange={handleChangeProviderPrice} fullWidth
                            InputProps={{inputComponent: PriceInput,
                                inputProps: { decimalScale: 2, fixedDecimalScale: true }}}/>
-                <TextField label={<Box><FormattedMessage id="project.global.field.salePrice"/> ({product.salePrice.toFixed(2)} €)</Box>}
+                <TextField label={<Box whiteSpace="nowrap"><FormattedMessage id="project.global.field.salePrice"/> ({product.salePrice.toFixed(2)} €)</Box>}
                            type="text" margin="dense" variant="outlined" disabled={updating}
                            value={salePrice} onChange={handleChangeSalePrice} fullWidth
                            InputProps={{inputComponent: PriceInput,
                                inputProps: { decimalScale: 2, fixedDecimalScale: true}}}/>
                 <TextField margin="dense" type="text" variant="outlined" fullWidth
-                           label={<Box><FormattedMessage id="project.global.field.barcode"/> ({product.barcode})</Box>}
+                           label={<Box whiteSpace="nowrap"><FormattedMessage id="project.global.field.barcode"/> ({product.barcode})</Box>}
                            value={barcode} onChange={handleChangeBarcode}/>
                 </DialogContent>
                 <DialogActions>

@@ -36,6 +36,7 @@ const Main = () => {
                             <div className={classes.innerContent}>
                                 <Switch>
                                     <Route exact path="/"><Dashboard/></Route>
+                                    <Route exact path="/dashboard"><Dashboard/></Route>
                                     <Route exact path="/catalog/categories"><CategoriesPage/></Route>
                                     <Route exact path="/catalog/products"><ProductsPage/></Route>
                                     <Route exact path="/catalog/products/:id"><ProductPage/></Route>

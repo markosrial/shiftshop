@@ -12,7 +12,6 @@ const NavigationItem = ({title, route, icon, checkActive}) => {
     const Icon = icon;
 
     return (
-
         <ListItem key={title} className={classes.item} disableGutters>
             <Button className={checkActive(route) ? classes.buttonActive : classes.button} component={Link} to={route} fullWidth>
                 {icon && <Icon className={classes.icon} />}

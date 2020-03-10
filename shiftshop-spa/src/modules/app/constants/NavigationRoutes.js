@@ -1,36 +1,30 @@
-import {Category, Group, Receipt, Settings, ShoppingBasket} from '@material-ui/icons';
+import {Category, Group, Receipt, ShoppingBasket, Dashboard} from '@material-ui/icons';
 import {Role} from '../../users';
 
 export default [
+    {
+        title: 'project.app.nav.app',
+        items: [
+            {
+                title: 'project.app.route.dashboard',
+                route: '/dashboard',
+                icon: Dashboard
+            }
+        ],
+        permissions: [Role.MANAGER, Role.ADMIN, Role.SALESMAN]
+    },
     {
         title: 'project.app.nav.catalog',
         items: [
             {
                 title: 'project.app.route.products',
                 route: '/catalog/products',
-                icon: ShoppingBasket,
+                icon: ShoppingBasket
             },
             {
                 title: 'project.app.route.categories',
                 route: '/catalog/categories',
                 icon: Category,
-            },
-            {
-                title: 'project.app.route.options',
-                route: '/catalog/options',
-                icon: Settings,
-                children: [
-                    {
-                        title: 'project.app.route.customers',
-                        route: '/catalog/options/customers',
-                        permissions: [Role.MANAGER, Role.ADMIN, Role.SALESMAN]
-                    },
-                    {
-                        title: 'project.app.route.projects',
-                        route: '/catalog/options/projects',
-                        permissions: [Role.MANAGER, Role.ADMIN, Role.SALESMAN]
-                    }
-                ]
             }
         ],
         permissions: [Role.MANAGER, Role.ADMIN, Role.SALESMAN]
