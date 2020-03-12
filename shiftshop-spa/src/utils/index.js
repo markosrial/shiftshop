@@ -1,3 +1,4 @@
+import * as formulas from './formulas';
 import * as formValidator from './formValidator';
 
-export {formValidator};
+export {formulas, formValidator};

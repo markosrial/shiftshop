@@ -11,7 +11,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-178"
+        className="MuiBox-root MuiBox-root-179"
       >
         Name
       </div>
@@ -29,7 +29,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-179"
+        className="MuiBox-root MuiBox-root-180"
       >
         Category
       </div>
@@ -56,7 +56,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-180"
+        className="MuiBox-root MuiBox-root-181"
       >
         Provider price
       </div>
@@ -74,7 +74,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-181"
+        className="MuiBox-root MuiBox-root-182"
       >
         Sale price
       </div>
@@ -83,7 +83,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-182"
+        className="MuiBox-root MuiBox-root-183"
       >
         2.00 €
          
@@ -95,7 +95,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
             className="MuiChip-label"
           >
             <div
-              className="MuiBox-root MuiBox-root-183"
+              className="MuiBox-root MuiBox-root-184"
             >
               <svg
                 aria-hidden="true"
@@ -113,7 +113,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
                 />
               </svg>
               0.00
-               € ROI
+               €
             </div>
           </span>
         </div>
@@ -127,17 +127,15 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-184"
+        className="MuiBox-root MuiBox-root-185"
       >
-        Barcode
+        Insertion date
       </div>
     </div>
     <div
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
-      <div
-        className="MuiBox-root MuiBox-root-185"
-      />
+      3/12/2020
     </div>
   </div>
   <div
@@ -149,6 +147,26 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       <div
         className="MuiBox-root MuiBox-root-186"
       >
+        Barcode
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-187"
+      />
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-188"
+      >
         State
       </div>
     </div>
@@ -156,10 +174,10 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-187 makeStyles-active-158"
+        className="MuiBox-root MuiBox-root-189 makeStyles-active-159"
       >
         <span
-          className="MuiBadge-root makeStyles-statusBadge-160"
+          className="MuiBadge-root makeStyles-statusBadge-161"
         >
           <span
             className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorPrimary"
@@ -168,7 +186,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
           </span>
         </span>
         <span
-          className="makeStyles-statusMessage-161"
+          className="makeStyles-statusMessage-162"
         >
           Active
         </span>
@@ -287,7 +305,7 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
                 />
               </svg>
               5.50
-               € ROI
+               €
             </div>
           </span>
         </div>
@@ -303,6 +321,24 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       <div
         className="MuiBox-root MuiBox-root-155"
       >
+        Insertion date
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
+    >
+      3/12/2020
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-156"
+      >
         Barcode
       </div>
     </div>
@@ -310,7 +346,7 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-156"
+        className="MuiBox-root MuiBox-root-157"
       />
     </div>
   </div>
@@ -321,7 +357,7 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-157"
+        className="MuiBox-root MuiBox-root-158"
       >
         State
       </div>
@@ -330,10 +366,10 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-162 makeStyles-active-158"
+        className="MuiBox-root MuiBox-root-163 makeStyles-active-159"
       >
         <span
-          className="MuiBadge-root makeStyles-statusBadge-160"
+          className="MuiBadge-root makeStyles-statusBadge-161"
         >
           <span
             className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorPrimary"
@@ -342,7 +378,7 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
           </span>
         </span>
         <span
-          className="makeStyles-statusMessage-161"
+          className="makeStyles-statusMessage-162"
         >
           Active
         </span>
@@ -363,7 +399,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-188"
+        className="MuiBox-root MuiBox-root-190"
       >
         Name
       </div>
@@ -381,7 +417,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-189"
+        className="MuiBox-root MuiBox-root-191"
       >
         Category
       </div>
@@ -408,7 +444,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-190"
+        className="MuiBox-root MuiBox-root-192"
       >
         Provider price
       </div>
@@ -426,7 +462,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-191"
+        className="MuiBox-root MuiBox-root-193"
       >
         Sale price
       </div>
@@ -435,7 +471,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-192"
+        className="MuiBox-root MuiBox-root-194"
       >
         1.75 €
          
@@ -447,7 +483,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
             className="MuiChip-label"
           >
             <div
-              className="MuiBox-root MuiBox-root-193"
+              className="MuiBox-root MuiBox-root-195"
             >
               <svg
                 aria-hidden="true"
@@ -461,7 +497,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
                 />
               </svg>
               0.25
-               € ROI
+               €
             </div>
           </span>
         </div>
@@ -475,7 +511,25 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-194"
+        className="MuiBox-root MuiBox-root-196"
+      >
+        Insertion date
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
+    >
+      3/12/2020
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-197"
       >
         Barcode
       </div>
@@ -484,7 +538,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-195"
+        className="MuiBox-root MuiBox-root-198"
       />
     </div>
   </div>
@@ -495,7 +549,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-196"
+        className="MuiBox-root MuiBox-root-199"
       >
         State
       </div>
@@ -504,10 +558,10 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-197 makeStyles-inactive-159"
+        className="MuiBox-root MuiBox-root-200 makeStyles-inactive-160"
       >
         <span
-          className="MuiBadge-root makeStyles-statusBadge-160"
+          className="MuiBadge-root makeStyles-statusBadge-161"
         >
           <span
             className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorSecondary"
@@ -516,7 +570,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
           </span>
         </span>
         <span
-          className="makeStyles-statusMessage-161"
+          className="makeStyles-statusMessage-162"
         >
           Inactive
         </span>

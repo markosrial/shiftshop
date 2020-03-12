@@ -1,17 +1,19 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {Button, Card, CardContent, CardHeader, Divider, IconButton, Typography} from '@material-ui/core';
+import {Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, Typography} from '@material-ui/core';
 import {Edit} from '@material-ui/icons';
 
 import {notFound} from '../../../assets/images';
 import useStyles from '../styles/ProductResult';
 
+import {formulas} from '../../../utils'
 import users, {Role} from '../../users';
 import ProductDetails from './ProductDetails';
 import EditProduct from './EditProduct';
+import ProductProfitText from './ProductProfitText';
 
 const ProductResult = ({product}) => {
     const classes = useStyles();
@@ -50,6 +52,13 @@ const ProductResult = ({product}) => {
             <CardContent>
                 <ProductDetails product={product}/>
             </CardContent>
+            {hasRole([Role.MANAGER, Role.ADMIN]) &&
+                <Fragment>
+                    <Divider/>
+                    <CardActions>
+                        <ProductProfitText profit={formulas.getROI(product.salePrice, product.providerPrice)} isROI/>
+                    </CardActions>
+                </Fragment>}
             {open && <EditProduct product={product} onClose={() => setOpen(false)}/>}
         </Card>
     );

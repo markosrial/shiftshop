@@ -1,13 +1,13 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
-import {FormattedMessage} from 'react-intl';
+import {FormattedDate, FormattedMessage} from 'react-intl';
 import {Box, Chip, Grid} from '@material-ui/core';
 
 import useStyles from '../styles/ProductDetails';
 
 import * as selectors from '../selectors';
-import ProductROIChip from './ProductROIChip';
+import ProductProfitChip from './ProductProfitChip';
 import ProductState from './ProductState';
 
 const RowItem = ({label, content}) => {
@@ -37,14 +37,15 @@ const ProductDetails = ({product}) => {
             <RowItem label="project.global.field.category"
                      content={<Chip label={selectors.getCategoryName(categories, product.categoryId)}/>}/>
             {product.providerPrice &&
-            <RowItem label="project.global.field.providerPrice" content={product.providerPrice.toFixed(2) + ' €'}/>}
+                <RowItem label="project.global.field.providerPrice" content={product.providerPrice.toFixed(2) + ' €'}/>}
             <RowItem label="project.global.field.salePrice" content={
                 <Box display="flex" alignItems="center">
                     {product.salePrice.toFixed(2) + ' €'}
                     &nbsp;
-                    {product.providerPrice && <ProductROIChip ROI={(product.salePrice - product.providerPrice)}/>}
+                    {product.providerPrice && <ProductProfitChip profit={(product.salePrice - product.providerPrice)}/>}
                 </Box>
             }/>
+            <RowItem label="project.global.field.creationDate" content={<FormattedDate value={product.creationDate}/>}/>
             <RowItem label="project.global.field.barcode" content={<Box fontFamily="Menlo,Arial">{product.barcode}</Box>}/>
             <RowItem label="project.global.field.state"
                      content={product.active ? <ProductState active showMessage/> : <ProductState showMessage/>}/>

@@ -31,7 +31,7 @@ describe('ProductDetails snapshot', () => {
 
     test('Product active and with positive ROI', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = categories;
         const store = mockStore(initialState);
 
@@ -51,7 +51,7 @@ describe('ProductDetails snapshot', () => {
 
     test('Product active and with neutral ROI', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = categories;
         const store = mockStore(initialState);
 
@@ -71,7 +71,7 @@ describe('ProductDetails snapshot', () => {
 
     test('Product inactive and with negative ROI', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = categories;
         const store = mockStore(initialState);
 

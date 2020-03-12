@@ -138,7 +138,7 @@ In our case the LAN DNS name is "*home*", so all request to our machine will go 
 
 1. Install Nginx:
 ```bash
-	apt install nginx
+   apt install nginx
 ```
 
 2. Remove default `/` website:
@@ -147,45 +147,42 @@ In our case the LAN DNS name is "*home*", so all request to our machine will go 
 
 3. Add file `shiftshop.conf`:
 ```bash
-	nano /etc/nginx/conf.d/shiftshop.conf
+   nano /etc/nginx/conf.d/shiftshop.conf
 ```
 
 ​       With content:
 
 ```
-  server {
-    
-    listen 80;
-    listen [::]:80;
+   server {
+      listen 80;
+      listen [::]:80;
+  
+      server_name shiftshop.* shiftshop;
 
-    server_name shiftshop.* shiftshop;
+      location /ws {
+         rewrite           /ws/(.*) /$1       break;
+         proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
+         proxy_set_header  X-Forwarded-Proto  $scheme;
+         proxy_set_header  X-Forwarded-Port   $server_port;
+         proxy_pass        http://localhost:6565;
+      }
 
-    location /ws {
-      rewrite           /ws/(.*) /$1       break;
-      proxy_set_header  X-Forwarded-For    $proxy_add_x_forwarded_for;
-      proxy_set_header  X-Forwarded-Proto  $scheme;
-      proxy_set_header  X-Forwarded-Port   $server_port;
-      proxy_pass        http://localhost:6565;
-    }
-
-    location / {
-      try_files $uri /index.html =404;
+      location / {
+         try_files $uri /index.html =404;
               
-      root /var/shiftshop/spa/build;
-      index index.html index.htm;      
-      
-    }
-
-  }
+         root /var/shiftshop/spa/build;
+         index index.html index.htm;      
+      }
+   }
 ```
 
 4. Add SSL:
 ```
-	shifshop.*:443
-	shifshop.*/ws -> 6565 con ssl
-	
-	// Hacer esto tras securebot
-	ufw allow 'Nginx HTTPS'
+   shifshop.*:443
+   shifshop.*/ws -> 6565 con ssl
+   
+   // Hacer esto tras securebot
+   ufw allow 'Nginx HTTPS'
 ```
 
 
