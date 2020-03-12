@@ -36,7 +36,7 @@ describe('ProductsPage snapshot', () => {
 
     test('Without addProduct', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = salesmanUser;
         const store = mockStore(initialState);
 
@@ -48,7 +48,7 @@ describe('ProductsPage snapshot', () => {
 
     test('With addProduct', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = adminUser;
         const store = mockStore(initialState);
 

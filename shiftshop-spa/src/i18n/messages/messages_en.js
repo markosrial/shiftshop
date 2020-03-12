@@ -67,6 +67,7 @@ export default {
     'project.global.field.category': 'Category',
     'project.global.field.actions': 'Actions',
     'project.global.field.barcode': 'Barcode',
+    'project.global.field.creationDate': 'Insertion date',
     'project.global.field.date': 'Date',
     'project.global.field.keywords': 'Keywords',
     'project.global.field.name': 'Name',

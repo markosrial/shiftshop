@@ -36,7 +36,7 @@ describe('CategoriesPage snapshot', () => {
 
     test('Without addCategory', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = salesmanUser;
         const store = mockStore(initialState);
 
@@ -48,7 +48,7 @@ describe('CategoriesPage snapshot', () => {
 
     test('With addCategory', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = adminUser;
         const store = mockStore(initialState);
 

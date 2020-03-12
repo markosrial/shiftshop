@@ -1,6 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {Provider} from 'react-redux';
 import {IntlProvider} from 'react-intl';
+import configureStore from 'redux-mock-store';
 
 import {initReactIntl} from "../../../i18n";
 
@@ -12,26 +14,32 @@ const {messages} = initReactIntl();
 
 describe('ProductsSearchBar snapshot', () => {
 
-    const content = {keywords: 'test', category: 1};
+    const middlewares = [];
+    const mockStore = configureStore(middlewares);
 
-    const enabledSearching = {...content, searching: false};
-    const disabledSearching = {...content, searching: true};
+    const initialStore = {catalog: {categories: [{id: 1, name: 'CategoryA'}, {id: 2, name: 'CategoryB'}]}};
 
-    const createProductsSearchBar = ({keywords, category, searching}) => {
+    const enabledSearching = {searching: false};
+    const disabledSearching = {searching: true};
+
+    const createProductsSearchBar = (store, {searching}) => {
 
         return renderer.create(
-            <IntlProvider locale='en' messages={messages}>
-                <ProductsSearchBar keywords={keywords} category={category} searching={searching}
-                                   handleChangeKeywords={jest.fn()} handleChangeCategory={jest.fn()}
-                                   onSearch={jest.fn()}/>
-            </IntlProvider>
+            <Provider store={store}>
+                <IntlProvider locale='en' messages={messages}>
+                    <ProductsSearchBar searching={searching} startSearch={jest.fn()} stopSearch={jest.fn()}/>
+                </IntlProvider>
+            </Provider>
         );
 
     };
 
     test('With values and enabled search', () => {
 
-        const productsSearchBar = createProductsSearchBar(enabledSearching);
+        // Initialize mockstore
+        const store = mockStore(initialStore);
+
+        const productsSearchBar = createProductsSearchBar(store, enabledSearching);
 
         expect(productsSearchBar.toJSON()).toMatchSnapshot();
 
@@ -39,7 +47,10 @@ describe('ProductsSearchBar snapshot', () => {
 
     test('Disabled search', () => {
 
-        const productsSearchBar = createProductsSearchBar(disabledSearching);
+        // Initialize mockstore
+        const store = mockStore(initialStore);
+
+        const productsSearchBar = createProductsSearchBar(store, disabledSearching);
 
         expect(productsSearchBar.toJSON()).toMatchSnapshot();
 

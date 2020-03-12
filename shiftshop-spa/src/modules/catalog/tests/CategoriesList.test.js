@@ -36,7 +36,7 @@ describe('CategoriesList snapshot', () => {
 
     test('Categories is empty', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const store = mockStore({...emptyCategories, ...users});
 
         const categoriesList = createCategoriesList(store);
@@ -47,7 +47,7 @@ describe('CategoriesList snapshot', () => {
 
     test('Categories has elements', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const store = mockStore({...someCategories, ...users});
 
         const categoriesList = createCategoriesList(store);
