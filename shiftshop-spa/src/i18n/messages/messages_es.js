@@ -3,15 +3,14 @@ export default {
     'project.app.NetworkErrorMessage.title': 'Error de comunicación',
     'project.app.NetworkErrorMessage.message': 'No se pudo resolver la petición',
 
-    'project.app.nav.root': 'ShiftShop',
+    'project.app.nav.app': 'Aplicación',
     'project.app.nav.catalog': 'Catálogo',
+    'project.app.nav.root': 'ShiftShop',
     'project.app.nav.sales': 'Ventas',
     'project.app.nav.staff': 'Personal',
     'project.app.route.categories': 'Categorías',
-    'project.app.route.customers': 'Clientes',
-    'project.app.route.options': 'Opciones',
+    'project.app.route.dashboard': 'Panel principal',
     'project.app.route.products': 'Productos',
-    'project.app.route.projects': 'Proyectos',
     'project.app.route.records': 'Registros',
     'project.app.route.users': 'Usuarios',
 

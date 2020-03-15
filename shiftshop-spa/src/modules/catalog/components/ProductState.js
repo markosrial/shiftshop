@@ -12,7 +12,6 @@ const ProductState = ({active, showMessage}) => {
             <Badge className={classes.statusBadge} color={active ? "primary" : "secondary"} badgeContent=" "/>
             <span className={classes.statusMessage}>
                 {showMessage && <FormattedMessage  id={`project.global.field.state.${active ? 'active' : 'inactive'}`}/>}
-
             </span>
         </Box>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {AppBar, Hidden, IconButton, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
@@ -18,7 +19,9 @@ const TopBar = ({openSidebar}) => {
                         <Menu/>
                     </IconButton>
                 </Hidden>
-                <Typography className={classes.brand} variant="h3">ShiftShop</Typography>
+                <Typography className={classes.brand} variant="h3">
+                    <Link to="/">ShiftShop</Link>
+                </Typography>
                 <div className={classes.flexGrow} />
                 <LogOut/>
             </Toolbar>

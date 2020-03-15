@@ -30,11 +30,11 @@ const Navigation = () => {
                     <FormattedMessage id={title}/>
                 </div>}
                 <List>
-                    {items.map(({title, route, icon=null, children=null}) =>
+                    {items.map(({title, route, icon=null, children=null, permissions=null}) =>
                         children
                             ? <NavigationCollapse key={title} title={title} route={route} icon={icon} children={children}
                                                   checkActive={checkActive} checkPermissions={checkPermissions}/>
-                            : <NavigationItem key={title} title={title} route={route} icon={icon} checkActive={checkActive}/>
+                            : (!permissions || checkPermissions(permissions)) && <NavigationItem key={title} title={title} route={route} icon={icon} checkActive={checkActive}/>
                     )}
                 </List>
             </div>
