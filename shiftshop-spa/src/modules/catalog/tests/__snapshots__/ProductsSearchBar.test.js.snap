@@ -30,7 +30,7 @@ exports[`ProductsSearchBar snapshot Disabled search 1`] = `
         onFocus={[Function]}
         required={false}
         type="text"
-        value="test"
+        value=""
       />
       <fieldset
         aria-hidden={true}
@@ -126,7 +126,7 @@ exports[`ProductsSearchBar snapshot With values and enabled search 1`] = `
         onFocus={[Function]}
         required={false}
         type="text"
-        value="test"
+        value=""
       />
       <fieldset
         aria-hidden={true}

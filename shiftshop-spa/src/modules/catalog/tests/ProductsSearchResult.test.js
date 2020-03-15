@@ -34,7 +34,7 @@ describe('ProductsSearchResult snapshot', () => {
 
     test('Searching products', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = {catalog: {productsSearch: null}};
         const store = mockStore(initialState);
 
@@ -46,7 +46,7 @@ describe('ProductsSearchResult snapshot', () => {
 
     test('Not initialized productsSearch', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = {catalog: {productsSearch: null}};
         const store = mockStore(initialState);
 
@@ -58,7 +58,7 @@ describe('ProductsSearchResult snapshot', () => {
 
     test('Empty items in productsSearch', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = {catalog: {productsSearch: {result: {items: []}}}};
         const store = mockStore(initialState);
 
@@ -70,7 +70,7 @@ describe('ProductsSearchResult snapshot', () => {
 
     test('Some items in productsSearch', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = {catalog: {productsSearch: {result: {items: [{}, {}]}, criteria: {}}}};
         const store = mockStore(initialState);
 

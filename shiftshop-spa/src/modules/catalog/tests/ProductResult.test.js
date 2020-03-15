@@ -13,6 +13,7 @@ import ProductResult from '../components/ProductResult';
 import {Role} from '../../users';
 
 jest.mock('../components/ProductDetails', () => () => (<mockProductDetails/>));
+jest.mock('../components/ProductProfitText', () => () => (<mockProductProfitText/>));
 
 const {messages} = initReactIntl();
 
@@ -42,7 +43,7 @@ describe('ProductResult snapshot', () => {
 
     test('Product null', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = salesmanUser;
         const store = mockStore(initialState);
 
@@ -54,7 +55,7 @@ describe('ProductResult snapshot', () => {
 
     test('Product not null with edit permissions', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = adminUser;
         const store = mockStore(initialState);
 
@@ -68,7 +69,7 @@ describe('ProductResult snapshot', () => {
 
     test('Product not null without edit permissions', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const initialState = salesmanUser;
         const store = mockStore(initialState);
 

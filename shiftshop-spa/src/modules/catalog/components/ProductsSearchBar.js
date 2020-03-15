@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';
 import {Button, Hidden, TextField} from '@material-ui/core';
@@ -6,14 +7,51 @@ import {Search} from '@material-ui/icons';
 
 import useStyles from '../styles/ProductsSearchBar';
 
+import * as actions from '../actions';
+import * as selectors from '../selectors';
 import CategorySelector from './CategorySelector';
 
-const ProductsSearchBar = ({keywords, category, handleChangeKeywords, handleChangeCategory, searching, onSearch}) => {
+const ProductsSearchBar = ({searching, startSearch, stopSearch}) => {
     const classes = useStyles();
+
+    const dispatch = useDispatch();
+    const searchFilter = useSelector(selectors.getSearchFilter);
+    const productsSearch = useSelector(selectors.getProductsSearch);
+
+    const [category, setCategory] = useState('');
+    const [keywords, setKeywords] = useState('');
+
+    const handleChangeKeywords = event => setKeywords(event.target.value);
+    const handleChangeCategory = event => setCategory(event.target.value);
+
+    useEffect(() => {
+        if (productsSearch) {
+            setCategory(productsSearch.criteria.categoryId || '');
+            setKeywords(productsSearch.criteria.keywords || '');
+        }
+        // eslint-disable-next-line
+    }, []);
+
+    const search = () => {
+
+        if (searching) return;
+
+        startSearch();
+
+        const criteria = {
+            categoryId: category !== '' ? category : null,
+            keywords: keywords.trim(),
+            page: 0,
+            ...searchFilter
+        };
+
+        dispatch(actions.findProducts(criteria, stopSearch));
+
+    };
 
     const handleSubmit = event => {
         event.preventDefault();
-        onSearch();
+        search();
     };
 
     return (
@@ -33,12 +71,9 @@ const ProductsSearchBar = ({keywords, category, handleChangeKeywords, handleChan
 };
 
 ProductsSearchBar.propTypes = {
-    keywords: PropTypes.string.isRequired,
-    category: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    handleChangeKeywords: PropTypes.func.isRequired,
-    handleChangeCategory: PropTypes.func.isRequired,
     searching: PropTypes.bool.isRequired,
-    onSearch: PropTypes.func.isRequired
+    startSearch: PropTypes.func.isRequired,
+    stopSearch: PropTypes.func.isRequired
 };
 
 

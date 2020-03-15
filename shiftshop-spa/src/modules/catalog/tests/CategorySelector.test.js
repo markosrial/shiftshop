@@ -31,7 +31,7 @@ describe('CategorySelector snapshot', () => {
 
     test('Categories has elements and first is selected', () => {
 
-        // Initialize mockstore with empty state
+        // Initialize mockstore
         const store = mockStore(someCategories);
 
         const categorySelector = createCategorySelector(store, {selectedCategory: 1, allCategories: true, handleSelectedCategory: jest.fn()});

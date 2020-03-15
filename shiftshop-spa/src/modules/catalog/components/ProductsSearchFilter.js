@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
 import {Button, Divider, Drawer, FormControlLabel, Radio, RadioGroup, Switch} from '@material-ui/core';
-import {Close, Delete, Save} from '@material-ui/icons';
+import {Close, Delete} from '@material-ui/icons';
 
 import SearchOrderBy from '../constants/SearchOrderBy';
 import SearchOrder from '../constants/SearchOrder';
@@ -21,27 +21,17 @@ const ProductsSearchFilter = ({filterOpen, closeFilter}) => {
 
     const dispatch = useDispatch();
     const searchFilter = useSelector(selectors.getSearchFilter);
+    const {orderBy, order, onlyActive} = searchFilter;
 
-    const [orderBy, setOrderBy] = useState(searchFilter.orderBy);
-    const [order, setOrder] = useState(searchFilter.order);
-    const [onlyActive, setOnlyActive] = useState(searchFilter.onlyActive);
+    const saveOrderBy = e =>
+        dispatch(actions.changeSearchFilter({...searchFilter, orderBy: e.target.value}));
 
-    useEffect(() => {
-        // clean unsaved changes on filter on open/close
-        resetFilters();
-        // eslint-disable-next-line
-    }, [filterOpen]);
+    const saveOrder = e =>
+        dispatch(actions.changeSearchFilter({...searchFilter, order: e.target.value}));
 
-    const resetFilters = () => {
-        setOrderBy(searchFilter.orderBy);
-        setOrder(searchFilter.order);
-        setOnlyActive(searchFilter.onlyActive);
-    };
+    const saveOnlyActive = _ =>
+        dispatch(actions.changeSearchFilter({...searchFilter, onlyActive: !onlyActive}));
 
-    const saveSearchFilter = () => {
-        dispatch(actions.changeSearchFilter({orderBy, order, onlyActive}));
-        closeFilter();
-    };
     const resetSearchFilter = () => {
         dispatch(actions.resetSearchFilter(searchFilter));
         closeFilter();
@@ -61,7 +51,7 @@ const ProductsSearchFilter = ({filterOpen, closeFilter}) => {
                         <div className={classes.subTitle}>
                             <FormattedMessage id="project.catalog.ProductsSearchFilter.orderBy"/>
                         </div>
-                        <RadioGroup value={orderBy} onChange={event => setOrderBy(event.target.value)}>
+                        <RadioGroup value={orderBy} onChange={saveOrderBy}>
                             {orderByTypes.map(orderBy =>
                                 <FormControlLabel key={orderBy} control={<Radio color="primary"/>} value={orderBy}
                                                   label={<FormattedMessage id={"project.catalog.ProductsSearchFilter.label." + orderBy}/>} />)}
@@ -72,7 +62,7 @@ const ProductsSearchFilter = ({filterOpen, closeFilter}) => {
                         <div className={classes.subTitle}>
                             <FormattedMessage id="project.catalog.ProductsSearchFilter.order"/>
                         </div>
-                        <RadioGroup value={order} onChange={event => setOrder(event.target.value)}>
+                        <RadioGroup value={order} onChange={saveOrder}>
                             {orderTypes.map(order =>
                                 <FormControlLabel key={order} control={<Radio color="primary"/>} value={order}
                                                   label={<FormattedMessage id={"project.catalog.ProductsSearchFilter.label." + order}/>} />)}
@@ -83,7 +73,7 @@ const ProductsSearchFilter = ({filterOpen, closeFilter}) => {
                         <div className={classes.subTitle}>
                             <FormattedMessage id="project.catalog.ProductsSearchFilter.more"/>
                         </div>
-                        <FormControlLabel control={<Switch checked={onlyActive} color="primary" onChange={_ => setOnlyActive(!onlyActive)}/>}
+                        <FormControlLabel control={<Switch checked={onlyActive} color="primary" onChange={saveOnlyActive}/>}
                                           label={<FormattedMessage id="project.catalog.ProductsSearchFilter.label.onlyActive"/>}/>
                     </div>
                 </div>
@@ -91,10 +81,6 @@ const ProductsSearchFilter = ({filterOpen, closeFilter}) => {
                     <Button className={classes.actionButton} color="secondary" variant="contained" fullWidth
                             onClick={resetSearchFilter}>
                         <Delete/>&nbsp;<FormattedMessage id="project.global.button.reset"/>
-                    </Button>
-                    <Button className={classes.actionButton} color="primary" variant="contained" fullWidth
-                            onClick={saveSearchFilter}>
-                        <Save/>&nbsp;<FormattedMessage id="project.global.button.save"/>
                     </Button>
                 </div>
             </div>
