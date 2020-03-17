@@ -41,8 +41,6 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         marginLeft: 'auto',
-        paddingLeft: 16,
-        marginRight: -8
     }
 }));
 

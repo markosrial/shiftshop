@@ -63,6 +63,7 @@ const handleOkResponse = async (response, onSuccess) => {
     }
 
     if (response.status === 204) {
+        console.log("hihihi")
         onSuccess();
         return true;
     }

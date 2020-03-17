@@ -177,4 +177,14 @@ public class CatalogServiceImpl implements CatalogService {
 
     }
 
+    @Override
+    public void setActiveProduct(Long id, boolean active) throws InstanceNotFoundException {
+
+        Product product = findProductById(id);
+
+        if (product.isActive() != active) {
+            product.setActive(active);
+        }
+
+    }
 }

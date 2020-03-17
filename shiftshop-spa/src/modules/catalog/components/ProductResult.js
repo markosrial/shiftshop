@@ -3,7 +3,17 @@ import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import {Button, Card, CardActions, CardContent, CardHeader, Divider, IconButton, Typography} from '@material-ui/core';
+import {
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    Divider,
+    IconButton,
+    Typography
+} from '@material-ui/core';
 import {Edit} from '@material-ui/icons';
 
 import {notFound} from '../../../assets/images';
@@ -14,6 +24,7 @@ import users, {Role} from '../../users';
 import ProductDetails from './ProductDetails';
 import EditProduct from './EditProduct';
 import ProductProfitText from './ProductProfitText';
+import ProductChangeState from './ProductChangeState';
 
 const ProductResult = ({product}) => {
     const classes = useStyles();
@@ -57,6 +68,7 @@ const ProductResult = ({product}) => {
                     <Divider/>
                     <CardActions>
                         <ProductProfitText profit={formulas.getROI(product.salePrice, product.providerPrice)} isROI/>
+                        <Box display="flex" flexGrow={1} justifyContent="flex-end"><ProductChangeState id={product.id} active={product.active}/></Box>
                     </CardActions>
                 </Fragment>}
             {open && <EditProduct product={product} onClose={() => setOpen(false)}/>}

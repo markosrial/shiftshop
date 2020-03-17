@@ -69,7 +69,7 @@ export const nextFindProductsPage = (criteria, atFinally) =>
 
 const clearProductsSearch = () => ({type: actionTypes.CLEAR_PRODUCTS_SEARCH});
 
-const getProductSuccess = product => ({
+export const getProductSuccess = product => ({
     type: actionTypes.GET_PRODUCT_COMPLETED,
     product
 });
@@ -85,5 +85,19 @@ export const updateProduct = (id, data, onSuccess, onError, atFinally) => dispat
             onSuccess(product.name);
             dispatch(getProductSuccess(product));
         },
+        onError,
+        atFinally);
+
+const setProductActiveCompleted = () => ({
+    type: actionTypes.SET_PRODUCT_ACTIVE_COMPLETED
+});
+
+const setProductInactiveCompleted = () => ({
+    type: actionTypes.SET_PRODUCT_INACTIVE_COMPLETED
+});
+
+export const setProductActive = (id, active, onError, atFinally) => dispatch =>
+    backend.catalogService.setProductActive(id, active,
+        () => active ? dispatch(setProductActiveCompleted()) : dispatch(setProductInactiveCompleted()),
         onError,
         atFinally);

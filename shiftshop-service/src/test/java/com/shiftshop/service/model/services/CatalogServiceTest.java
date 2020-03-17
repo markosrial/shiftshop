@@ -257,15 +257,13 @@ public class CatalogServiceTest {
         Product product2 = createProduct(PRODUCT_NAME + "2", category.getId());
         Product product3 = createProduct(PRODUCT_NAME + "3", category.getId());
 
-        product2.setActive(false);
-        productDao.save(product2);
+        catalogService.setActiveProduct(product2.getId(), false);
 
         Block<Product> expectedBlock = new Block<>(Arrays.asList(product1, product3), false);
         assertEquals(expectedBlock, catalogService.findProducts(category.getId(), null, true,
                 null, null, 0, 3));
 
-        product2.setActive(true);
-        productDao.save(product2);
+        catalogService.setActiveProduct(product2.getId(), true);
 
         expectedBlock = new Block<>(Arrays.asList(product1, product2, product3), false);
         assertEquals(expectedBlock, catalogService.findProducts(null, null, true,
@@ -319,7 +317,14 @@ public class CatalogServiceTest {
         Product product1 = createProduct(PRODUCT_NAME + "1", category.getId());
         Product product2 = createProduct(PRODUCT_NAME + "2", category.getId());
 
-        catalogService.updateProduct(product1.getId(), product2.getName(), null, null, product2.getBarcode(),null);
+        catalogService.updateProduct(product1.getId(), product2.getName(), null, null, product2.getBarcode(), null);
+
+    }
+
+    @Test(expected = InstanceNotFoundException.class)
+    public void testSetActiveProductNonExistentId() throws InstanceNotFoundException {
+
+        catalogService.setActiveProduct(NON_EXISTENT_ID, true );
 
     }
 

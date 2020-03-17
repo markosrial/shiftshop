@@ -8,7 +8,8 @@ Necessary artifacts:
 - **shiftshop-spa.zip**
 - **shiftshop.exe** (*Windows*), **shiftshop-pos.deb** (*Linux*) or **shiftshop-pos.zip** (*MacOs*)
 
-[TOC]
+
+
 ______
 
 ## First steps

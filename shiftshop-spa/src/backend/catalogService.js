@@ -50,3 +50,7 @@ export const findProductById = (id, onSuccess, atFinally) =>
 
 export const updateProduct = (id, data, onSuccess, onError, atFinally) =>
     appFetch(`/catalog/products/${id}`, config('PUT', data), onSuccess, onError, atFinally);
+
+
+export const setProductActive = (id, active, onSuccess, onError, atFinally) =>
+    appFetch(`/catalog/products/${id}/${active ? 'active' : 'inactive'}`, config('PUT'), onSuccess, onError, atFinally);
