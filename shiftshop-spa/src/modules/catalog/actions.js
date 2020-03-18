@@ -87,3 +87,17 @@ export const updateProduct = (id, data, onSuccess, onError, atFinally) => dispat
         },
         onError,
         atFinally);
+
+const setProductActiveCompleted = () => ({
+    type: actionTypes.SET_PRODUCT_ACTIVE_COMPLETED
+});
+
+const setProductInactiveCompleted = () => ({
+    type: actionTypes.SET_PRODUCT_INACTIVE_COMPLETED
+});
+
+export const setProductActive = (id, active, onError, atFinally) => dispatch =>
+    backend.catalogService.setProductActive(id, active,
+        () => active ? dispatch(setProductActiveCompleted()) : dispatch(setProductInactiveCompleted()),
+        onError,
+        atFinally);

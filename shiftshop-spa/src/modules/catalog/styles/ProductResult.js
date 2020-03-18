@@ -15,10 +15,7 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 500
     },
     backToProducts: {marginTop: theme.spacing(2)},
-    editButton: {backgroundColor: theme.palette.light.main},
-    actions: {
-        justifyContent: 'flex-end'
-    }
+    editButton: {backgroundColor: theme.palette.light.main}
 }));
 
 export default useStyles;

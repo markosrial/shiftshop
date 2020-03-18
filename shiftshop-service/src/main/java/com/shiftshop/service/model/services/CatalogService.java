@@ -29,4 +29,7 @@ public interface CatalogService {
     Product updateProduct(Long id, String name, BigDecimal providerPrice, BigDecimal salePrice,
                           String barcode, Long categoryId)
             throws DuplicateInstancePropertyException, InstanceNotFoundException;
+
+    void setActiveProduct(Long id, boolean active) throws InstanceNotFoundException;
+    
 }

@@ -31,7 +31,9 @@ const ProductProfitChip = ({profit, isROI}) => {
     return (
         <Chip className={chip.classes} label={
             <Box display="flex" alignItems="center">
-                {chip.icon}{Math.abs(profit).toFixed(2)}{isROI ? ' % ROI' : ' €'}
+                {chip.icon}
+                {isROI ? (isFinite(profit) ? Math.abs(profit).toFixed(2) : '∞' ): Math.abs(profit).toFixed(2)}
+                {isROI ? ' % ROI' : ' €'}
             </Box>
         }/>
     );

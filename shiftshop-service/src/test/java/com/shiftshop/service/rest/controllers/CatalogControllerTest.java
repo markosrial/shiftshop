@@ -607,4 +607,53 @@ public class CatalogControllerTest {
 
     }
 
+    @Test
+    public void testPutProductsActiveInactive_NoContent() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(ADMIN_LOGIN);
+        Category category = catalogService.addCategory(CATEGORY_NAME);
+        Product product = catalogService.addProduct(PRODUCT_NAME, PROV_PRICE, SALE_PRICE, category.getId());
+
+        this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/active")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNoContent());
+
+        this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/inactive")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNoContent());
+
+    }
+
+    @Test
+    public void testPutProductsActiveInactive_NotFound() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(ADMIN_LOGIN);
+
+        this.mockMvc.perform(put("/catalog/products/" + NON_EXISTENT_ID + "/active")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNotFound());
+
+        this.mockMvc.perform(put("/catalog/products/" + NON_EXISTENT_ID + "/inactive")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void testPutProductsActiveInactive_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedSalesmanUser(SALESMAN_LOGIN);
+        Category category = catalogService.addCategory(CATEGORY_NAME);
+        Product product = catalogService.addProduct(PRODUCT_NAME, PROV_PRICE, SALE_PRICE, category.getId());
+
+        this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/active")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
+
+        this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/inactive")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
+
+    }
+
 }
