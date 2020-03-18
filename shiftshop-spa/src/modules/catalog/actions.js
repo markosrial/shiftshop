@@ -69,7 +69,7 @@ export const nextFindProductsPage = (criteria, atFinally) =>
 
 const clearProductsSearch = () => ({type: actionTypes.CLEAR_PRODUCTS_SEARCH});
 
-export const getProductSuccess = product => ({
+const getProductSuccess = product => ({
     type: actionTypes.GET_PRODUCT_COMPLETED,
     product
 });

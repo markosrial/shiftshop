@@ -608,7 +608,7 @@ public class CatalogControllerTest {
     }
 
     @Test
-    public void testPutProductsActiveInactive_Ok() throws Exception {
+    public void testPutProductsActiveInactive_NoContent() throws Exception {
 
         AuthenticatedUserDto user = createAuthenticatedAdminUser(ADMIN_LOGIN);
         Category category = catalogService.addCategory(CATEGORY_NAME);
@@ -616,11 +616,11 @@ public class CatalogControllerTest {
 
         this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/active")
                 .header("Authorization", "Bearer " + user.getServiceToken()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/inactive")
                 .header("Authorization", "Bearer " + user.getServiceToken()))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
     }
 
