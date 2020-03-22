@@ -155,7 +155,7 @@ public class CatalogServiceTest {
         createProduct(PRODUCT_NAME + "3", category2.getId());
 
         Block<Product> expectedBlock = new Block<>(Arrays.asList(product1), false);
-        assertEquals(expectedBlock, catalogService.findProducts(category1.getId(), "prod", null,
+        assertEquals(expectedBlock, catalogService.findProducts(category1.getId(), "prod", false,
                 null, null, 0, 3));
 
     }
@@ -171,12 +171,12 @@ public class CatalogServiceTest {
 
         // Test case sensitive
         Block<Product> expectedBlock = new Block<>(Arrays.asList(product1, product2), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, "PrOd", null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, "PrOd", false,
                 null, null, 0, 2));
 
         // Test multiple keywords
         expectedBlock = new Block<>(Arrays.asList(product2), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, "Prod X", null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, "Prod X", false,
                 null, null, 0, 3));
 
     }
@@ -191,23 +191,23 @@ public class CatalogServiceTest {
         Product product3 = createProduct("another", category.getId());
 
         Block<Product> expectedBlock = new Block<>(Arrays.asList(product3, product1, product2), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
                 Product.ProductOrderType.name.getType(), null, 0, 3));
 
         expectedBlock = new Block<>(Arrays.asList(product1, product2, product3), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
                 Product.ProductOrderType.creationDate.getType(), OrderAscDesc.ASC.name(), 0, 3));
 
         expectedBlock = new Block<>(Arrays.asList(product3, product2, product1), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
                 Product.ProductOrderType.creationDate.getType(), OrderAscDesc.DESC.name(), 0, 3));
 
         expectedBlock = new Block<>(Arrays.asList(product3, product1, product2), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
                 Product.ProductOrderType.name.getType(), OrderAscDesc.ASC.name(), 0, 3));
 
         expectedBlock = new Block<>(Arrays.asList(product2, product1, product3), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
                 Product.ProductOrderType.name.getType(), OrderAscDesc.DESC.name(), 0, 3));
 
     }
@@ -220,7 +220,7 @@ public class CatalogServiceTest {
         createProduct(PRODUCT_NAME, category.getId());
 
         Block<Product> expectedBlock = new Block<>(new ArrayList<>(), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, "non-existent", null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, "non-existent", false,
                 null, null, 0, 1));
 
     }
@@ -235,15 +235,15 @@ public class CatalogServiceTest {
         Product product3 = createProduct(PRODUCT_NAME + "3", category.getId());
 
         Block<Product> expectedBlock = new Block<>(Arrays.asList(product1, product2), true);
-        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
                 null, null, 0, 2));
 
         expectedBlock = new Block<>(of(product3), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
                 null, null, 1, 2));
 
         expectedBlock = new Block<>(new ArrayList<>(), false);
-        assertEquals(expectedBlock, catalogService.findProducts(null, null, null,
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
                 null, null, 2, 2));
 
     }

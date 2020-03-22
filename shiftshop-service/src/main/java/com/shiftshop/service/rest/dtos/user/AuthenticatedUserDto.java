@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AuthenticatedUserDto {
 
 	private String serviceToken;
-	private UserDto userDto;
+	private UserLoggedDto userLoggedDto;
 
 	public AuthenticatedUserDto() {}
 
-	public AuthenticatedUserDto(String serviceToken, UserDto userDto) {
+	public AuthenticatedUserDto(String serviceToken, UserLoggedDto userLoggedDto) {
 
 		this.serviceToken = serviceToken;
-		this.userDto = userDto;
+		this.userLoggedDto = userLoggedDto;
 
 	}
 
@@ -25,12 +25,12 @@ public class AuthenticatedUserDto {
 	}
 
 	@JsonProperty("user")
-	public UserDto getUserDto() {
-		return userDto;
+	public UserLoggedDto getUserLoggedDto() {
+		return userLoggedDto;
 	}
 
-	public void setUserDto(UserDto userDto) {
-		this.userDto = userDto;
+	public void setUserLoggedDto(UserLoggedDto userLoggedDto) {
+		this.userLoggedDto = userLoggedDto;
 	}
 
 }

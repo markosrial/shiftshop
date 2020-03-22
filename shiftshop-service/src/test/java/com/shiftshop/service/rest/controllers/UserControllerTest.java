@@ -6,6 +6,7 @@ import com.shiftshop.service.model.entities.User.RoleType;
 import com.shiftshop.service.model.entities.UserDao;
 import com.shiftshop.service.model.services.IncorrectLoginException;
 import com.shiftshop.service.model.services.UserNotActiveException;
+import com.shiftshop.service.model.services.UserService;
 import com.shiftshop.service.rest.common.JwtGenerator;
 import com.shiftshop.service.rest.common.JwtInfo;
 import com.shiftshop.service.rest.dtos.user.AuthenticatedUserDto;
@@ -25,7 +26,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -38,6 +41,8 @@ public class UserControllerTest {
 
     private final Long NON_EXISTENT_ID = new Long(-1);
     private final static String PASSWORD = "password";
+    private final String NAME = "User";
+    private final String SURNAMES = "Test Tester";
 
     @Autowired
     private MockMvc mockMvc;
@@ -57,7 +62,7 @@ public class UserControllerTest {
     private AuthenticatedUserDto createAuthenticatedUser(String userName, Set<RoleType> roles)
             throws IncorrectLoginException, UserNotActiveException {
 
-        User user = new User(userName, PASSWORD);
+        User user = new User(userName, NAME, SURNAMES, PASSWORD);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(roles);
@@ -81,6 +86,15 @@ public class UserControllerTest {
         return createAuthenticatedUser(userName, roles);
     }
 
+    private AuthenticatedUserDto createAuthenticatedManagerUser(String userName)
+            throws IncorrectLoginException, UserNotActiveException {
+
+        Set<RoleType> roles = new HashSet<>();
+        roles.add(RoleType.MANAGER);
+
+        return createAuthenticatedUser(userName, roles);
+    }
+
     @Test
     public void testPostLogin_Ok() throws Exception {
 
@@ -88,7 +102,7 @@ public class UserControllerTest {
         ObjectMapper mapper = new ObjectMapper();
 
         LoginParamsDto loginParams = new LoginParamsDto();
-        loginParams.setUserName(user.getUserDto().getUserName());
+        loginParams.setUserName(user.getUserLoggedDto().getUserName());
         loginParams.setPassword(PASSWORD);
 
         mockMvc.perform(post("/users/login" )
@@ -107,7 +121,7 @@ public class UserControllerTest {
         // Incorrect username
 
         LoginParamsDto loginParams = new LoginParamsDto();
-        loginParams.setUserName("_" + user.getUserDto().getUserName());
+        loginParams.setUserName("_" + user.getUserLoggedDto().getUserName());
         loginParams.setPassword(PASSWORD);
 
         mockMvc.perform(post("/users/login" )
@@ -119,7 +133,7 @@ public class UserControllerTest {
         // Incorrect password
 
         loginParams = new LoginParamsDto();
-        loginParams.setUserName(user.getUserDto().getUserName());
+        loginParams.setUserName(user.getUserLoggedDto().getUserName());
         loginParams.setPassword("_" + PASSWORD);
 
         mockMvc.perform(post("/users/login" )
@@ -130,12 +144,12 @@ public class UserControllerTest {
 
         // Not active user
 
-        User userInserted = userDao.findByUserName(user.getUserDto().getUserName()).get();
+        User userInserted = userDao.findByUserName(user.getUserLoggedDto().getUserName()).get();
         userInserted.setActive(false);
         userDao.save(userInserted);
 
         loginParams = new LoginParamsDto();
-        loginParams.setUserName(user.getUserDto().getUserName());
+        loginParams.setUserName(user.getUserLoggedDto().getUserName());
         loginParams.setPassword(PASSWORD);
 
         mockMvc.perform(post("/users/login" )
@@ -174,11 +188,71 @@ public class UserControllerTest {
         AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
 
         String tokenWithNoExistentId = jwtGenerator.generate(
-                new JwtInfo(NON_EXISTENT_ID, user.getUserDto().getUserName(), user.getUserDto().getRoles()));
+                new JwtInfo(NON_EXISTENT_ID, user.getUserLoggedDto().getUserName(), user.getUserLoggedDto().getRoles()));
 
         mockMvc.perform(post("/users/loginFromServiceToken" )
                 .header("Authorization", "Bearer " + tokenWithNoExistentId))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testGetUserRoles_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+
+        mockMvc.perform(get("/users/roles" )
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void testGetUserRoles_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+
+        mockMvc.perform(get("/users/roles" )
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    public void testGetUsers_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+
+        mockMvc.perform(get("/users" )
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items.length()").value(1));
+
+    }
+
+    @Test
+    public void testGetBlockedUsers_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+
+        // Add blocked user
+        User blockedUser = new User("user", NAME, SURNAMES, PASSWORD);
+
+        blockedUser.setPassword(passwordEncoder.encode(blockedUser.getPassword()));
+        blockedUser.setRoles(new HashSet<>());
+        blockedUser.setActive(false);
+
+        userDao.save(blockedUser);
+
+        // Get result
+        mockMvc.perform(get("/users/blocked" )
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items.length()").value(1));
+
     }
 
 }

@@ -14,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Null;
 import java.math.RoundingMode;
 import java.util.List;
 
@@ -76,7 +75,7 @@ public class CatalogController {
     public BlockDto<ProductSummaryDto> findProducts(
             @RequestParam(required = false) Long categoryId, @RequestParam(required = false) String keywords,
             @RequestParam(required = false) String orderBy, @RequestParam(required = false) String order,
-            @RequestParam(defaultValue = "true", required = false) Boolean onlyActive,
+            @RequestParam(defaultValue = "true", required = false) boolean onlyActive,
             @RequestParam(defaultValue = "0", required = false) @Min(0) int page,
             @RequestParam(defaultValue = "15", required = false) @Min(0) int size) {
 

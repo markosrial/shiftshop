@@ -1,6 +1,10 @@
 package com.shiftshop.service.model.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,15 +18,21 @@ public class User {
     private Long id;
     private String userName;
     private String password;
+    private String name;
+    private String surnames;
     private boolean active;
+    private LocalDateTime creationTimestamp;
+    private LocalDateTime updateTimestamp;
     private Set<RoleType> roles = new HashSet<>();
 
     public User() {}
 
-    public User(String userName, String password) {
+    public User(String userName, String name, String surnames, String password) {
 
         this.userName = userName;
         this.password = password;
+        this.name = name;
+        this.surnames = surnames;
 
     }
 
@@ -52,12 +62,46 @@ public class User {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurnames() {
+        return surnames;
+    }
+
+    public void setSurnames(String surnames) {
+        this.surnames = surnames;
+    }
+
     public boolean isActive() {
         return active;
     }
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @CreationTimestamp
+    public LocalDateTime getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public void setCreationTimestamp(LocalDateTime creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
+    @UpdateTimestamp
+    public LocalDateTime getUpdateTimestamp() {
+        return updateTimestamp;
+    }
+
+    public void setUpdateTimestamp(LocalDateTime updateTimestamp) {
+        this.updateTimestamp = updateTimestamp;
     }
 
     @ElementCollection(targetClass = RoleType.class)

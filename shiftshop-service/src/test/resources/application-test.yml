@@ -5,3 +5,4 @@ spring:
     max-idle: 1
   flyway:
     url: @testDataSource.url@
+    locations: classpath:db/migration/schema

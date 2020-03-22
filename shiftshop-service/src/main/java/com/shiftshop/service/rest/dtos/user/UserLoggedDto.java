@@ -2,22 +2,20 @@ package com.shiftshop.service.rest.dtos.user;
 
 import java.util.Set;
 
-public class UserDto {
+public class UserLoggedDto {
 
 	private Long id;
 	private String userName;
 	private String name;
-	private String surnames;
-	private Set<Integer> roles;
+	private Set<String> roles;
 
-	public UserDto() {}
+	public UserLoggedDto() {}
 
-	public UserDto(Long id, String userName, String name, String surnames, Set<Integer> roles) {
+	public UserLoggedDto(Long id, String userName, String name, Set<String> roles) {
 
 		this.id = id;
 		this.userName = userName;
 		this.name = name;
-		this.surnames = surnames;
 		this.roles = roles;
 
 	}
@@ -35,7 +33,7 @@ public class UserDto {
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.userName = userName.trim();
 	}
 
 	public String getName() {
@@ -43,22 +41,14 @@ public class UserDto {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.trim();
 	}
 
-	public String getSurnames() {
-		return surnames;
-	}
-
-	public void setSurnames(String surnames) {
-		this.surnames = surnames;
-	}
-
-	public Set<Integer> getRoles() {
+	public Set<String> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Integer> role) {
+	public void setRoles(Set<String> role) {
 		this.roles = role;
 	}
 

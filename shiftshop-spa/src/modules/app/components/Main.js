@@ -13,6 +13,7 @@ import Dashboard from './Dashboard';
 const CategoriesPage = React.lazy(() => import('../../catalog/components/CategoriesPage'));
 const ProductsPage = React.lazy(() => import('../../catalog/components/ProductsPage'));
 const ProductPage = React.lazy(() => import('../../catalog/components/ProductPage'));
+const UsersPage = React.lazy(() => import('../../users/components/UsersPage'));
 
 const Main = () => {
     const classes = useStyles();
@@ -41,7 +42,7 @@ const Main = () => {
                                     <Route exact path="/catalog/products"><ProductsPage/></Route>
                                     <Route exact path="/catalog/products/:id"><ProductPage/></Route>
                                     { hasRole([Role.MANAGER])
-                                        && <Route exact path="/staff/users"><Dashboard/></Route> }
+                                        && <Route exact path="/staff/users"><UsersPage/></Route> }
                                     <Route><Dashboard/></Route>
                                 </Switch>
                             </div>

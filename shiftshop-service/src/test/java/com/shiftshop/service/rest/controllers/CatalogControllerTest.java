@@ -49,6 +49,8 @@ public class CatalogControllerTest {
     private final static String ADMIN_LOGIN = "admin";
     private final static String SALESMAN_LOGIN = "salesman";
     private final static String PASSWORD = "password";
+    private final String NAME = "User";
+    private final String SURNAMES = "Test Tester";
 
     @Autowired
     private MockMvc mockMvc;
@@ -69,7 +71,7 @@ public class CatalogControllerTest {
     private AuthenticatedUserDto createAuthenticatedUser(String userName, Set<User.RoleType> roles)
             throws IncorrectLoginException, UserNotActiveException {
 
-        User user = new User(userName, PASSWORD);
+        User user = new User(userName, NAME, SURNAMES, PASSWORD);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(roles);

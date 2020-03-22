@@ -3,7 +3,10 @@ package com.shiftshop.service.model.services;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.common.exceptions.InstancePropertyNotFoundException;
 import com.shiftshop.service.model.entities.User;
+import com.shiftshop.service.model.entities.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserDao userDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -58,4 +64,24 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Block<User> getUsers(int page, int size) {
+
+        Slice<User> slice = userDao.findByActiveIsTrueOrderByUserNameAsc(PageRequest.of(page, size));
+
+        return new Block<>(slice.getContent(), slice.hasNext());
+
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public Block<User> getBlockedUsers(int page, int size) {
+
+        Slice<User> slice = userDao.findByActiveIsFalseOrderByUserNameAsc(PageRequest.of(page, size));
+
+        return new Block<>(slice.getContent(), slice.hasNext());
+
+    }
 }

@@ -9,4 +9,8 @@ public interface UserService {
 
     User loginFromId(Long id) throws InstanceNotFoundException, UserNotActiveException;
 
+    Block<User> getUsers(int page, int size);
+
+    Block<User> getBlockedUsers(int page, int size);
+
 }

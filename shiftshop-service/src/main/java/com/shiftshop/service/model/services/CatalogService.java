@@ -23,7 +23,7 @@ public interface CatalogService {
 
     Product findProductById(Long id) throws InstanceNotFoundException;
 
-    Block<Product> findProducts(Long categoryId, String keywords, Boolean onlyActive,
+    Block<Product> findProducts(Long categoryId, String keywords, boolean onlyActive,
                                 String orderType, String order, int page, int size);
 
     Product updateProduct(Long id, String name, BigDecimal providerPrice, BigDecimal salePrice,
@@ -31,5 +31,5 @@ public interface CatalogService {
             throws DuplicateInstancePropertyException, InstanceNotFoundException;
 
     void setActiveProduct(Long id, boolean active) throws InstanceNotFoundException;
-    
+
 }

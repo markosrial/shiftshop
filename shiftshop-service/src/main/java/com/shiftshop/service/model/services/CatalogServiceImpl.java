@@ -127,7 +127,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     @Transactional(readOnly = true)
-    public Block<Product> findProducts(Long categoryId, String keywords, Boolean onlyActive,
+    public Block<Product> findProducts(Long categoryId, String keywords, boolean onlyActive,
                                        String orderType, String order, int page, int size) {
 
         Slice<Product> slice = productDao.find(categoryId, keywords, onlyActive,
