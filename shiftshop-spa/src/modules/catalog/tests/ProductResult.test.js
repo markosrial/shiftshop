@@ -5,6 +5,7 @@ import {Provider} from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
 import {IntlProvider} from 'react-intl';
 import {MuiThemeProvider} from '@material-ui/core';
+import {SnackbarProvider} from 'notistack';
 
 import {initReactIntl} from "../../../i18n";
 import theme from '../../../theme';
@@ -14,6 +15,7 @@ import {Role} from '../../users';
 
 jest.mock('../components/ProductDetails', () => () => (<mockProductDetails/>));
 jest.mock('../components/ProductProfitText', () => () => (<mockProductProfitText/>));
+jest.mock('../components/ProductChangeState', () => () => (<mockProductChangeState/>));
 
 const {messages} = initReactIntl();
 
@@ -29,13 +31,15 @@ describe('ProductResult snapshot', () => {
 
         return renderer.create(
             <MuiThemeProvider theme={theme}>
-                <Provider store={store}>
-                    <IntlProvider locale='en' messages={messages}>
-                        <BrowserRouter>
-                            <ProductResult product={product}/>
-                        </BrowserRouter>
-                    </IntlProvider>
-                </Provider>
+                <SnackbarProvider>
+                    <Provider store={store}>
+                        <IntlProvider locale='en' messages={messages}>
+                            <BrowserRouter>
+                                <ProductResult product={product}/>
+                            </BrowserRouter>
+                        </IntlProvider>
+                    </Provider>
+                </SnackbarProvider>
             </MuiThemeProvider>
         );
 

@@ -73,7 +73,7 @@ exports[`CategoriesList snapshot Categories is empty 1`] = `
       <h6
         className="MuiTypography-root makeStyles-emptyText-5 MuiTypography-subtitle2"
       >
-        Here will appear the added categories
+        Here will appear the added categories.
       </h6>
     </div>
   </div>
