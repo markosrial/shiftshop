@@ -37,6 +37,7 @@ const ProductPage = () => {
 
         dispatch(actions.getProduct(productId, () => setLoading(false)));
 
+        return () => dispatch(actions.clearProduct());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

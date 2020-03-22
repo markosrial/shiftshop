@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, CircularProgress} from '@material-ui/core';
-import {RadioButtonChecked, RadioButtonUnchecked} from '@material-ui/icons';
+import {ToggleOffRounded, ToggleOnRounded} from '@material-ui/icons';
 
 import * as actions from '../actions';
 import users, {Role} from '../../users';
@@ -49,11 +49,11 @@ const ProductChangeState = ({id, active}) => {
     return (
         hasRole([Role.ADMIN]) &&
         <Button variant="outlined"
-                color={active ? 'secondary' : 'primary'}
+                color={active ? 'primary' : 'secondary'}
                 onClick={changeState}
                 disabled={updating}>
             {updating && <CircularProgress style={{position: 'absolute'}} size={24}/>}
-            {active ? <RadioButtonUnchecked/> : <RadioButtonChecked/>}
+            {active ? <ToggleOnRounded/> : <ToggleOffRounded/>}
         </Button>
     );
 };

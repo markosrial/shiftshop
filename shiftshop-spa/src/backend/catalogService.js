@@ -6,7 +6,7 @@ export const addCategory = (category, onSuccess, onError, atFinally) =>
     appFetch('/catalog/categories', config('POST', category),
         onSuccess, onError, atFinally);
 
-export const findAllCategories = (onSuccess) =>
+export const findAllCategories = onSuccess =>
     appFetch('/catalog/categories', config('GET'), onSuccess);
 
 export const updateCategory = (id, category, onSuccess, onError, atFinally) =>
@@ -38,8 +38,8 @@ export const findProducts = ({categoryId, keywords, orderBy, order, onlyActive, 
         path += `&order=${order}`;
     }
 
-    if (onlyActive) {
-        path += `&onlyActive=true`;
+    if (!onlyActive) {
+        path += `&onlyActive=false`;
     }
 
     appFetch(path, config('GET'), onSuccess, null, atFinally);

@@ -18,12 +18,12 @@ const ProductsSearch = () => {
 
     const _isMounted = useRef(true);
     useEffect(() => {
-        return () => _isMounted.current = false
+        return () => _isMounted.current = false;
         // eslint-disable-next-line
     }, []);
 
     const startSearch = () => {if (_isMounted.current) setSearching(true)};
-    const stopSearch = () => {if (_isMounted.current) setSearching(false)}
+    const stopSearch = () => {if (_isMounted.current) setSearching(false)};
 
     return (
         <Card>
