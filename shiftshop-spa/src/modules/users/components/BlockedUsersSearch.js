@@ -6,6 +6,7 @@ import {Lock} from '@material-ui/icons'
 
 import useStyles from '../styles/BlockedUsersSearch';
 
+import {minDelayFunction} from '../../utils';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 import BlockedUsersSearchResult from './BlockedUsersSearchResult';
@@ -29,12 +30,15 @@ const BlockedUsersSearch = () => {
 
     useEffect(() => {
 
+        // Opening dialog && not searching
         if (open && !searching) {
             startSearch();
             dispatch(actions.getBlockedUsers(0, stopSearch));
         }
-
-        return () => open && dispatch(actions.clearBlockedUsersSearch());
+        // Closing dialog and not searching
+        else if (!open && !searching) {
+            dispatch(actions.clearBlockedUsersSearch());
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [open]);
 
@@ -45,7 +49,11 @@ const BlockedUsersSearch = () => {
 
         if (!searching && blockedUsersSearch && blockedUsersSearch.page != null) {
             startSearch();
-            dispatch(actions.getBlockedUsers(blockedUsersSearch.page, stopSearch));
+
+            // Run minimun delayfor show the placeholder message a visible instant before stopping the search
+            const minDelay = minDelayFunction(300);
+
+            dispatch(actions.getBlockedUsers(blockedUsersSearch.page, minDelay(stopSearch)));
         }
 
     };

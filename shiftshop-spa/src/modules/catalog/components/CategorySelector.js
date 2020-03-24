@@ -30,7 +30,10 @@ const CategorySelector = ({selectedCategory, handleSelectedCategory, previous, a
             </InputLabel>
             <Select labelId="categorySelector" labelWidth={labelWidth}
                     value={selectedCategory} onChange={handleSelectedCategory}
-                    displayEmpty={allCategories} notched={allCategories || selectedCategory !== ''}>
+                    displayEmpty={allCategories} notched={allCategories || selectedCategory !== ''}
+                    MenuProps={{anchorOrigin: {vertical: "bottom", horizontal: "left"},
+                        transformOrigin: {vertical: "top", horizontal: "left"},
+                        getContentAnchorEl: null}}>
                 {empty && <MenuItem value="">&nbsp;</MenuItem>}
                 {!empty && allCategories && <MenuItem value=""><FormattedMessage id="project.catalog.CategorySelector.allCategories"/></MenuItem>}
                 {categories && categories.map(category =>

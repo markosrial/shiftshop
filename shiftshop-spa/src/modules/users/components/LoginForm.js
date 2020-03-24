@@ -27,7 +27,7 @@ const LoginForm = () => {
 
     const checkValid = () => {
         return formValidator.isNotEmpty(username)
-            && formValidator.isNotEmpty(password)
+            && formValidator.isNotFullEmpty(password)
     };
 
     const handleSubmit = event => {
