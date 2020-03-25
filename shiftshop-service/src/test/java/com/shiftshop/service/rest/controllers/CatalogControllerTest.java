@@ -71,10 +71,9 @@ public class CatalogControllerTest {
     private AuthenticatedUserDto createAuthenticatedUser(String userName, Set<User.RoleType> roles)
             throws IncorrectLoginException, UserNotActiveException {
 
-        User user = new User(userName, NAME, SURNAMES, PASSWORD);
+        User user = new User(userName, PASSWORD, NAME, SURNAMES, roles);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(roles);
         user.setActive(true);
 
         userDao.save(user);

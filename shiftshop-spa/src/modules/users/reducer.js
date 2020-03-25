@@ -45,6 +45,9 @@ const usersSearch = (state = initialState.usersSearch, action) => {
         case actionTypes.GET_USERS_COMPLETED:
             return action.usersSearch;
 
+        case actionTypes.CLEAR_USERS_SEARCH:
+            return initialState.usersSearch;
+
         default:
             return state;
     }

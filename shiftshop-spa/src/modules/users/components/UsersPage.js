@@ -5,6 +5,7 @@ import {Grid, Typography} from '@material-ui/core';
 import useStyles from '../styles/UsersPage';
 
 import UsersSearch from './UsersSearch';
+import AddUser from './AddUser';
 
 const UsersPage = () => {
 
@@ -20,6 +21,9 @@ const UsersPage = () => {
                     <Typography variant="h3">
                         <FormattedMessage id="project.users.UsersPage.title"/>
                     </Typography>
+                </Grid>
+                <Grid item>
+                    <AddUser/>
                 </Grid>
             </Grid>
             <Grid className={classes.grid} container spacing={2}>

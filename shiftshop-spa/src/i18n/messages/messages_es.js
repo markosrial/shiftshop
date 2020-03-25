@@ -49,6 +49,11 @@ export default {
     'project.catalog.ProductsSearchResult.emptySearch': 'Esto está muy vacío, ¡prueba a buscar algo!',
     'project.catalog.ProductsSearchResult.emptyProducts': 'No se encontraron productos',
 
+    'project.users.AddUser.addButton': 'Nuevo',
+    'project.users.AddUser.customPassword.title': 'Cambiar contraseña inicial',
+    'project.users.AddUser.customPassword.message': 'Por defecto se utiliza el nombre de usuario como contraseña inicial',
+    'project.users.AddUser.success': 'Usuario añadido',
+    'project.users.AddUser.title': 'Nuevo usuario',
     'project.users.BlockedUsersSearch.title': 'Usuarios bloqueados',
     'project.users.BlockedUsersSearchResult.emptyUsers': 'No se encontraron usuarios bloqueados.',
     'project.users.BlockedUsersSearchResult.noData': 'Sin datos que mostrar.',
@@ -74,6 +79,7 @@ export default {
     'project.global.button.save': 'Guardar',
     'project.global.button.search': 'Buscar',
     'project.global.button.signout': 'Cerrar sesión',
+    'project.global.error.passwordMatch': 'Constraseñas no coinciden',
     'project.global.field.category': 'Categoría',
     'project.global.field.actions': 'Acciones',
     'project.global.field.barcode': 'Código de barras',
@@ -83,6 +89,7 @@ export default {
     'project.global.field.name': 'Nombre',
     'project.global.field.password': 'Contraseña',
     'project.global.field.providerPrice': 'Precio de proveedor',
+    'project.global.field.repeatPassword': 'Repetir contraseña',
     'project.global.field.roles': 'Roles',
     'project.global.field.roles.ADMIN': 'Administrador',
     'project.global.field.roles.MANAGER': 'Gerente',
@@ -93,6 +100,8 @@ export default {
     'project.global.field.state': 'Estado',
     'project.global.field.state.active': 'Activo',
     'project.global.field.state.inactive': 'Inactivo',
-    'project.global.field.username': 'Usuario',
+    'project.global.field.surnames': 'Apellidos',
+    'project.global.field.username': 'Nombre de usuario',
+    'project.global.field.userName': 'Nombre de usuario'
 
 }

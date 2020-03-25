@@ -1,8 +1,11 @@
 package com.shiftshop.service.model.services;
 
+import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.common.exceptions.InstancePropertyNotFoundException;
+import com.shiftshop.service.model.common.utils.MessageConstants;
 import com.shiftshop.service.model.entities.User;
+import com.shiftshop.service.model.entities.User.RoleType;
 import com.shiftshop.service.model.entities.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +26,36 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Override
+    public User registerUser(User user) throws DuplicateInstancePropertyException, NoUserRolesException {
+
+        try {
+
+            // Check if user with login exists
+            permissionChecker.checkUser(user.getUserName());
+            throw new DuplicateInstancePropertyException(MessageConstants.ENTITIES_USER,
+                    MessageConstants.ENTITIES_PROPS_USERNAME, user.getUserName());
+
+        } catch (InstancePropertyNotFoundException e) {
+
+            // New manager users can not be registered
+            user.getRoles().remove(RoleType.MANAGER);
+
+            if (user.getRoles().size() == 0) {
+                throw new NoUserRolesException();
+            }
+
+            // Set password to login if no password given and encode the selected password
+            user.setPassword(passwordEncoder.encode(
+                    user.getPassword() == null ? user.getUserName() : user.getPassword()));
+
+            user.setActive(true);
+
+            return userDao.save(user);
+
+        }
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -47,7 +80,6 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
-
     }
 
     @Override
@@ -61,7 +93,6 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
-
     }
 
     @Override
@@ -71,7 +102,6 @@ public class UserServiceImpl implements UserService {
         Slice<User> slice = userDao.findByActiveIsTrueOrderByUserNameAsc(PageRequest.of(page, size));
 
         return new Block<>(slice.getContent(), slice.hasNext());
-
     }
 
 
@@ -82,6 +112,5 @@ public class UserServiceImpl implements UserService {
         Slice<User> slice = userDao.findByActiveIsFalseOrderByUserNameAsc(PageRequest.of(page, size));
 
         return new Block<>(slice.getContent(), slice.hasNext());
-
     }
 }

@@ -49,6 +49,11 @@ export default {
     'project.catalog.ProductsSearchResult.emptySearch': 'This is too empty, try to search something!',
     'project.catalog.ProductsSearchResult.emptyProducts': 'No products were found',
 
+    'project.users.AddUser.addButton': 'New',
+    'project.users.AddUser.customPassword.title': 'Change initial password',
+    'project.users.AddUser.customPassword.message': 'By default, username is used as the initial password',
+    'project.users.AddUser.success': 'User added',
+    'project.users.AddUser.title': 'New user',
     'project.users.BlockedUsersSearch.title': 'Blocked users',
     'project.users.BlockedUsersSearchResult.emptyUsers': 'No blocked users were found.',
     'project.users.BlockedUsersSearchResult.noData': 'No data to display.',
@@ -74,6 +79,7 @@ export default {
     'project.global.button.save': 'Save',
     'project.global.button.search': 'Search',
     'project.global.button.signout': 'Sign Out',
+    'project.global.error.passwordMatch': 'Password doesnt match',
     'project.global.field.category': 'Category',
     'project.global.field.actions': 'Actions',
     'project.global.field.barcode': 'Barcode',
@@ -83,6 +89,7 @@ export default {
     'project.global.field.name': 'Name',
     'project.global.field.password': 'Password',
     'project.global.field.providerPrice': 'Provider price',
+    'project.global.field.repeatPassword': 'Repeat password',
     'project.global.field.roles': 'Roles',
     'project.global.field.roles.ADMIN': 'Admin',
     'project.global.field.roles.MANAGER': 'Manager',
@@ -93,6 +100,8 @@ export default {
     'project.global.field.state': 'State',
     'project.global.field.state.active': 'Active',
     'project.global.field.state.inactive': 'Inactive',
+    'project.global.field.surnames': 'Surnames',
     'project.global.field.username': 'Username',
+    'project.global.field.userName': 'Username'
 
 }

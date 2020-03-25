@@ -53,15 +53,22 @@ export const logout = () => {
 
 };
 
+export const addUser = (user, onSuccess, onError, atFinally) =>
+    backend.userService.addUser(user, onSuccess, onError, atFinally);
+
 const getUsersCompleted = usersSearch => ({
     type: actionTypes.GET_USERS_COMPLETED,
     usersSearch
 });
 
-export const getUsers = (page, atFinally) => dispatch =>
+export const getUsers = (page, atFinally) => dispatch => {
+
+    dispatch(clearUsersSearch());
+
     backend.userService.getUsers(page,
         result => dispatch(getUsersCompleted({page, result})),
         atFinally);
+};
 
 export const previousUsersPage = (page, atFinally) =>
     getUsers(page-1, atFinally);
@@ -69,13 +76,17 @@ export const previousUsersPage = (page, atFinally) =>
 export const nextUsersPage = (page, atFinally) =>
     getUsers(page+1, atFinally);
 
+export const clearUsersSearch = () => ({type: actionTypes.CLEAR_USERS_SEARCH});
+
 const getBlockedUsersCompleted = blockedUsersSearch => ({
     type: actionTypes.GET_BLOCKED_USERS_COMPLETED,
     blockedUsersSearch
 });
 
 export const getBlockedUsers = (page, atFinally) => dispatch => {
+
     dispatch(clearBlockedUsersSearch());
+
     backend.userService.getBlockedUsers(page,
         result => dispatch(getBlockedUsersCompleted({page, result})),
         atFinally);};

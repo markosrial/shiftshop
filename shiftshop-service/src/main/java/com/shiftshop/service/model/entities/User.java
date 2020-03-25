@@ -27,12 +27,13 @@ public class User {
 
     public User() {}
 
-    public User(String userName, String name, String surnames, String password) {
+    public User(String userName, String password, String name, String surnames, Set<RoleType> roles) {
 
         this.userName = userName;
         this.password = password;
         this.name = name;
         this.surnames = surnames;
+        this.roles = roles;
 
     }
 

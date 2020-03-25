@@ -1,11 +1,10 @@
 package com.shiftshop.service.model.services;
 
+import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
-import com.shiftshop.service.model.entities.Product;
 import com.shiftshop.service.model.entities.User;
 import com.shiftshop.service.model.entities.User.RoleType;
 import com.shiftshop.service.model.entities.UserDao;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -34,38 +34,75 @@ public class UserServiceTest {
     private final String PASSWORD = "password";
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
     private UserDao userDao;
 
     @Autowired
     private UserService userService;
 
-    private Set<RoleType> createRoles() {
+    private User createUser(String userName) throws DuplicateInstancePropertyException, NoUserRolesException {
 
-        Set<RoleType> roles = new HashSet<>();
-        roles.add(RoleType.MANAGER);
-        roles.add(RoleType.ADMIN);
+        User user = new User(userName, PASSWORD, NAME, SURNAMES,
+                new HashSet<>(Arrays.asList(RoleType.ADMIN, RoleType.SALESMAN)));
 
-        return roles;
-
-    }
-
-    private User createUser(String userName) {
-
-        User user = new User(userName, NAME, SURNAMES, PASSWORD);
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setActive(true);
-        user.setRoles(createRoles());
-
-        return userDao.save(user);
+        return userService.registerUser(user);
 
     }
 
     @Test
-    public void testLoginFromId() throws InstanceNotFoundException, UserNotActiveException {
+    public void testRegisterUserAndLogin() throws IncorrectLoginException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
+
+        User user = createUser(USERNAME);
+
+        User loggedInUser = userService.login(user.getUserName(), PASSWORD);
+        assertEquals(user, loggedInUser);
+
+    }
+
+    @Test
+    public void testRegisterUserNoPasswordAndLogin() throws IncorrectLoginException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
+
+        User user = new User(USERNAME, null, NAME, SURNAMES,
+                new HashSet<>(Arrays.asList(RoleType.ADMIN, RoleType.SALESMAN)));
+
+        userService.registerUser(user);
+
+        // Login with default password -> username of the new user
+        User loggedInUser = userService.login(user.getUserName(), USERNAME);
+        assertEquals(user, loggedInUser);
+
+    }
+
+    @Test(expected = DuplicateInstancePropertyException.class)
+    public void testRegisterUserDuplicatedUserName() throws DuplicateInstancePropertyException, NoUserRolesException {
+
+        createUser(USERNAME);
+        createUser(USERNAME);
+
+    }
+
+    @Test(expected = NoUserRolesException.class)
+    public void testRegisterUserNoUserRoles() throws DuplicateInstancePropertyException, NoUserRolesException {
+
+        User user = new User(USERNAME, null, NAME, SURNAMES, new HashSet<>());
+
+        userService.registerUser(user);
+
+    }
+
+    @Test(expected = NoUserRolesException.class)
+    public void testRegisterManagerUser() throws DuplicateInstancePropertyException, NoUserRolesException {
+
+        User user = new User(USERNAME, null, NAME, SURNAMES, new HashSet<>(Arrays.asList(RoleType.MANAGER)));
+
+        userService.registerUser(user);
+
+    }
+
+    @Test
+    public void testLoginFromId() throws InstanceNotFoundException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
 
         User user = createUser(USERNAME);
 
@@ -82,22 +119,13 @@ public class UserServiceTest {
     }
 
     @Test(expected = UserNotActiveException.class)
-    public void testLoginFromIdNotActive() throws InstanceNotFoundException, UserNotActiveException {
+    public void testLoginFromIdNotActive() throws InstanceNotFoundException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
 
         User user = createUser(USERNAME);
         user.setActive(false);
 
         userService.loginFromId(user.getId());
-
-    }
-
-    @Test
-    public void testLogin() throws IncorrectLoginException, UserNotActiveException {
-
-        User user = createUser(USERNAME);
-
-        User loggedInUser = userService.login(user.getUserName(), PASSWORD);
-        assertEquals(user, loggedInUser);
 
     }
 
@@ -109,7 +137,8 @@ public class UserServiceTest {
     }
 
     @Test(expected = IncorrectLoginException.class)
-    public void testLoginWithIncorrectPassword() throws IncorrectLoginException, UserNotActiveException {
+    public void testLoginWithIncorrectPassword() throws IncorrectLoginException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
 
         User user = createUser(USERNAME);
 
@@ -118,7 +147,8 @@ public class UserServiceTest {
     }
 
     @Test(expected = UserNotActiveException.class)
-    public void testLoginNotActive() throws IncorrectLoginException, UserNotActiveException {
+    public void testLoginNotActive() throws IncorrectLoginException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
 
         User user = createUser(USERNAME);
 
@@ -131,7 +161,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getActiveUsersWithPagination() {
+    public void getActiveUsersWithPagination() throws DuplicateInstancePropertyException, NoUserRolesException {
 
         User user1 = createUser(USERNAME + "1");
         User user2 = createUser(USERNAME + "2");
@@ -149,7 +179,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getBlockedUsersWithPagination() {
+    public void getBlockedUsersWithPagination() throws DuplicateInstancePropertyException, NoUserRolesException {
 
         User user1 = createUser(USERNAME + "1");
         User user2 = createUser(USERNAME + "2");
