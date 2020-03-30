@@ -33,13 +33,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/users/login").permitAll()
 				.antMatchers("/users/loginFromServiceToken").permitAll()
-				.antMatchers("/users/changePassword").permitAll()
+				.antMatchers("/users/changePassword").authenticated()
 				.antMatchers("/users/**").hasRole(MANAGER)
 				.antMatchers(HttpMethod.POST, "/catalog/categories/**").hasRole(ADMIN)
 				.antMatchers(HttpMethod.PUT, "/catalog/categories/**").hasRole(ADMIN)
 				.antMatchers(HttpMethod.POST, "/catalog/products/**").hasRole(ADMIN)
 				.antMatchers(HttpMethod.PUT, "/catalog/products/**").hasRole(ADMIN)
 				.antMatchers("/catalog/**").authenticated()
+				.antMatchers("/pos/lastUpdateTimestamp").permitAll()
+				.antMatchers("/pos/**").authenticated()
 				.antMatchers("/**").hasRole(MANAGER);
 
 	}

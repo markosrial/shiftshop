@@ -45,7 +45,7 @@ const LogOut = () => {
                     </span>
                 </Hidden>
             </Button>
-            <Dialog className={classes.root} fullWidth maxWidth="xs" open={open} onClose={closeDialog}>
+            <Dialog className={classes.root} fullWidth maxWidth="xs" scroll="body" open={open} onClose={closeDialog}>
                 <DialogTitle>
                     <Typography component="span" variant="h4">
                         <FormattedMessage id="project.users.Logout.title"/>

@@ -19,9 +19,9 @@ const getById = db => async id => {
 };
 
 // Update
-const update = db => async (_id, ...data) => {
+const update = db => async (id, data) => {
     try {
-        let doc = await db.get(_id);
+        let doc = await db.get(id);
         return await db.put({...doc, ...data});
     } catch (err) {
         throw ErrorTypes.NotFound;

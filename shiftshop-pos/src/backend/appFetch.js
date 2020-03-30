@@ -2,11 +2,8 @@ const BACKEND_URL = 'http://localhost:8080';
 const SERVICE_TOKEN_NAME = 'serviceToken';
 
 let networkErrorCallback;
-let reauthenticationCallback;
 
 export const init = callback => networkErrorCallback = callback;
-
-export const setReauthenticationCallback = callback => reauthenticationCallback = callback;
 
 export const setServiceToken = serviceToken =>
     sessionStorage.setItem(SERVICE_TOKEN_NAME, serviceToken);
@@ -81,12 +78,10 @@ const handle4xxResponse = async (response, onErrors) => {
         return false;
     }
 
-    if (response.status === 401 && reauthenticationCallback) {
-        reauthenticationCallback();
+    if (response.status === 401) {
+        removeServiceToken();
         return true;
     }
-
-    console.log(response);
 
     if (!isJson(response)) {
         throw new Error();
@@ -124,4 +119,13 @@ export const appFetch = (path, options, onSuccess, onErrors, atFinally) =>
     fetch(`${BACKEND_URL}${path}`, options)
         .then(response => handleResponse(response, onSuccess, onErrors))
         .catch(networkErrorCallback)
+        .finally(atFinally);
+
+export const appFetchOffline = (path, options, onSuccess, onErrors, atFinally, networkError = true) =>
+    fetch(`${BACKEND_URL}${path}`, options)
+        .then(response => handleResponse(response, onSuccess, onErrors))
+        .catch(() => {
+            onErrors && onErrors();
+            networkError && networkErrorCallback();
+        })
         .finally(atFinally);

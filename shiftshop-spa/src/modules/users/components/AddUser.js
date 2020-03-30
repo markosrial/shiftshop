@@ -142,7 +142,7 @@ const AddUser = () => {
             <Button variant="contained" color="primary" size="small" onClick={openDialog}>
                 <Add/> <FormattedMessage id="project.users.AddUser.addButton"/>
             </Button>
-            <Dialog className={classes.root} fullWidth open={open} onClose={closeDialog}>
+            <Dialog className={classes.root} fullWidth scroll="body" open={open} onClose={closeDialog}>
                 <DialogTitle>
                     <Box display="flex" alignItems="center">
                         <AddBox fontSize="default" color="primary"/>&nbsp;

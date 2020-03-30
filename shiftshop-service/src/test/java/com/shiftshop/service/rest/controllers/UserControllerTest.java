@@ -217,8 +217,7 @@ public class UserControllerTest {
         loginParams.setUserName(user.getUserLoggedDto().getUserName());
         loginParams.setPassword(PASSWORD);
 
-        mockMvc.perform(post("/users/login" )
-                .header("Authorization", "Bearer " + user.getServiceToken())
+        mockMvc.perform(post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(loginParams)))
                 .andExpect(status().isOk());
@@ -235,8 +234,7 @@ public class UserControllerTest {
         loginParams.setUserName("_" + user.getUserLoggedDto().getUserName());
         loginParams.setPassword(PASSWORD);
 
-        mockMvc.perform(post("/users/login" )
-                .header("Authorization", "Bearer " + user.getServiceToken())
+        mockMvc.perform(post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(loginParams)))
                 .andExpect(status().isNotFound());
@@ -246,8 +244,7 @@ public class UserControllerTest {
         loginParams.setUserName(user.getUserLoggedDto().getUserName());
         loginParams.setPassword("_" + PASSWORD);
 
-        mockMvc.perform(post("/users/login" )
-                .header("Authorization", "Bearer " + user.getServiceToken())
+        mockMvc.perform(post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(loginParams)))
                 .andExpect(status().isNotFound());
@@ -261,8 +258,7 @@ public class UserControllerTest {
         loginParams.setUserName(user.getUserLoggedDto().getUserName());
         loginParams.setPassword(PASSWORD);
 
-        mockMvc.perform(post("/users/login" )
-                .header("Authorization", "Bearer " + user.getServiceToken())
+        mockMvc.perform(post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(loginParams)))
                 .andExpect(status().isNotFound());
@@ -274,8 +270,7 @@ public class UserControllerTest {
         AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
 
         // Without loginParams
-        mockMvc.perform(post("/users/login" )
-                .header("Authorization", "Bearer " + user.getServiceToken())
+        mockMvc.perform(post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }

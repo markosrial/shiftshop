@@ -44,4 +44,13 @@ public class UserConversor {
 		return users.stream().map(u -> toUserDto(u)).collect(Collectors.toList());
 	}
 
+	public static final POSUserDto toPOSUserDto(User user) {
+		return new POSUserDto(user.getId(), user.getUserName(), user.getPassword(), user.getName(),
+				user.isActive(), user.getRoles().contains(RoleType.SALESMAN));
+	}
+
+	public static final List<POSUserDto> toPOSUserDtos(List<User> users) {
+		return users.stream().map(UserConversor::toPOSUserDto).collect(Collectors.toList());
+	}
+
 }

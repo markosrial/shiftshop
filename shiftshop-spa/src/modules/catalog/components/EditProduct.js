@@ -114,7 +114,7 @@ const EditProduct = ({product, onClose}) => {
     }
 
     return (
-        <Dialog open fullWidth onClose={onClose}>
+        <Dialog open fullWidth scroll="body" onClose={onClose}>
             <DialogTitle>
                 <Typography component="span" variant="h5">
                     <FormattedMessage id="project.catalog.EditProduct.title"/>: <i>{product.name}</i>
