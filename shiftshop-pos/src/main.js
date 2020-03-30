@@ -17,6 +17,7 @@ const createWindow = () => {
     height: 800,
     minWidth: 1280,
     minHeight: 800,
+    show: false,
     webPreferences: {
       nodeIntegration: true
     }
@@ -34,6 +35,10 @@ const createWindow = () => {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+  });
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
   });
 };
 

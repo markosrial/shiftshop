@@ -2,14 +2,16 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
-import {Button, Typography, CircularProgress, TextField} from '@material-ui/core';
+import Bcrypt from 'bcryptjs';
+import {Button, CircularProgress, TextField, Typography} from '@material-ui/core';
 import {Error} from '@material-ui/icons';
 
-import {useStyles} from './LoginFormStyles';
+import {useStyles} from '../styles/LoginForm';
 
 import {formValidator} from '../../../utils';
 import * as actions from '../actions';
 import {UsersDB} from '../../../databases';
+import {minDelayFunction} from '../../utils';
 
 const LoginForm = () => {
     const classes = useStyles();
@@ -29,7 +31,7 @@ const LoginForm = () => {
 
     const checkValid = () => {
         return formValidator.isNotEmpty(username)
-            && formValidator.isNotEmpty(password)
+            && formValidator.isNotFullEmpty(password)
     };
 
     const handleSubmit = event => {
@@ -57,9 +59,9 @@ const LoginForm = () => {
 
     };
 
-    const successLogin = () => {
+    const successLogin = user => {
         setIsLogging(false);
-        dispatch(actions.login(username, password));
+        dispatch(actions.login(user));
     };
 
     const errorLogin = error => {
@@ -78,14 +80,30 @@ const LoginForm = () => {
     };
 
     const checkUser = (usersDB, username, password) => {
-        usersDB.getByUsername(username).then(user => {
-            if (user && user.username === username && user.password === password) {
-                usersDB.close();
-                successLogin();
-            } else {
-               errorLogin("project.users.LoginForm.invalidLogin")
-            }
-        }).catch(err => errorDB(err));
+
+        const delay = minDelayFunction(500);
+
+        usersDB.getById(username)
+            .then(user => {
+
+                if (Bcrypt.compareSync(password, user.password)) {
+
+                    usersDB.close();
+
+                    const {id, userName, name} = user;
+                    successLogin({id, userName, name});
+
+                } else {
+                    throw new Error();
+                }
+
+            })
+            .catch(() => {
+                delay(() => {
+                    errorLogin("project.users.LoginForm.invalidLogin");
+                    setIsLogging(false);
+                });
+            })
     };
 
     return (

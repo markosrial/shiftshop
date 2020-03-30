@@ -88,7 +88,7 @@ const EditCategory = ({category, onClose}) => {
     }
 
     return (
-        <Dialog open maxWidth="xs" fullWidth onClose={onClose}>
+        <Dialog open maxWidth="xs" fullWidth scroll="body" onClose={onClose}>
             <DialogTitle>
                 <Typography component="span" variant="h5">
                     <FormattedMessage id="project.catalog.EditCategory.title"/>: <i>{category.name}</i>

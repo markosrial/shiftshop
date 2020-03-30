@@ -119,7 +119,7 @@ const AddProduct = () => {
             <Button color="primary" variant="contained" size="small" onClick={openDialog}>
                 <Add/> <FormattedMessage id="project.catalog.AddProduct.addButton"/>
             </Button>
-            <Dialog className={classes.root} fullWidth open={open} onClose={closeDialog}>
+            <Dialog className={classes.root} fullWidth scroll="body" open={open} onClose={closeDialog}>
                 <DialogTitle>
                     <Box display="flex" alignItems="center">
                         <AddBox fontSize="default" color="primary"/>&nbsp;

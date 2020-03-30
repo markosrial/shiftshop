@@ -14,12 +14,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -112,7 +111,7 @@ public class UserServiceTest {
     }
 
     @Test(expected = InstanceNotFoundException.class)
-    public void testloginFromNonExistentId() throws InstanceNotFoundException, UserNotActiveException {
+    public void testLoginFromNonExistentId() throws InstanceNotFoundException, UserNotActiveException {
 
         userService.loginFromId(NON_EXISTENT_ID);
 
@@ -161,7 +160,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getActiveUsersWithPagination() throws DuplicateInstancePropertyException, NoUserRolesException {
+    public void testGetActiveUsersWithPagination() throws DuplicateInstancePropertyException, NoUserRolesException {
 
         User user1 = createUser(USERNAME + "1");
         User user2 = createUser(USERNAME + "2");
@@ -179,7 +178,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getBlockedUsersWithPagination() throws DuplicateInstancePropertyException, NoUserRolesException {
+    public void testGetBlockedUsersWithPagination() throws DuplicateInstancePropertyException, NoUserRolesException {
 
         User user1 = createUser(USERNAME + "1");
         User user2 = createUser(USERNAME + "2");
@@ -196,6 +195,32 @@ public class UserServiceTest {
 
         expectedBlock = new Block<>(Arrays.asList(user1), true);
         assertEquals(expectedBlock, userService.getBlockedUsers(0, 1));
+
+    }
+
+    @Test
+    public void testLastUserUpdates() throws DuplicateInstancePropertyException, NoUserRolesException {
+
+        // Test update timestamp
+
+        assertEquals(LocalDateTime.MIN, userService.getLastUserUpdatedTimestamp());
+
+        User user1 = createUser(USERNAME + "1");
+
+        assertEquals(user1.getUpdateTimestamp(), userService.getLastUserUpdatedTimestamp());
+
+        // Test updated users
+
+        User user2 = createUser(USERNAME + "2");
+
+        List<User> expectedUsers = new ArrayList<>(Arrays.asList(user1, user2));
+        assertEquals(expectedUsers, userService.getUpdatedUsers(null));
+
+
+        expectedUsers = new ArrayList<>(Arrays.asList(user2));
+        assertEquals(expectedUsers, userService.getUpdatedUsers(user1.getUpdateTimestamp()));
+
+        assertEquals(new ArrayList<>(), userService.getUpdatedUsers(userService.getLastUserUpdatedTimestamp()));
 
     }
 

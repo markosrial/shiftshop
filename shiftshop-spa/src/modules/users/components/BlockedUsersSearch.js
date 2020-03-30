@@ -50,7 +50,7 @@ const BlockedUsersSearch = () => {
         if (!searching && blockedUsersSearch && blockedUsersSearch.page != null) {
             startSearch();
 
-            // Run minimun delayfor show the placeholder message a visible instant before stopping the search
+            // Run minimun delay for show the placeholder message a visible instant before stopping the search
             const minDelay = minDelayFunction(300);
 
             dispatch(actions.getBlockedUsers(blockedUsersSearch.page, minDelay(stopSearch)));
@@ -63,7 +63,7 @@ const BlockedUsersSearch = () => {
             <Button variant="outlined" color="secondary" onClick={() => setOpen(true)}>
                 <Lock/>
             </Button>
-            <Dialog open={open} fullWidth onClose={() => setOpen(false)}>
+            <Dialog open={open} fullWidth scroll="body" onClose={() => setOpen(false)}>
                 <DialogTitle>
                     <Typography component="span" variant="h5">
                         <FormattedMessage id="project.users.BlockedUsersSearch.title"/>

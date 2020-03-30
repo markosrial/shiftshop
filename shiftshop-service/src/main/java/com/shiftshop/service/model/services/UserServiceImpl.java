@@ -7,12 +7,17 @@ import com.shiftshop.service.model.common.utils.MessageConstants;
 import com.shiftshop.service.model.entities.User;
 import com.shiftshop.service.model.entities.User.RoleType;
 import com.shiftshop.service.model.entities.UserDao;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -112,5 +117,28 @@ public class UserServiceImpl implements UserService {
         Slice<User> slice = userDao.findByActiveIsFalseOrderByUserNameAsc(PageRequest.of(page, size));
 
         return new Block<>(slice.getContent(), slice.hasNext());
+    }
+
+    @Override
+    public LocalDateTime getLastUserUpdatedTimestamp() {
+
+        Optional<LocalDateTime> lastUpdate = userDao.getLastUpdateTimestampDesc();
+
+        if (lastUpdate.isEmpty()) {
+            return LocalDateTime.MIN;
+        }
+
+        return lastUpdate.get();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<User> getUpdatedUsers(LocalDateTime lastUpdate) {
+
+        if (lastUpdate != null) {
+            return userDao.findByUpdateTimestampIsAfter(lastUpdate);
+        } else {
+            return userDao.findAllByActiveIsTrueAndRolesContains(RoleType.SALESMAN);
+        }
     }
 }

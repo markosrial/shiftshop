@@ -9,6 +9,11 @@ export const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
         padding: theme.spacing(6, 2),
     },
+    localUpdate: {
+        position: 'absolute',
+        top: theme.spacing(2),
+        right: theme.spacing(2),
+    },
     card: {
         width: theme.breakpoints.values.md,
         maxWidth: '100%',
