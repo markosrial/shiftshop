@@ -7,7 +7,6 @@ import com.shiftshop.service.model.common.utils.MessageConstants;
 import com.shiftshop.service.model.entities.User;
 import com.shiftshop.service.model.entities.User.RoleType;
 import com.shiftshop.service.model.entities.UserDao;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -47,7 +46,7 @@ public class UserServiceImpl implements UserService {
             // New manager users can not be registered
             user.getRoles().remove(RoleType.MANAGER);
 
-            if (user.getRoles().size() == 0) {
+            if (user.getRoles().isEmpty()) {
                 throw new NoUserRolesException();
             }
 
