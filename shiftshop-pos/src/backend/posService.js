@@ -12,6 +12,18 @@ export const syncUsers = (lastUpdate, onSuccess, onErrors) => {
         path += '?lastUpdate=' + lastUpdate;
     }
 
-    appFetch(path, config('GET'), onSuccess, onErrors, null, false);
+    return appFetch(path, config('GET'), onSuccess, onErrors, null);
+
+};
+
+export const syncProducts = (lastUpdate, onSuccess, onErrors) => {
+
+    let path = '/pos/syncProducts';
+
+    if (lastUpdate) {
+        path += '?lastUpdate=' + lastUpdate;
+    }
+
+    return appFetch(path, config('GET'), onSuccess, onErrors, null);
 
 };

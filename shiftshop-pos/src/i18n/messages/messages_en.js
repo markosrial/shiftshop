@@ -7,6 +7,7 @@ export default {
     'project.bd.error.FailedInitIndexes': 'Failed on initialize database indexes',
     'project.bd.error.NotFound': 'Resource not found',
     'project.bd.error.NotIndexedSearch': 'Failed on indexed search',
+    'project.bd.error.ReadDocs': 'Failed reading resources',
 
     'project.global.button.authenticate': 'Authenticate',
     'project.global.button.cancel': 'Cancel',

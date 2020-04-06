@@ -29,4 +29,13 @@ public class ProductConversor {
                 product.isActive(), product.getCategory().getId());
     }
 
+    public static final POSProductDto toPOSProductDto(Product product) {
+        return new POSProductDto(product.getId(), product.getName(), product.getSalePrice(),
+                product.getBarcode(), product.isActive());
+    }
+
+    public static final List<POSProductDto> toPOSProductDtos(List<Product> products) {
+        return products.stream().map(ProductConversor::toPOSProductDto).collect(Collectors.toList());
+    }
+
 }

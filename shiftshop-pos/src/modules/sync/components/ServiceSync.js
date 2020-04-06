@@ -5,7 +5,7 @@ import {Error} from '@material-ui/icons';
 
 import {useStyles} from '../styles/ServiceSync';
 
-import {ErrorsDB, UsersDB} from '../../../databases';
+import {ErrorsDB, ProductsDB, UsersDB} from '../../../databases';
 
 import * as actions from '../actions';
 import {minDelayFunction} from '../../utils';
@@ -21,63 +21,77 @@ const ServiceSync = ({localUpdateTimestamp, lastUpdateTimestamp, nextStep, onCan
         update();
     }, []);
 
-    const update = () => {
+    const update = async () => {
 
         if (updating) return;
 
         setUpdating(true);
 
-        actions.syncUsers(localUpdateTimestamp, users => addUsers(users));
-
-    };
-
-    const addUsers = async (users) => {
-
         try {
-
-            let usersDB = await UsersDB.init();
 
             const delay = minDelayFunction(1000);
 
-            // With no data -> add all items on fresh DB
-            if (!localUpdateTimestamp) {
+            await actions.syncUsers(localUpdateTimestamp, users => addUsers(users));
+            await actions.syncProducts(localUpdateTimestamp, products => addProducts(products));
 
-                // Empty DB
-                await usersDB.destroy();
-                usersDB = await UsersDB.init();
-
-                // Add all salesman users
-                await Promise.all(
-                    users.map(async (user) => {
-                        const {id, userName, password, name} = user;
-                        await usersDB.add({_id: userName, id, userName, password, name});
-                    })
-                );
-
-                actions.setLocalStorageUpdateTimestamp(lastUpdateTimestamp);
-                delay(nextStep);
-            }
-            // With existing data -> update items
-            else {
-
-                // Add + update all salesman users && remove no salesman users
-                await Promise.all(
-                    users.map(async user => await updateDBUser(usersDB, user))
-                );
-
-                actions.setLocalStorageUpdateTimestamp(lastUpdateTimestamp);
-                delay(nextStep);
-            }
+            actions.setLocalStorageUpdateTimestamp(lastUpdateTimestamp);
+            delay(nextStep);
 
         } catch (e) {
+
             setUpdating(false);
             setFailed(true);
+
         }
+
+
+    };
+
+    const sleep = (delay) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, delay)
+        });
+    }
+
+    const addUsers = async (users) => {
+
+        if (users.length === 0) {
+            return;
+        }
+
+        let usersDB = await UsersDB.init();
+
+        // With no data -> add all items on fresh DB
+        if (!localUpdateTimestamp) {
+
+            // Empty DB
+            await usersDB.destroy();
+            usersDB = await UsersDB.init();
+
+            // Add all salesman users
+            await Promise.all(
+                users.map(async (user) => {
+                    const {id, userName, password, name} = user;
+                    await usersDB.add({_id: userName, id, userName, password, name});
+                })
+            );
+
+        }
+        // With existing data -> update items
+        else {
+
+            // Add + update all salesman users && remove no salesman users
+            await Promise.all(
+                users.map(async user => await updateDBUser(usersDB, user))
+            );
+
+        }
+
+        usersDB.close();
+
     };
 
     const updateDBUser = async (usersDB, user) => {
-
-        console.log(user);
 
         const data = {
             id: user.id,
@@ -87,12 +101,14 @@ const ServiceSync = ({localUpdateTimestamp, lastUpdateTimestamp, nextStep, onCan
         };
 
         if (!user.salesman || !user.active) {
+
             try {
                 await usersDB.remove(data.userName);
             } catch (e) {
                 // If not added on previous updates then continue
                 if (e === ErrorsDB.NotFound) return;
             }
+
         } else {
 
             try {
@@ -107,6 +123,79 @@ const ServiceSync = ({localUpdateTimestamp, lastUpdateTimestamp, nextStep, onCan
 
             // Found -> update
             await usersDB.update(data.userName, data);
+
+        }
+
+    };
+
+    const addProducts = async (products) => {
+
+        if (products.length === 0) {
+            return;
+        }
+
+        let productsDB = await ProductsDB.init();
+
+        // With no data -> add all items on fresh DB
+        if (!localUpdateTimestamp) {
+
+            // Empty DB
+            await productsDB.destroy();
+            productsDB = await ProductsDB.init();
+
+            // Add all active products
+            await Promise.all(
+                products.map(async (product) => {
+                    const {id, name, salePrice, barcode} = product;
+                    await productsDB.add({_id: id.toString(), id, name, salePrice, barcode});
+                })
+            );
+
+        }
+        // With existing data -> update items
+        else {
+
+            // Add + update all products && remove no active products
+            await Promise.all(
+                products.map(async product => await updateDBProduct(productsDB, product))
+            );
+
+        }
+
+        productsDB.close();
+
+    };
+
+    const updateDBProduct = async (productsDB, product) => {
+
+        const data = {
+            id: product.id,
+            name: product.name,
+            salePrice: product.salePrice,
+            barcode: product.barcode
+        };
+
+        if (!product.active) {
+            try {
+                await productsDB.remove(data.id.toString());
+            } catch (e) {
+                // If not added on previous updates then continue
+                if (e === ErrorsDB.NotFound) return;
+            }
+        } else {
+
+            try {
+                await productsDB.getById(data.id.toString());
+            } catch (e) {
+                if (e === ErrorsDB.NotFound) {
+                    // NotFound -> add
+                    await productsDB.add({_id: data.id.toString(), ...data});
+                    return;
+                }
+            }
+
+            // Found -> update
+            await productsDB.update(data.id.toString(), data);
 
         }
 

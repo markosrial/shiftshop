@@ -1,16 +1,14 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {Box, Card, CardContent, CircularProgress, Typography} from '@material-ui/core';
 import {FormattedMessage} from 'react-intl';
 
-import * as actions from '../actions';
+import {ProductsDB, UsersDB} from '../../../databases';
+
 import {minDelayFunction} from '../../utils';
-import {UsersDB} from '../../../databases'
+import * as actions from '../actions';
 import {Alert} from '../../common';
 
 const InitialClean = ({callOnSuccess}) => {
-
-    const dispatch = useDispatch();
 
     const [processing, setProcessing] = useState(true);
     const [error, setError] = useState(null);
@@ -49,8 +47,12 @@ const InitialClean = ({callOnSuccess}) => {
             const userDB = await UsersDB.init();
             await userDB.destroy();
 
+            const productsDB = await ProductsDB.init();
+            await productsDB.destroy();
+
             // Clean succesfull
             onSuccess();
+
         } catch (e) {
             setProcessing(false);
             setError(e);

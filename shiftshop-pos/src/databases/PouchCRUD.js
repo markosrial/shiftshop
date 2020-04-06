@@ -18,6 +18,15 @@ const getById = db => async id => {
     }
 };
 
+const getAll = db => async () => {
+    try {
+        const result = db.allDocs({include_docs : true});
+        return result;
+    } catch (err) {
+        throw ErrorTypes.ReadDocs;
+    }
+};
+
 // Update
 const update = db => async (id, data) => {
     try {
@@ -41,6 +50,7 @@ const remove = db => async id => {
 const PouchCRUD = db => ({
     add: add(db),
     getById: getById(db),
+    getAll: getAll(db),
     update: update(db),
     remove: remove(db),
 });
