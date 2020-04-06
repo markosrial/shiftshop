@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public LocalDateTime getLastUserUpdatedTimestamp() {
 
-        Optional<LocalDateTime> lastUpdate = userDao.getLastUpdateTimestampDesc();
+        Optional<LocalDateTime> lastUpdate = userDao.getLastUpdateTimestamp();
 
         if (lastUpdate.isEmpty()) {
             return LocalDateTime.MIN;

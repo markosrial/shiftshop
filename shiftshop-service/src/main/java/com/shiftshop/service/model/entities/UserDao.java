@@ -19,7 +19,7 @@ public interface UserDao extends PagingAndSortingRepository<User, Long> {
     Slice<User> findByActiveIsFalseOrderByUserNameAsc(Pageable pageable);
 
     @Query("SELECT MAX(u.updateTimestamp) FROM User u")
-    Optional<LocalDateTime> getLastUpdateTimestampDesc();
+    Optional<LocalDateTime> getLastUpdateTimestamp();
 
     List<User> findByUpdateTimestampIsAfter(LocalDateTime lastUpdate);
 

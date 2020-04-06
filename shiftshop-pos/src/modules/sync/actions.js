@@ -66,3 +66,7 @@ export const getLastUpdateTimestamp = atFinally => dispatch =>
 
 export const syncUsers = (lastUpdate, onSuccess, onErrors) =>
     backend.posService.syncUsers(lastUpdate, users => onSuccess(users), onErrors);
+
+
+export const syncProducts = (lastUpdate, onSuccess, onErrors) =>
+    backend.posService.syncProducts(lastUpdate, products => onSuccess(products), onErrors);

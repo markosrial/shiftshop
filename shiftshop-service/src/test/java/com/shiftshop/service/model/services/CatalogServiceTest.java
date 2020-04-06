@@ -14,8 +14,10 @@ import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static java.util.List.of;
 import static org.junit.Assert.assertEquals;
@@ -325,6 +327,34 @@ public class CatalogServiceTest {
     public void testSetActiveProductNonExistentId() throws InstanceNotFoundException {
 
         catalogService.setActiveProduct(NON_EXISTENT_ID, true );
+
+    }
+
+    @Test
+    public void testLastProductUpdates() throws DuplicateInstancePropertyException, InstanceNotFoundException {
+
+        // Test update timestamp
+
+        assertEquals(LocalDateTime.MIN, catalogService.getLastProductUpdatedTimestamp());
+
+        Category category = createCategory(CATEGORY_NAME);
+
+        Product product1 = createProduct(PRODUCT_NAME + "1", category.getId());
+
+        assertEquals(product1.getUpdateTimestamp(), catalogService.getLastProductUpdatedTimestamp());
+
+        // Test updated products
+
+        Product product2 = createProduct(PRODUCT_NAME + "2", category.getId());
+
+        List<Product> expectedProducts = new ArrayList<>(Arrays.asList(product1, product2));
+        assertEquals(expectedProducts, catalogService.getUpdatedProducts(null));
+
+
+        expectedProducts = new ArrayList<>(Arrays.asList(product2));
+        assertEquals(expectedProducts, catalogService.getUpdatedProducts(product1.getUpdateTimestamp()));
+
+        assertEquals(new ArrayList<>(), catalogService.getUpdatedProducts(catalogService.getLastProductUpdatedTimestamp()));
 
     }
 
