@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import Bcrypt from 'bcryptjs';
@@ -12,6 +12,7 @@ import {formValidator} from '../../../utils';
 import * as actions from '../actions';
 import {UsersDB} from '../../../databases';
 import {minDelayFunction} from '../../utils';
+import * as selectors from '../../sync/selectors';
 
 const LoginForm = () => {
     const classes = useStyles();
@@ -22,12 +23,23 @@ const LoginForm = () => {
     useEffect(() => {return () => {_isMounted.current = false}}, []);
 
     const dispatch = useDispatch();
+    const localUpdateTimestamp = useSelector(selectors.getLocalUpdateTimestamp);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isLogging, setIsLogging] = useState(false);
     const [errors, setErrors] = useState(null);
     const [usersDB, setUsersDB] = useState(null);
+
+    useEffect(() => {
+
+        // Clear when a update is completed to reload usersDB on new load try
+        if (usersDB !== null && localUpdateTimestamp !== '') {
+            usersDB.close();
+            setUsersDB(null);
+        }
+
+    }, [localUpdateTimestamp]);
 
     const checkValid = () => {
         return formValidator.isNotEmpty(username)

@@ -23,11 +23,11 @@ export const initLocalUpdateTimestamp = onSuccess => {
     let updateTimestamp = getLocalStorageUpdateTimestamp();
 
     if (!updateTimestamp) {
-        updateTimestamp = "";
+        updateTimestamp = '';
         setLocalStorageUpdateTimestamp(updateTimestamp);
     }
 
-    if (updateTimestamp === "") {
+    if (updateTimestamp === '') {
         updateTimestamp = null;
     }
 
@@ -41,7 +41,7 @@ export const loadLocalUpdateTimestamp = onSuccess => dispatch => {
 
     let updateTimestamp = getLocalStorageUpdateTimestamp();
 
-    if (updateTimestamp === "") {
+    if (updateTimestamp === '') {
         updateTimestamp = null;
     }
 

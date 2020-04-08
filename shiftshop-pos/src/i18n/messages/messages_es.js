@@ -3,20 +3,21 @@ export default {
     'project.app.NetworkErrorMessage.title': 'Error de comunicación',
     'project.app.NetworkErrorMessage.message': 'No se pudo resolver la petición',
 
+    'project.app.nav.records': 'Registros',
+    'project.app.nav.sales': 'Venta',
+    'project.app.route.localRecords': 'Locales',
+    'project.app.route.preOrders': 'Reservas',
+    'project.app.route.shopping': 'Carrito',
+    'project.app.route.uploadedRecords': 'Subidos',
+
     'project.bd.error.Duplicated': 'Instancia duplicada',
     'project.bd.error.FailedInitIndexes': 'Fallo al inicializar los índeces de la base de datos',
     'project.bd.error.NotFound': 'Recurso no encontrado',
     'project.bd.error.NotIndexedSearch': 'Fallo en búsqueda con índice',
     'project.bd.error.ReadDocs': 'Fallo en lectura de recursos',
 
-    'project.global.button.authenticate': 'Autenticar',
-    'project.global.button.cancel': 'Cancelar',
-    'project.global.button.close': 'Cerrar',
-    'project.global.button.finalize': 'Finalizar',
-    'project.global.button.login': 'Iniciar sesión',
-    'project.global.button.retry': 'Reintentar',
-    'project.global.field.password': 'Contraseña',
-    'project.global.field.username': 'Usuario',
+    'project.sales.AddToCart.searchLabel': 'Añadir al carrito',
+    'project.sales.CatalogAutocomplete.noOptions': 'No se encontraron productos',
 
     'project.sync.InfoLocalUpdate.lastUpdate': 'Última actualización',
     'project.sync.InfoLocalUpdate.noSyncAvaliable': 'Sincronización no disponible',
@@ -31,5 +32,22 @@ export default {
     'project.sync.Synchronization.title': 'Sincronización de datos',
 
     'project.users.LoginForm.invalidLogin': 'Usuario/contraseña incorrectos',
+    'project.users.Logout.title': 'Salir',
+    'project.users.Logout.message': 'Selecciona "Continuar" para confirmar el cierre de la sesión actual.',
+    'project.users.Logout.noEmptyCart': '¡El carrito no está vacío!',
+
+
+    'project.global.button.authenticate': 'Autenticar',
+    'project.global.button.cancel': 'Cancelar',
+    'project.global.button.clear': 'Vaciar',
+    'project.global.button.close': 'Cerrar',
+    'project.global.button.continue': 'Continuar',
+    'project.global.button.finalize': 'Finalizar',
+    'project.global.button.login': 'Iniciar sesión',
+    'project.global.button.payment': 'Pago',
+    'project.global.button.retry': 'Reintentar',
+    'project.global.field.password': 'Contraseña',
+    'project.global.field.username': 'Usuario',
+
 
 }
