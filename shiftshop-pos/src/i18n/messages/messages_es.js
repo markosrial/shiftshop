@@ -17,7 +17,11 @@ export default {
     'project.bd.error.ReadDocs': 'Fallo en lectura de recursos',
 
     'project.sales.AddToCart.searchLabel': 'Añadir al carrito',
+    'project.sales.CartContent.emptyCart': 'El carrito está vacío',
     'project.sales.CatalogAutocomplete.noOptions': 'No se encontraron productos',
+    'project.sales.CleanCart.title': 'Vaciar carrito',
+    'project.sales.CleanCart.message': 'Pulse "Continuar" para vaciar el carrito.',
+    'project.sales.ShoppingCart.title': 'Carrito',
 
     'project.sync.InfoLocalUpdate.lastUpdate': 'Última actualización',
     'project.sync.InfoLocalUpdate.noSyncAvaliable': 'Sincronización no disponible',
@@ -36,7 +40,6 @@ export default {
     'project.users.Logout.message': 'Selecciona "Continuar" para confirmar el cierre de la sesión actual.',
     'project.users.Logout.noEmptyCart': '¡El carrito no está vacío!',
 
-
     'project.global.button.authenticate': 'Autenticar',
     'project.global.button.cancel': 'Cancelar',
     'project.global.button.clear': 'Vaciar',
@@ -46,7 +49,13 @@ export default {
     'project.global.button.login': 'Iniciar sesión',
     'project.global.button.payment': 'Pago',
     'project.global.button.retry': 'Reintentar',
+    'project.global.field.actions': 'Acciones',
+    'project.global.field.discount': 'Descuento',
+    'project.global.field.name': 'Nombre',
     'project.global.field.password': 'Contraseña',
+    'project.global.field.unitPrice': 'Precio unidad',
+    'project.global.field.quantity': 'Cantidad',
+    'project.global.field.total': 'Total',
     'project.global.field.username': 'Usuario',
 
 

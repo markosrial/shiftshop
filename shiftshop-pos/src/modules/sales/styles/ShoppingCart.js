@@ -9,8 +9,8 @@ const useStyles = makeStyles(theme => ({
     cardContent: {
         flexGrow: 1,
         height: '100%',
-        overflow: 'hidden'
-    }
+    },
+    actionsBox: {width: '100%'}
 }));
 
 export default useStyles;

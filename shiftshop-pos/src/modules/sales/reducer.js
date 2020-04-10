@@ -45,7 +45,7 @@ const shoppingCart = (state = initialState.shoppingCart, action) => {
 
         case actionTypes.SUBTRACT_PRODUCT_IN_CART:
 
-            const subtractProduct = state.find(item => item.id === action.id);
+            const subtractProduct = state.find(item => item.id === action.productId);
 
             if (subtractProduct) {
 
@@ -58,7 +58,7 @@ const shoppingCart = (state = initialState.shoppingCart, action) => {
 
                 }
 
-                return state.filter(item => item.id !== action.id);
+                return state.filter(item => item.id !== action.productId);
 
             }
 

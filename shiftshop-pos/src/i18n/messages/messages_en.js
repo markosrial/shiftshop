@@ -17,7 +17,11 @@ export default {
     'project.bd.error.ReadDocs': 'Failed reading resources',
 
     'project.sales.AddToCart.searchLabel': 'Add to shopping cart',
+    'project.sales.CartContent.emptyCart': 'Shopping cart is empty',
     'project.sales.CatalogAutocomplete.noOptions': 'No products found',
+    'project.sales.CleanCart.title': 'Clean shopping cart',
+    'project.sales.CleanCart.message': 'Press "Continue" to clean the shopping cart.',
+    'project.sales.ShoppingCart.title': 'Shopping cart',
 
     'project.sync.InfoLocalUpdate.lastUpdate': 'Last update',
     'project.sync.InfoLocalUpdate.noSyncAvaliable': 'No synchronization available',
@@ -46,7 +50,13 @@ export default {
     'project.global.button.login': 'Login',
     'project.global.button.payment': 'Payment',
     'project.global.button.retry': 'Retry',
+    'project.global.field.actions': 'Actions',
+    'project.global.field.discount': 'Discount',
+    'project.global.field.name': 'Name',
     'project.global.field.password': 'Password',
+    'project.global.field.unitPrice': 'Unit price',
+    'project.global.field.quantity': 'Quantity',
+    'project.global.field.total': 'Total',
     'project.global.field.username': 'Username',
 
 }

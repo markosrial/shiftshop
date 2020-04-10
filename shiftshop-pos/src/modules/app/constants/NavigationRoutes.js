@@ -9,11 +9,11 @@ export default [
                 route: '/sales/shopping',
                 icon: ShoppingBasket
             },
-            {
+            /*{
                 title: 'project.app.route.preOrders',
                 route: '/sales/preOrders',
                 icon: Book
-            }
+            }*/
         ]
     },
     {

@@ -1,44 +1,84 @@
-import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, {Fragment, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
-import {Button, Card, CardActions, CardContent, CardHeader, Divider} from '@material-ui/core';
-import {ClearAll, DoubleArrow} from '@material-ui/icons';
+import {
+    Box,
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    Divider,
+    IconButton,
+    TextField
+} from '@material-ui/core';
+import {Clear, DoubleArrow} from '@material-ui/icons';
+import NumberFormat from 'react-number-format';
 
 import useStyles from '../styles/ShoppingCart';
 
-import * as actions from '../actions';
 import * as selectors from '../selectors';
+import CartContent from './CartContent';
+import CleanCart from './CleanCart';
+import CartTotal from './CartTotal';
 
 const ShoppingCart = () => {
 
     const classes = useStyles();
 
-    const dispatch = useDispatch();
     const cartCount = useSelector(selectors.getShoppingCartCount);
+    const cartSubtotal = useSelector(selectors.getShoppingCartSubtotal);
 
-    const cleanCart = () => dispatch(actions.clearCart());
+    const [discount, setDiscount] = useState(null);
+
+    const handleChangeDiscount = value => {
+
+        if (value && Number.parseFloat(value) > cartSubtotal) {
+            setDiscount(cartSubtotal);
+            return;
+        }
+
+        setDiscount(value);
+
+    };
 
     return (
         <Card className={classes.card}>
-            <CardHeader title={"Shopping Cart"}
-                        action={<Button variant="contained" color="secondary" size="small" disableElevation
-                                        disabled={cartCount === 0} onClick={cleanCart}>
-                                    <ClearAll fontSize="small"/>
-                                    &nbsp;
-                                    <FormattedMessage id="project.global.button.clear"/>
-                                </Button>}/>
+            <CardHeader title={<FormattedMessage id="project.sales.ShoppingCart.title"/>}
+                        action={<CleanCart/>}/>
             <Divider/>
             <CardContent className={classes.cardContent}>
-                <div/>
+                <CartContent/>
             </CardContent>
             <Divider/>
             <CardActions>
-                <Button variant="contained" color="primary" size="medium" disableElevation
-                        disabled={cartCount === 0} onClick={null}>
-                    <DoubleArrow/>
-                    &nbsp;
-                    <FormattedMessage id="project.global.button.payment"/>
-                </Button>
+                <Box className={classes.actionsBox} display="flex" alignItems="center">
+                    {(cartCount > 0) &&
+                        <NumberFormat value={discount} onValueChange={values => handleChangeDiscount(values.value)}
+                                      inputProps={{style: { textAlign: "right" }}}
+                                      decimalScale={2} fixedDecimalScale suffix=" €" allowNegative={false}
+                                      customInput={TextField} variant="outlined" margin="dense"
+                                      label={<FormattedMessage id="project.global.field.discount"/>}
+                                      InputProps={{
+                                          startAdornment:
+                                              discount && <IconButton onClick={() => setDiscount(null)}>
+                                                  <Clear fontSize="small"/>
+                                              </IconButton>,
+                                      }}/>}
+                    <Box flexGrow={1}/>
+                    <Button variant="contained" color="primary" size="medium" disableElevation
+                            disabled={cartCount === 0} onClick={null}>
+                        <DoubleArrow/>
+                        &nbsp;
+                        <FormattedMessage id="project.global.button.payment"/>
+                        {(cartCount > 0) &&
+                            <Fragment>
+                                &nbsp;
+                                (<FormattedMessage id="project.global.field.total"/>: <CartTotal discount={discount}/>)
+                            </Fragment>
+                        }
+                    </Button>
+                </Box>
             </CardActions>
         </Card>
     );
