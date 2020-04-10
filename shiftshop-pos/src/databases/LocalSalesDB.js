@@ -1,7 +1,7 @@
 import PouchDB from 'pouchdb';
 import PouchCRUD from './PouchCRUD';
 
-const dbName = 'Users';
+const dbName = 'LocalSales';
 
 export const instantiate = () => {
 
@@ -10,7 +10,12 @@ export const instantiate = () => {
     // CRUD operations and query indexes
     const CRUD = PouchCRUD(db);
 
-    return ({name: dbName, close: db.close, destroy: db.destroy, ...CRUD});
+    return ({
+        name: dbName,
+        ...CRUD,
+        close: db.close,
+        destroy: db.destroy
+    });
 
 };
 

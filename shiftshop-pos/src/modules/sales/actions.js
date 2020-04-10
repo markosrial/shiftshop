@@ -7,8 +7,11 @@ const loadCatalogCompleted = catalog => ({
     catalog
 });
 
-export const loadCatalog = onError => dispatch =>
-    ProductsDB.init().then(productDB => productDB.getAll())
+export const loadCatalog = onError => dispatch => {
+
+    const productDB = ProductsDB.instantiate();
+
+    productDB.getAll()
         .then(products => {
 
             const sortedProducts = products.sort(
@@ -18,7 +21,7 @@ export const loadCatalog = onError => dispatch =>
 
         }).catch(onError);
 
-
+};
 
 export const addToCart = productId => ({
     type: actionTypes.ADD_TO_CART,

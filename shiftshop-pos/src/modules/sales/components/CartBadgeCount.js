@@ -9,7 +9,7 @@ const CartBadgeCount = ({Icon}) => {
     const cartCount = useSelector(selectors.getShoppingCartCount);
 
     return (
-        <Badge color="secondary" badgeContent={<Box fontWeight={700}>{cartCount}</Box>}>
+        <Badge color="secondary" max={99} badgeContent={cartCount}>
             {Icon}
             &nbsp;
         </Badge>

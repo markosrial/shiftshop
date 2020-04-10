@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {
@@ -21,6 +21,7 @@ import * as selectors from '../selectors';
 import CartContent from './CartContent';
 import CleanCart from './CleanCart';
 import CartTotal from './CartTotal';
+import AddSale from './AddSale';
 
 const ShoppingCart = () => {
 
@@ -30,10 +31,20 @@ const ShoppingCart = () => {
     const cartSubtotal = useSelector(selectors.getShoppingCartSubtotal);
 
     const [discount, setDiscount] = useState(null);
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+
+        if (discount && discount > cartSubtotal) {
+            setDiscount(null);
+        }
+
+    }, [cartSubtotal]);
 
     const handleChangeDiscount = value => {
 
         if (value && Number.parseFloat(value) > cartSubtotal) {
+
             setDiscount(cartSubtotal);
             return;
         }
@@ -67,19 +78,20 @@ const ShoppingCart = () => {
                                       }}/>}
                     <Box flexGrow={1}/>
                     <Button variant="contained" color="primary" size="medium" disableElevation
-                            disabled={cartCount === 0} onClick={null}>
+                            disabled={cartCount === 0} onClick={() => setOpen(true)}>
                         <DoubleArrow/>
                         &nbsp;
                         <FormattedMessage id="project.global.button.payment"/>
                         {(cartCount > 0) &&
                             <Fragment>
                                 &nbsp;
-                                (<FormattedMessage id="project.global.field.total"/>: <CartTotal discount={discount}/>)
+                                (<FormattedMessage id="project.global.field.total"/>: <CartTotal discount={discount && Number.parseFloat(discount)}/>)
                             </Fragment>
                         }
                     </Button>
                 </Box>
             </CardActions>
+            {open && <AddSale discount={discount && Number.parseFloat(discount)} closeDialog={() => setOpen(false)}/>}
         </Card>
     );
 

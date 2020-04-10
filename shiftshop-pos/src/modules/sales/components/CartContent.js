@@ -65,7 +65,7 @@ const CartContent = () => {
                             if (!product) return null;
 
                             return (
-                                <TableRow key={product.id}>
+                                <TableRow key={item.id}>
                                     <TableCell>{product.name}</TableCell>
                                     <TableCell align="right">{product.salePrice.toFixed(2)} €</TableCell>
                                     <TableCell align="right">x{item.quantity}</TableCell>

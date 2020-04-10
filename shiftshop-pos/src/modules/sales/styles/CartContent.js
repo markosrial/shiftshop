@@ -27,16 +27,16 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(0),
         color: theme.palette.primary.contrastText,
         backgroundColor: theme.palette.primary.light,
-        "&:hover": {
+        '&:hover': {
             backgroundColor: theme.palette.primary.main,
-        }
+        },
     },
     productActionSubtract: {
         paddingLeft: theme.spacing(0),
         paddingRight: theme.spacing(0),
         color: theme.palette.secondary.contrastText,
         backgroundColor: theme.palette.secondary.light,
-        "&:hover": {
+        '&:hover': {
             backgroundColor: theme.palette.secondary.main,
         }
     },
@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(0),
         color: theme.palette.dark.contrastText,
         backgroundColor: theme.palette.dark.light,
-        "&:hover": {
+        '&:hover': {
             backgroundColor: theme.palette.dark.main,
         }
     }

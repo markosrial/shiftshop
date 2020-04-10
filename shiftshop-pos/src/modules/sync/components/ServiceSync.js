@@ -59,14 +59,14 @@ const ServiceSync = ({localUpdateTimestamp, lastUpdateTimestamp, nextStep, onCan
             return;
         }
 
-        let usersDB = await UsersDB.init();
+        let usersDB = UsersDB.instantiate();
 
         // With no data -> add all items on fresh DB
         if (!localUpdateTimestamp) {
 
             // Empty DB
             await usersDB.destroy();
-            usersDB = await UsersDB.init();
+            usersDB = UsersDB.instantiate();
 
             // Add all salesman users
             await Promise.all(
@@ -134,14 +134,14 @@ const ServiceSync = ({localUpdateTimestamp, lastUpdateTimestamp, nextStep, onCan
             return;
         }
 
-        let productsDB = await ProductsDB.init();
+        let productsDB = ProductsDB.instantiate();
 
         // With no data -> add all items on fresh DB
         if (!localUpdateTimestamp) {
 
             // Empty DB
             await productsDB.destroy();
-            productsDB = await ProductsDB.init();
+            productsDB = ProductsDB.instantiate();
 
             // Add all active products
             await Promise.all(

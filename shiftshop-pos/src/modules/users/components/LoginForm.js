@@ -62,9 +62,12 @@ const LoginForm = () => {
         setIsLogging(true);
 
         if (!usersDB) {
-            UsersDB.init()
-                .then(usersDB => { setUsersDB(usersDB); checkUser(usersDB, username, password); })
-                .catch(err => errorDB(err));
+
+            const db = UsersDB.instantiate();
+            setUsersDB(db);
+
+            checkUser(db, username, password);
+
         } else {
             checkUser(usersDB, username, password);
         }

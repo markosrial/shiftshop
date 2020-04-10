@@ -1,25 +1,41 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
+import {useSnackbar} from 'notistack';
 import {HashRouter, Route, Switch} from 'react-router-dom';
+import {Button} from '@material-ui/core';
 
 import useStyles from '../styles/Main';
 
-import users from '../../users';
-import shopping, {ShoppingFrame} from '../../sales';
+import records from '../../records';
+import sales, {ShoppingFrame} from '../../sales';
 import TopBar from './TopBar';
 import SideBar from './SideBar';
+import {FormattedMessage} from 'react-intl';
 
 const Main = () => {
 
     const classes = useStyles();
 
+    const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(shopping.actions.loadCatalog(error => console.log(error)));
-    }, []);
 
-    const user = useSelector(users.selectors.getUser);
+        // Init
+        dispatch(sales.actions.loadCatalog(
+            () => enqueueSnackbar(
+                <FormattedMessage id="project.app.Main.loadCatalogError"/>,
+                {variant: 'error', persist: true, action: key => (
+                    <Button variant="outlined" color="inherit" onClick={() => closeSnackbar(key)}>
+                        <FormattedMessage id="project.global.button.close"/>
+                    </Button>)})
+        ));
+        dispatch(records.actions.instantiateSalesDB());
+
+        return () => dispatch(records.actions.closeSalesDB());
+
+    }, []);
 
     const [sidebarActive, setSidebarActive] = useState(true);
 

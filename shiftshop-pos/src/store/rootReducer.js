@@ -1,12 +1,14 @@
 import {combineReducers} from 'redux';
 
 // import app from '../modules/app';
+import records from '../modules/records';
 import sales from '../modules/sales';
 import sync from '../modules/sync';
 import users from '../modules/users';
 
 const appReducer = combineReducers({
     // app: app.reducer,
+    records: records.reducer,
     sales: sales.reducer,
     sync: sync.reducer,
     users: users.reducer,

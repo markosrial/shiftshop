@@ -24,8 +24,12 @@ export const getProductById = (catalog, id) => {
 export const getShoppingCart = state =>
     getModuleState(state).shoppingCart;
 
-export const getShoppingCartCount = state =>
-    getModuleState(state).shoppingCart.length;
+export const getShoppingCartCount = createSelector(
+    getShoppingCart,
+    shoppingCart =>
+        (shoppingCart.map(item => item.quantity)
+            .reduce((a, b) => a + b, 0))
+);
 
 
 export const getShoppingCartSubtotal = createSelector(
