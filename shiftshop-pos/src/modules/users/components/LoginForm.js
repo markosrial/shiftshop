@@ -96,7 +96,7 @@ const LoginForm = () => {
 
     const checkUser = (usersDB, username, password) => {
 
-        const delay = minDelayFunction(500);
+        const delay = minDelayFunction(300);
 
         usersDB.getById(username)
             .then(user => {
