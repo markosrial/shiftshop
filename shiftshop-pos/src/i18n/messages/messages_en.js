@@ -1,9 +1,13 @@
 export default {
 
-    'project.app.NetworkErrorMessage.title': 'Network error',
-    'project.app.NetworkErrorMessage.message': 'Request could not be resolved',
+    'project.app.nav.records': 'Records',
+    'project.app.nav.sales': 'Sale',
+    'project.app.route.localRecords': 'Local',
+    'project.app.route.preOrders': 'Pre-orders',
+    'project.app.route.shopping': 'Shopping cart',
+    'project.app.route.uploadedRecords': 'Uploaded',
 
-    'project.bd.error.Duplicated': 'Duplicated instance',
+    'project.bd.error.Duplicated': 'Duplicated resource',
     'project.bd.error.FailedInitIndexes': 'Failed on initialize database indexes',
     'project.bd.error.NotFound': 'Resource not found',
     'project.bd.error.NotIndexedSearch': 'Failed on indexed search',
@@ -11,13 +15,40 @@ export default {
 
     'project.global.button.authenticate': 'Authenticate',
     'project.global.button.cancel': 'Cancel',
+    'project.global.button.clear': 'Clear',
     'project.global.button.close': 'Close',
+    'project.global.button.continue': 'Continue',
     'project.global.button.finalize': 'Finalize',
-    'project.global.button.complete': 'Completar',
     'project.global.button.login': 'Login',
+    'project.global.button.payment': 'Payment',
+    'project.global.button.printAndSave': 'Print and save',
     'project.global.button.retry': 'Retry',
+    'project.global.button.save': 'Save',
+    'project.global.field.actions': 'Actions',
+    'project.global.field.cash': 'Cash',
+    'project.global.field.change': 'Change',
+    'project.global.field.discount': 'Discount',
+    'project.global.field.name': 'Name',
     'project.global.field.password': 'Password',
+    'project.global.field.unitPrice': 'Unit price',
+    'project.global.field.quantity': 'Quantity',
+    'project.global.field.subtotal': 'Subtotal',
+    'project.global.field.total': 'Total',
     'project.global.field.username': 'Username',
+
+    'project.app.Main.loadCatalogError': 'Error on initial catalog load',
+    'project.app.NetworkErrorMessage.title': 'Network error',
+    'project.app.NetworkErrorMessage.message': 'Request could not be resolved',
+
+    'project.sales.AddSale.title': 'Sale resume',
+    'project.sales.AddSale.numItems': 'Items number',
+    'project.sales.AddSale.success': 'Sale added',
+    'project.sales.AddToCart.searchLabel': 'Add to shopping cart',
+    'project.sales.CartContent.emptyCart': 'Shopping cart is empty',
+    'project.sales.CatalogAutocomplete.noOptions': 'No products found',
+    'project.sales.CleanCart.title': 'Clean shopping cart',
+    'project.sales.CleanCart.message': 'Press "Continue" to clean the shopping cart.',
+    'project.sales.ShoppingCart.title': 'Shopping cart',
 
     'project.sync.InfoLocalUpdate.lastUpdate': 'Last update',
     'project.sync.InfoLocalUpdate.noSyncAvaliable': 'No synchronization available',
@@ -32,5 +63,8 @@ export default {
     'project.sync.Synchronization.title': 'Data synchronization',
 
     'project.users.LoginForm.invalidLogin': 'Invalid username/password',
+    'project.users.Logout.title': 'Exit',
+    'project.users.Logout.message': 'Select "Continue" to confirm the close of the current session.',
+    'project.users.Logout.noEmptyCart': 'Shopping cart is not empty!',
 
 }

@@ -44,10 +44,10 @@ const InitialClean = ({callOnSuccess}) => {
 
         try {
 
-            const userDB = await UsersDB.init();
+            const userDB = UsersDB.instantiate();
             await userDB.destroy();
 
-            const productsDB = await ProductsDB.init();
+            const productsDB = ProductsDB.instantiate();
             await productsDB.destroy();
 
             // Clean succesfull

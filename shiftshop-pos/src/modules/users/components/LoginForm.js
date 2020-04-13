@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import Bcrypt from 'bcryptjs';
@@ -12,6 +12,7 @@ import {formValidator} from '../../../utils';
 import * as actions from '../actions';
 import {UsersDB} from '../../../databases';
 import {minDelayFunction} from '../../utils';
+import * as selectors from '../../sync/selectors';
 
 const LoginForm = () => {
     const classes = useStyles();
@@ -22,12 +23,23 @@ const LoginForm = () => {
     useEffect(() => {return () => {_isMounted.current = false}}, []);
 
     const dispatch = useDispatch();
+    const localUpdateTimestamp = useSelector(selectors.getLocalUpdateTimestamp);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isLogging, setIsLogging] = useState(false);
     const [errors, setErrors] = useState(null);
     const [usersDB, setUsersDB] = useState(null);
+
+    useEffect(() => {
+
+        // Clear when a update is completed to reload usersDB on new load try
+        if (usersDB !== null && localUpdateTimestamp !== '') {
+            usersDB.close();
+            setUsersDB(null);
+        }
+
+    }, [localUpdateTimestamp]);
 
     const checkValid = () => {
         return formValidator.isNotEmpty(username)
@@ -50,9 +62,12 @@ const LoginForm = () => {
         setIsLogging(true);
 
         if (!usersDB) {
-            UsersDB.init()
-                .then(usersDB => { setUsersDB(usersDB); checkUser(usersDB, username, password); })
-                .catch(err => errorDB(err));
+
+            const db = UsersDB.instantiate();
+            setUsersDB(db);
+
+            checkUser(db, username, password);
+
         } else {
             checkUser(usersDB, username, password);
         }
@@ -81,7 +96,7 @@ const LoginForm = () => {
 
     const checkUser = (usersDB, username, password) => {
 
-        const delay = minDelayFunction(500);
+        const delay = minDelayFunction(300);
 
         usersDB.getById(username)
             .then(user => {

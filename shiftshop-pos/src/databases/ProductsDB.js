@@ -3,7 +3,7 @@ import PouchCRUD from './PouchCRUD';
 
 const dbName = 'Products';
 
-export const init = async () => {
+export const instantiate = () => {
 
     const db = new PouchDB(dbName);
 
@@ -33,4 +33,4 @@ export const init = async () => {
 
 };
 
-export default {init};
+export default {instantiate};

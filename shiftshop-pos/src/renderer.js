@@ -28,7 +28,7 @@ ReactDOM.render(
       <Provider store={store}>
         <IntlProvider locale={locale} messages={messages}>
           <SnackbarProvider anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                            autoHideDuration={2500}>
+                            autoHideDuration={1500}>
             <App/>
           </SnackbarProvider>
         </IntlProvider>
