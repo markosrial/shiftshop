@@ -64,7 +64,7 @@ export default {
   },
   body2: {
     color: palette.text.secondary,
-    fontSize: '0.75rem',
+    fontSize: '0.85rem',
     lineHeight: '1.125rem'
   },
   button: {
@@ -73,12 +73,12 @@ export default {
   },
   caption: {
     color: palette.text.secondary,
-    fontSize: '0.7rem',
+    fontSize: '0.75rem',
     lineHeight: '0.82rem',
   },
   overline: {
     color: palette.text.secondary,
-    fontSize: '0.7rem',
+    fontSize: '0.75rem',
     fontWeight: 500,
     letterSpacing: '0.021rem',
     lineHeight: '0.82rem',

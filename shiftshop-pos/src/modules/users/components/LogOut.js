@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
 import {
     Box,
@@ -20,7 +21,10 @@ import * as actions from '../actions';
 import sales from '../../sales';
 
 const LogOut = () => {
+
     const classes = useStyles();
+
+    const history = useHistory();
 
     const dispatch = useDispatch();
     const cartCount = useSelector(sales.selectors.getShoppingCartCount);
@@ -32,6 +36,7 @@ const LogOut = () => {
 
     const logout = () => {
         dispatch(actions.logout());
+        history.push('/');
     };
 
     return (
