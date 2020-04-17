@@ -40,6 +40,7 @@ describe('ProductDetails snapshot', () => {
             categoryId: categories[0],
             providerPrice: 2.0,
             salePrice: 7.5,
+            creationDate: new Date(2020, 2, 12, 0, 0, 0, 0),
             active: true
         };
 
@@ -60,6 +61,7 @@ describe('ProductDetails snapshot', () => {
             categoryId: categories[0],
             providerPrice: 2.0,
             salePrice: 2.0,
+            creationDate: new Date(2020, 2, 12, 0, 0, 0, 0),
             active: true
         };
 
@@ -80,6 +82,7 @@ describe('ProductDetails snapshot', () => {
             categoryId: categories[0],
             providerPrice: 2.0,
             salePrice: 1.75,
+            creationDate: new Date(2020, 2, 12, 0, 0, 0, 0),
             active: false
         };
 

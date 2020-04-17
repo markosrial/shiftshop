@@ -1,12 +1,23 @@
 package com.shiftshop.service.model.services;
 
+import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.common.exceptions.InstancePropertyNotFoundException;
+import com.shiftshop.service.model.common.utils.MessageConstants;
 import com.shiftshop.service.model.entities.User;
+import com.shiftshop.service.model.entities.User.RoleType;
+import com.shiftshop.service.model.entities.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -17,6 +28,36 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Override
+    public User registerUser(User user) throws DuplicateInstancePropertyException, NoUserRolesException {
+
+        try {
+
+            // Check if user with login exists
+            permissionChecker.checkUser(user.getUserName());
+            throw new DuplicateInstancePropertyException(MessageConstants.ENTITIES_USER,
+                    MessageConstants.ENTITIES_PROPS_USERNAME, user.getUserName());
+
+        } catch (InstancePropertyNotFoundException e) {
+
+            // New manager users can not be registered
+            user.getRoles().remove(RoleType.MANAGER);
+
+            if (user.getRoles().isEmpty()) {
+                throw new NoUserRolesException();
+            }
+
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setActive(true);
+
+            return userDao.save(user);
+
+        }
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -41,7 +82,6 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
-
     }
 
     @Override
@@ -55,7 +95,51 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
-
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Block<User> getUsers(int page, int size) {
+
+        Slice<User> slice = userDao.findByActiveIsTrueOrderByUserNameAsc(PageRequest.of(page, size));
+
+        return new Block<>(slice.getContent(), slice.hasNext());
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public Block<User> getBlockedUsers(int page, int size) {
+
+        Slice<User> slice = userDao.findByActiveIsFalseOrderByUserNameAsc(PageRequest.of(page, size));
+
+        return new Block<>(slice.getContent(), slice.hasNext());
+    }
+
+    @Override
+    public LocalDateTime getLastUserUpdatedTimestamp() {
+
+        Optional<LocalDateTime> lastUpdate = userDao.getLastUpdateTimestamp();
+
+        if (lastUpdate.isEmpty()) {
+            return LocalDateTime.MIN;
+        }
+
+        return lastUpdate.get();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<User> getUpdatedUsers(LocalDateTime lastUpdate) {
+
+        // With no user changes (have lastUpdate and last update on user is before or equal to lastUpdate passed)
+        if (lastUpdate != null && !getLastUserUpdatedTimestamp().isAfter(lastUpdate)) {
+
+            return new ArrayList<>();
+
+        }
+
+        return userDao.findAllByActiveIsTrueAndRolesContains(RoleType.SALESMAN);
+
+    }
 }

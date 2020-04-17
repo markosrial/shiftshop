@@ -1,13 +1,13 @@
 package com.shiftshop.service.rest.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.entities.Category;
 import com.shiftshop.service.model.entities.Product;
 import com.shiftshop.service.model.entities.User;
+import com.shiftshop.service.model.entities.User.RoleType;
 import com.shiftshop.service.model.entities.UserDao;
-import com.shiftshop.service.model.services.CatalogService;
-import com.shiftshop.service.model.services.IncorrectLoginException;
-import com.shiftshop.service.model.services.UserNotActiveException;
+import com.shiftshop.service.model.services.*;
 import com.shiftshop.service.rest.dtos.catalog.InsertCategoryParamsDto;
 import com.shiftshop.service.rest.dtos.catalog.InsertProductParamsDto;
 import com.shiftshop.service.rest.dtos.user.AuthenticatedUserDto;
@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,33 +50,28 @@ public class CatalogControllerTest {
     private final static String ADMIN_LOGIN = "admin";
     private final static String SALESMAN_LOGIN = "salesman";
     private final static String PASSWORD = "password";
+    private final String NAME = "User";
+    private final String SURNAMES = "Test Tester";
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     @Autowired
     private CatalogService catalogService;
 
-
     @Autowired
     private UserController userController;
 
-    private AuthenticatedUserDto createAuthenticatedUser(String userName, Set<User.RoleType> roles)
-            throws IncorrectLoginException, UserNotActiveException {
+    private AuthenticatedUserDto createAuthenticatedUser(String userName, Set<RoleType> roles)
+            throws IncorrectLoginException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
 
-        User user = new User(userName, PASSWORD);
+        User user = new User(userName, PASSWORD, NAME, SURNAMES, roles);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(roles);
-        user.setActive(true);
-
-        userDao.save(user);
+        userService.registerUser(user);
 
         LoginParamsDto loginParams = new LoginParamsDto();
         loginParams.setUserName(user.getUserName());
@@ -85,21 +81,15 @@ public class CatalogControllerTest {
     }
 
     private AuthenticatedUserDto createAuthenticatedAdminUser(String userName)
-            throws IncorrectLoginException, UserNotActiveException {
-
-        Set<User.RoleType> roles = new HashSet<>();
-        roles.add(User.RoleType.ADMIN);
-
-        return createAuthenticatedUser(userName, roles);
+            throws IncorrectLoginException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
+        return createAuthenticatedUser(userName, new HashSet<>(Arrays.asList(RoleType.ADMIN)));
     }
 
     private AuthenticatedUserDto createAuthenticatedSalesmanUser(String userName)
-            throws IncorrectLoginException, UserNotActiveException {
-
-        Set<User.RoleType> roles = new HashSet<>();
-        roles.add(User.RoleType.SALESMAN);
-
-        return createAuthenticatedUser(userName, roles);
+            throws IncorrectLoginException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
+        return createAuthenticatedUser(userName, new HashSet<>(Arrays.asList(RoleType.SALESMAN)));
     }
 
     /* Test categories section from controller */
@@ -114,7 +104,7 @@ public class CatalogControllerTest {
         InsertCategoryParamsDto params = new InsertCategoryParamsDto();
         params.setName("test");
 
-        mockMvc.perform(post("/catalog/categories" )
+        mockMvc.perform(post("/catalog/categories")
                 .header("Authorization", "Bearer " + user.getServiceToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(params)))
@@ -132,7 +122,7 @@ public class CatalogControllerTest {
         InsertCategoryParamsDto params = new InsertCategoryParamsDto();
         params.setName("");
 
-        this.mockMvc.perform(post("/catalog/categories" )
+        this.mockMvc.perform(post("/catalog/categories")
                 .header("Authorization", "Bearer " + user.getServiceToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(params)))
@@ -150,13 +140,13 @@ public class CatalogControllerTest {
         InsertCategoryParamsDto params = new InsertCategoryParamsDto();
         params.setName(CATEGORY_NAME);
 
-        mockMvc.perform(post("/catalog/categories" )
+        mockMvc.perform(post("/catalog/categories")
                 .header("Authorization", "Bearer " + user.getServiceToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(params)))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(post("/catalog/categories" )
+        mockMvc.perform(post("/catalog/categories")
                 .header("Authorization", "Bearer " + user.getServiceToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(params)))
@@ -169,7 +159,7 @@ public class CatalogControllerTest {
 
         AuthenticatedUserDto user = createAuthenticatedSalesmanUser(SALESMAN_LOGIN);
 
-        this.mockMvc.perform(post("/catalog/categories" )
+        this.mockMvc.perform(post("/catalog/categories")
                 .header("Authorization", "Bearer " + user.getServiceToken()))
                 .andExpect(status().isForbidden());
 
@@ -602,6 +592,55 @@ public class CatalogControllerTest {
         AuthenticatedUserDto user = createAuthenticatedSalesmanUser(SALESMAN_LOGIN);
 
         this.mockMvc.perform(put("/catalog/products/" + NON_EXISTENT_ID)
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    public void testPutProductsActiveInactive_NoContent() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(ADMIN_LOGIN);
+        Category category = catalogService.addCategory(CATEGORY_NAME);
+        Product product = catalogService.addProduct(PRODUCT_NAME, PROV_PRICE, SALE_PRICE, category.getId());
+
+        this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/active")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNoContent());
+
+        this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/inactive")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNoContent());
+
+    }
+
+    @Test
+    public void testPutProductsActiveInactive_NotFound() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(ADMIN_LOGIN);
+
+        this.mockMvc.perform(put("/catalog/products/" + NON_EXISTENT_ID + "/active")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNotFound());
+
+        this.mockMvc.perform(put("/catalog/products/" + NON_EXISTENT_ID + "/inactive")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void testPutProductsActiveInactive_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedSalesmanUser(SALESMAN_LOGIN);
+        Category category = catalogService.addCategory(CATEGORY_NAME);
+        Product product = catalogService.addProduct(PRODUCT_NAME, PROV_PRICE, SALE_PRICE, category.getId());
+
+        this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/active")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
+
+        this.mockMvc.perform(put("/catalog/products/" + product.getId() + "/inactive")
                 .header("Authorization", "Bearer " + user.getServiceToken()))
                 .andExpect(status().isForbidden());
 

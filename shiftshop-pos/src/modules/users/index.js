@@ -4,5 +4,6 @@ import reducer from './reducer';
 import * as selectors from './selectors';
 
 export {default as LoginPortal} from './components/LoginPortal';
+export {default as LogOut} from './components/LogOut';
 
 export default {actionTypes, actions, reducer, selectors};

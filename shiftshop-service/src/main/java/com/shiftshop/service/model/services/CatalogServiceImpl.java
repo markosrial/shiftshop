@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -127,7 +128,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     @Transactional(readOnly = true)
-    public Block<Product> findProducts(Long categoryId, String keywords, Boolean onlyActive,
+    public Block<Product> findProducts(Long categoryId, String keywords, boolean onlyActive,
                                        String orderType, String order, int page, int size) {
 
         Slice<Product> slice = productDao.find(categoryId, keywords, onlyActive,
@@ -174,6 +175,44 @@ public class CatalogServiceImpl implements CatalogService {
         }
 
         return product;
+
+    }
+
+    @Override
+    public void setActiveProduct(Long id, boolean active) throws InstanceNotFoundException {
+
+        Product product = findProductById(id);
+
+        if (product.isActive() != active) {
+            product.setActive(active);
+        }
+
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public LocalDateTime getLastProductUpdatedTimestamp() {
+
+        Optional<LocalDateTime> lastUpdate = productDao.getLastUpdateTimestamp();
+
+        if (lastUpdate.isEmpty()) {
+            return LocalDateTime.MIN;
+        }
+
+        return lastUpdate.get();
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Product> getUpdatedProducts(LocalDateTime lastUpdate) {
+
+        if (lastUpdate != null) {
+            return productDao.findByUpdateTimestampIsAfter(lastUpdate);
+        } else {
+            return productDao.findAllByActiveIsTrue();
+        }
 
     }
 

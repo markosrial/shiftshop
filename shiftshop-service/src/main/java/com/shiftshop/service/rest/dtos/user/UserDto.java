@@ -6,14 +6,18 @@ public class UserDto {
 
 	private Long id;
 	private String userName;
-	private Set<String> roles;
+	private String name;
+	private String surnames;
+	private Set<Integer> roles;
 
 	public UserDto() {}
 
-	public UserDto(Long id, String userName, Set<String> roles) {
+	public UserDto(Long id, String userName, String name, String surnames, Set<Integer> roles) {
 
 		this.id = id;
-		this.userName = userName != null ? userName.trim() : null;
+		this.userName = userName;
+		this.name = name;
+		this.surnames = surnames;
 		this.roles = roles;
 
 	}
@@ -31,14 +35,30 @@ public class UserDto {
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName.trim();
+		this.userName = userName;
 	}
 
-	public Set<String> getRoles() {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurnames() {
+		return surnames;
+	}
+
+	public void setSurnames(String surnames) {
+		this.surnames = surnames;
+	}
+
+	public Set<Integer> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<String> role) {
+	public void setRoles(Set<Integer> role) {
 		this.roles = role;
 	}
 

@@ -27,13 +27,13 @@ public class CustomizedProductDaoImpl implements CustomizedProductDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Slice<Product> find(Long categoryId, String keywords, Boolean onlyActive,
+    public Slice<Product> find(Long categoryId, String keywords, boolean onlyActive,
                                ProductOrderType orderType, OrderAscDesc order, int page, int size) {
 
         String[] tokens = getTokens(keywords);
         String queryString = "FROM Product p";
 
-        if (categoryId != null || tokens.length > 0 || onlyActive != null) {
+        if (categoryId != null || tokens.length > 0 || onlyActive) {
             queryString += " WHERE ";
         }
 
@@ -55,7 +55,7 @@ public class CustomizedProductDaoImpl implements CustomizedProductDao {
 
         }
 
-        if (onlyActive != null && onlyActive) {
+        if (onlyActive) {
 
             if (categoryId != null || tokens.length > 0) {
                 queryString += " AND ";

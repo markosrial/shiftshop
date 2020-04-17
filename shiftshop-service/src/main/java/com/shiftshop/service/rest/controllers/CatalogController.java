@@ -8,6 +8,7 @@ import com.shiftshop.service.model.services.CatalogService;
 import com.shiftshop.service.rest.dtos.catalog.*;
 import com.shiftshop.service.rest.dtos.common.BlockDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -74,7 +75,7 @@ public class CatalogController {
     public BlockDto<ProductSummaryDto> findProducts(
             @RequestParam(required = false) Long categoryId, @RequestParam(required = false) String keywords,
             @RequestParam(required = false) String orderBy, @RequestParam(required = false) String order,
-            @RequestParam(defaultValue = "true", required = false) Boolean onlyActive,
+            @RequestParam(defaultValue = "true", required = false) boolean onlyActive,
             @RequestParam(defaultValue = "0", required = false) @Min(0) int page,
             @RequestParam(defaultValue = "15", required = false) @Min(0) int size) {
 
@@ -93,6 +94,18 @@ public class CatalogController {
                 catalogService.updateProduct(id, params.getName(), params.getProviderPrice(),
                         params.getSalePrice(), params.getBarcode(), params.getCategoryId()),
                 getRolesFromAuthentication(authentication));
+    }
+
+    @PutMapping("/products/{id}/active")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void activeProduct(@PathVariable Long id) throws InstanceNotFoundException {
+        catalogService.setActiveProduct(id, true);
+    }
+
+    @PutMapping("/products/{id}/inactive")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void inactiveProduct(@PathVariable Long id) throws InstanceNotFoundException {
+        catalogService.setActiveProduct(id, false);
     }
 
 }

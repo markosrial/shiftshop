@@ -18,10 +18,19 @@ const getById = db => async id => {
     }
 };
 
-// Update
-const update = db => async (_id, ...data) => {
+const getAll = db => async () => {
     try {
-        let doc = await db.get(_id);
+        const result = db.allDocs({include_docs : true});
+        return result;
+    } catch (err) {
+        throw ErrorTypes.ReadDocs;
+    }
+};
+
+// Update
+const update = db => async (id, data) => {
+    try {
+        let doc = await db.get(id);
         return await db.put({...doc, ...data});
     } catch (err) {
         throw ErrorTypes.NotFound;
@@ -41,6 +50,7 @@ const remove = db => async id => {
 const PouchCRUD = db => ({
     add: add(db),
     getById: getById(db),
+    getAll: getAll(db),
     update: update(db),
     remove: remove(db),
 });

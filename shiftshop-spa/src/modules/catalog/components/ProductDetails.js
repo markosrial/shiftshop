@@ -36,13 +36,13 @@ const ProductDetails = ({product}) => {
             <RowItem label="project.global.field.name" content={product.name}/>
             <RowItem label="project.global.field.category"
                      content={<Chip label={selectors.getCategoryName(categories, product.categoryId)}/>}/>
-            {product.providerPrice &&
+            {(product.providerPrice != null) &&
                 <RowItem label="project.global.field.providerPrice" content={product.providerPrice.toFixed(2) + ' €'}/>}
             <RowItem label="project.global.field.salePrice" content={
                 <Box display="flex" alignItems="center">
                     {product.salePrice.toFixed(2) + ' €'}
                     &nbsp;
-                    {product.providerPrice && <ProductProfitChip profit={(product.salePrice - product.providerPrice)}/>}
+                    {(product.providerPrice != null) && <ProductProfitChip profit={(product.salePrice - product.providerPrice)}/>}
                 </Box>
             }/>
             <RowItem label="project.global.field.creationDate" content={<FormattedDate value={product.creationDate}/>}/>

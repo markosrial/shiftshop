@@ -4,8 +4,10 @@ import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyEx
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.entities.Category;
 import com.shiftshop.service.model.entities.Product;
+import com.shiftshop.service.model.entities.User;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CatalogService {
@@ -23,10 +25,17 @@ public interface CatalogService {
 
     Product findProductById(Long id) throws InstanceNotFoundException;
 
-    Block<Product> findProducts(Long categoryId, String keywords, Boolean onlyActive,
+    Block<Product> findProducts(Long categoryId, String keywords, boolean onlyActive,
                                 String orderType, String order, int page, int size);
 
     Product updateProduct(Long id, String name, BigDecimal providerPrice, BigDecimal salePrice,
                           String barcode, Long categoryId)
             throws DuplicateInstancePropertyException, InstanceNotFoundException;
+
+    void setActiveProduct(Long id, boolean active) throws InstanceNotFoundException;
+
+    LocalDateTime getLastProductUpdatedTimestamp();
+
+    List<Product> getUpdatedProducts(LocalDateTime lastUpdate);
+
 }

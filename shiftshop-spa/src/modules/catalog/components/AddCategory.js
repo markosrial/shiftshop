@@ -97,7 +97,7 @@ const AddCategory = () => {
             <Button color="primary" variant="contained" size="small" onClick={openDialog}>
                 <Add/> <FormattedMessage id="project.catalog.AddCategory.addButton"/>
             </Button>
-            <Dialog className={classes.root} maxWidth="xs" fullWidth open={open} onClose={closeDialog}>
+            <Dialog className={classes.root} maxWidth="xs" fullWidth scroll="body" open={open} onClose={closeDialog}>
                 <DialogTitle>
                     <Box display="flex" alignItems="center">
                         <AddBox fontSize="default" color="primary"/>&nbsp;

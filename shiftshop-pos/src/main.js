@@ -17,16 +17,30 @@ const createWindow = () => {
     height: 800,
     minWidth: 1280,
     minHeight: 800,
+    show: false,
     webPreferences: {
       nodeIntegration: true
     }
   });
 
+  // Set backend url global variable
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      global.APP_BACKEND_URL = 'http://shiftshop.home/ws';
+      break;
+    case 'development':
+    default:
+      global.APP_BACKEND_URL = 'http://localhost:8080';
+      break;
+  }
+
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if (process.env.NODE_ENV === 'development') {
+    mainWindow.webContents.openDevTools();
+  }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -34,6 +48,10 @@ const createWindow = () => {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+  });
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
   });
 };
 

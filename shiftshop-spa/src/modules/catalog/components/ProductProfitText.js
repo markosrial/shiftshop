@@ -30,7 +30,9 @@ const ProductProfitText = ({profit, isROI}) => {
 
     return (
         <Box className={text.classes} display="flex" alignItems="center">
-            {text.icon}{Math.abs(profit).toFixed(2)}{isROI ? ' % ROI' : ' €'}
+            {text.icon}
+            {isROI ? (isFinite(profit) ? Math.abs(profit).toFixed(2) : '∞' ): Math.abs(profit).toFixed(2)}
+            {isROI ? ' % ROI' : ' €'}
         </Box>
     );
 

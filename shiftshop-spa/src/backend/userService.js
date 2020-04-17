@@ -39,3 +39,16 @@ export const tryLoginFromServiceToken = (onSuccess, atFinally, reauthenticationC
 };
 
 export const logout = () => removeServiceToken();
+
+export const getRoles = onSuccess =>
+    appFetch('/users/roles', config('GET'), onSuccess);
+
+export const addUser = (user, onSuccess, onError, atFinally) =>
+    appFetch('/users', config('POST', user), onSuccess, onError, atFinally);
+
+export const getUsers = (page, onSuccess, atFinally) =>
+    appFetch(`/users?page=${page}`, config('GET'), onSuccess, null, atFinally);
+
+
+export const getBlockedUsers = (page, onSuccess, atFinally) =>
+    appFetch(`/users/blocked?page=${page}`, config('GET'), onSuccess, null, atFinally);

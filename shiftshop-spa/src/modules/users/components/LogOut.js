@@ -45,10 +45,10 @@ const LogOut = () => {
                     </span>
                 </Hidden>
             </Button>
-            <Dialog className={classes.root} fullWidth maxWidth="xs" open={open} onClose={closeDialog}>
+            <Dialog className={classes.root} fullWidth maxWidth="xs" scroll="body" open={open} onClose={closeDialog}>
                 <DialogTitle>
                     <Typography component="span" variant="h4">
-                        <FormattedMessage id="project.usuario.Logout.title"/>
+                        <FormattedMessage id="project.users.Logout.title"/>
                     </Typography>
                     <IconButton className={classes.closeButton} onClick={closeDialog}>
                         <Close/>
@@ -57,15 +57,15 @@ const LogOut = () => {
                 <DialogContent dividers>
                     <DialogContentText>
                         <Typography component="span" variant="subtitle1">
-                            <FormattedMessage id="project.usuario.Logout.message"/>
+                            <FormattedMessage id="project.users.Logout.message"/>
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button variant="contained" color="secondary" onClick={closeDialog}>
+                    <Button variant="contained" color="secondary" disableElevation onClick={closeDialog}>
                         <FormattedMessage id="project.global.button.cancel"/>
                     </Button>
-                    <Button variant="contained" color="primary" autoFocus onClick={logout}>
+                    <Button variant="contained" color="primary" autoFocus disableElevation onClick={logout}>
                         <FormattedMessage id="project.global.button.continue"/>
                     </Button>
                 </DialogActions>

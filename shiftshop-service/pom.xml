@@ -14,7 +14,7 @@
     <!-- **************** PROJECT INFO **************** -->
     <groupId>com.shiftshop</groupId>
     <artifactId>service</artifactId>
-    <version>0.1.0-RELEASE</version>
+    <version>0.2.0-RELEASE</version>
     <name>ShiftShop Service</name>
     <description>Service for ShiftShop System</description>
 

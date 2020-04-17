@@ -68,6 +68,12 @@ const product  = (state = initialState.product, action) => {
         case actionTypes.GET_PRODUCT_COMPLETED:
             return action.product;
 
+        case actionTypes.SET_PRODUCT_ACTIVE_COMPLETED:
+            return state ? {...state, active: true} : initialState.product;
+
+        case actionTypes.SET_PRODUCT_INACTIVE_COMPLETED:
+            return state ? {...state, active: false} : initialState.product;
+
         default:
             return state;
 
