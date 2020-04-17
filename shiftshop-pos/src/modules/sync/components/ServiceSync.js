@@ -61,70 +61,19 @@ const ServiceSync = ({localUpdateTimestamp, lastUpdateTimestamp, nextStep, onCan
 
         let usersDB = UsersDB.instantiate();
 
-        // With no data -> add all items on fresh DB
-        if (!localUpdateTimestamp) {
+        // Empty DB
+        await usersDB.destroy();
+        usersDB = UsersDB.instantiate();
 
-            // Empty DB
-            await usersDB.destroy();
-            usersDB = UsersDB.instantiate();
-
-            // Add all salesman users
-            await Promise.all(
-                users.map(async (user) => {
-                    const {id, userName, password, name} = user;
-                    await usersDB.add({_id: userName, id, userName, password, name});
-                })
-            );
-
-        }
-        // With existing data -> update items
-        else {
-
-            // Add + update all salesman users && remove no salesman users
-            await Promise.all(
-                users.map(async user => await updateDBUser(usersDB, user))
-            );
-
-        }
+        // Add all salesman users
+        await Promise.all(
+            users.map(async (user) => {
+                const {id, userName, password, name} = user;
+                await usersDB.add({_id: userName, id, userName, password, name});
+            })
+        );
 
         usersDB.close();
-
-    };
-
-    const updateDBUser = async (usersDB, user) => {
-
-        const data = {
-            id: user.id,
-            userName: user.userName,
-            password: user.password,
-            name: user.name
-        };
-
-        if (!user.salesman || !user.active) {
-
-            try {
-                await usersDB.remove(data.userName);
-            } catch (e) {
-                // If not added on previous updates then continue
-                if (e === ErrorsDB.NotFound) return;
-            }
-
-        } else {
-
-            try {
-                await usersDB.getById(data.userName);
-            } catch (e) {
-                if (e === ErrorsDB.NotFound) {
-                    // NotFound -> add
-                    await usersDB.add({_id: data.userName, ...data});
-                    return;
-                }
-            }
-
-            // Found -> update
-            await usersDB.update(data.userName, data);
-
-        }
 
     };
 

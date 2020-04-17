@@ -28,6 +28,7 @@ public class InsertUserParamsDto {
         this.userName = userName;
     }
 
+    @NotNull(groups = {AddValidations.class})
     @Size(min=1, max=60, groups={AddValidations.class, UpdateValidations.class})
     public String getPassword() {
         return password;

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,10 +51,7 @@ public class UserServiceImpl implements UserService {
                 throw new NoUserRolesException();
             }
 
-            // Set password to login if no password given and encode the selected password
-            user.setPassword(passwordEncoder.encode(
-                    user.getPassword() == null ? user.getUserName() : user.getPassword()));
-
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setActive(true);
 
             return userDao.save(user);
@@ -134,10 +132,14 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public List<User> getUpdatedUsers(LocalDateTime lastUpdate) {
 
-        if (lastUpdate != null) {
-            return userDao.findByUpdateTimestampIsAfter(lastUpdate);
-        } else {
-            return userDao.findAllByActiveIsTrueAndRolesContains(RoleType.SALESMAN);
+        // With no user changes (have lastUpdate and last update on user is before or equal to lastUpdate passed)
+        if (lastUpdate != null && !getLastUserUpdatedTimestamp().isAfter(lastUpdate)) {
+
+            return new ArrayList<>();
+
         }
+
+        return userDao.findAllByActiveIsTrueAndRolesContains(RoleType.SALESMAN);
+
     }
 }
