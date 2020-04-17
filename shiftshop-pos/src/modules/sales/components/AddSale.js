@@ -19,12 +19,11 @@ import {
 } from '@material-ui/core';
 import {Close, Print, Save} from '@material-ui/icons';
 
-import {generateBarcode} from '../../utils';
+import {generateBarcode, fixedDecimal} from '../../utils';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 import records from '../../records';
 import users from '../../users';
-import {ErrorsDB} from '../../../databases';
 
 const AddSale = ({discount, closeDialog}) => {
 
@@ -37,12 +36,12 @@ const AddSale = ({discount, closeDialog}) => {
     const cartSubtotal = useSelector(selectors.getShoppingCartSubtotal);
     const user = useSelector(users.selectors.getUser);
 
-    const localSalesDB = useSelector(records.selectors.getSalesDB);
+    const salesDB = useSelector(records.selectors.getSalesDB);
 
     const [cash, setCash] = useState(null);
     const [saving, setSaving] = useState(false);
 
-    const total = useMemo(() => (cartSubtotal - (discount || 0)), [cartSubtotal, discount]);
+    const total = useMemo(() => fixedDecimal(cartSubtotal - (discount || 0)), [cartSubtotal, discount]);
 
     const cashError = (cash !== null) && (cash < total);
 
@@ -50,7 +49,7 @@ const AddSale = ({discount, closeDialog}) => {
 
         if (cash && cash >= total) {
 
-            return (cash - total);
+            return fixedDecimal(cash - total);
 
         }
 
@@ -88,9 +87,10 @@ const AddSale = ({discount, closeDialog}) => {
             date: saleTimestamp,
             items,
             sellerId: user.id,
-            subtotal: cartSubtotal && Number.parseFloat(cartSubtotal.toFixed(2)),
-            discount: discount && Number.parseFloat(discount.toFixed(2)),
-            cash: cash && Number.parseFloat(cash.toFixed(2))
+            total,
+            discount,
+            cash,
+            uploaded: false
         };
 
     };
@@ -103,14 +103,15 @@ const AddSale = ({discount, closeDialog}) => {
 
         const sale = getSale();
 
-        localSalesDB.add(sale)
-            .then(() => {
+        records.actions.saveSale(salesDB, sale,
+            () => {
                 enqueueSnackbar(<FormattedMessage id="project.sales.AddSale.success"/>, {variant: 'success'});
                 dispatch(actions.clearCart());
                 closeDialog();
-            })
-            .catch(error => {
-                enqueueSnackbar(<FormattedMessage id={`project.bd.error.${error}`}/>, {variant: 'error'});
+            },
+            error => {
+                enqueueSnackbar(<FormattedMessage id="project.sales.AddSale.error"/>, {variant: 'error'});
+                console.log(error);
                 setSaving(false);
             });
 

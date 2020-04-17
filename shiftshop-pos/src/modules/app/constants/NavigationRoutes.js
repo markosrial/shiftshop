@@ -1,33 +1,28 @@
-import {Book, CloudUpload, SdStorage, ShoppingBasket} from '@material-ui/icons';
+import {Book, SdStorage, ShoppingBasket} from '@material-ui/icons';
 
 export default [
     {
-        title: 'project.app.nav.sales',
+        title: 'project.app.nav.sale',
         items: [
             {
-                title: 'project.app.route.shopping',
-                route: '/sales/shopping',
+                title: 'project.app.route.cart',
+                route: '/sale/cart',
                 icon: ShoppingBasket
             },
-            /*{
-                title: 'project.app.route.preOrders',
-                route: '/sales/preOrders',
-                icon: Book
-            }*/
         ]
     },
     {
         title: 'project.app.nav.records',
         items: [
             {
-                title: 'project.app.route.localRecords',
-                route: '/records/local',
+                title: 'project.app.route.sales',
+                route: '/records/sales',
                 icon: SdStorage
             },
             {
-                title: 'project.app.route.uploadedRecords',
-                route: '/records/uploaded',
-                icon: CloudUpload,
+                title: 'project.app.route.preOrders',
+                route: '/records/preOrders',
+                icon: Book
             }
         ]
     },

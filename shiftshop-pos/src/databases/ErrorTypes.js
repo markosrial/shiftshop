@@ -1,4 +1,5 @@
 const ErrorTypes = {
+    DBNotInstantiated: 'DBNotInstantiated',
     Duplicated: 'Duplicated',
     FailedInitIndexes: 'FailedInitIndexes',
     NotFound: 'NotFound',

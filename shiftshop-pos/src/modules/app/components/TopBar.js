@@ -4,8 +4,8 @@ import {AppBar, Box, Chip, Toolbar, Typography} from '@material-ui/core';
 import {ShoppingBasketRounded} from '@material-ui/icons';
 
 import useStyles from '../styles/TopBar'
-import CartBadgeCount from '../../sales/components/CartBadgeCount';
 
+import {CartBadgeCount} from '../../sales';
 import {LogOut} from '../../users';
 
 const TopBar = () => {

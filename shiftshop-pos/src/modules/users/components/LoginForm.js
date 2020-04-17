@@ -15,6 +15,7 @@ import {minDelayFunction} from '../../utils';
 import * as selectors from '../../sync/selectors';
 
 const LoginForm = () => {
+
     const classes = useStyles();
 
     const {enqueueSnackbar, closeSnackbar} = useSnackbar();

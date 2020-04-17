@@ -16,3 +16,6 @@ export const generateBarcode = () => {
     return base32Encode(Buffer.from(newUUID, 'hex'), 'RFC4648', { padding: false });
 
 };
+
+export const fixedDecimal = (value, decimalPoints = 2) =>
+    Number.parseFloat(value.toFixed(decimalPoints));
