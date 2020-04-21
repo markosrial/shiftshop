@@ -5,8 +5,7 @@ const dbName = 'Users';
 
 export const instantiate = () => {
 
-    const db = new PouchDB(dbName);
-
+    const db = new PouchDB(dbName, {revs_limit: 1, auto_compaction: true});
     // CRUD operations and query indexes
     const CRUD = PouchCRUD(db);
 

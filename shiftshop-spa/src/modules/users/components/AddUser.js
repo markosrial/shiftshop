@@ -38,7 +38,6 @@ const AddUser = () => {
     const [errors, setErrors] = useState(null);
 
     const [open, setOpen] = useState(false);
-    const [changePassword, setChangePassword] = useState(false);
     const [adding, setAdding] = useState(false);
 
     const _isMounted = useRef(true);
@@ -57,7 +56,6 @@ const AddUser = () => {
             setName('');
             setSurnames('');
             setRoles([]);
-            setChangePassword(false);
             setPassword('');
             setRepeatPassword('');
         }

@@ -1,7 +1,7 @@
 {
   "name": "shiftshop-pos",
   "productName": "shiftshop-pos",
-  "version": "0.2.0-RELEASE",
+  "version": "0.3.0-SNAPSHOT",
   "description": "ShiftShop Point of Sale App",
   "main": ".webpack/main",
   "scripts": {
