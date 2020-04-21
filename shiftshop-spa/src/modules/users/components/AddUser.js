@@ -3,18 +3,14 @@ import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
 import {
     Box,
+    Divider,
     Button,
     CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
-    Divider,
-    ExpansionPanel,
-    ExpansionPanelDetails,
-    ExpansionPanelSummary,
     Grid,
-    Radio,
     TextField,
     Typography
 } from '@material-ui/core';
@@ -54,16 +50,6 @@ const AddUser = () => {
     const closeErrors = () => setErrors(null);
     const openDialog = () => setOpen(true);
     const closeDialog = () => setOpen(false);
-    const handlePassPanel = _ => {
-
-        if (changePassword) {
-            setPassword('');
-            setRepeatPassword('');
-        }
-
-        setChangePassword(!changePassword);
-
-    };
 
     const resetForm = () => {
         if (_isMounted.current) {
@@ -78,13 +64,14 @@ const AddUser = () => {
     };
 
     const isValidUserName = useMemo(() => formValidator.isNotEmpty(userName), [userName]);
-    const isValidPassword = useMemo(() => !changePassword || formValidator.isNotFullEmpty(password), [changePassword, password]);
+    const isValidPassword = useMemo(() => formValidator.isNotFullEmpty(password), [password]);
     const isValidRepeatedPassword = useMemo(() => repeatPassword === password, [password, repeatPassword]);
     const isValidName = useMemo(() => formValidator.isNotEmpty(name), [name]);
     const isValidSurnames = useMemo(() => formValidator.isNotEmpty(surnames), [surnames]);
     const isValidRoles = useMemo(() => formValidator.isSomeRoleSelected(roles), [roles]);
 
-    const checkValid = isValidUserName && isValidPassword && isValidRepeatedPassword && isValidName && isValidSurnames && isValidRoles;
+    const checkValid = isValidUserName && isValidPassword && isValidRepeatedPassword
+        && isValidName && isValidSurnames && isValidRoles;
 
     const handleSubmit = e => {
 
@@ -104,7 +91,7 @@ const AddUser = () => {
 
         const user = {
             userName: userName.trim(),
-            password: changePassword ? password : null,
+            password: password,
             name: name.trim(),
             surnames: surnames.trim(),
             roles
@@ -151,7 +138,7 @@ const AddUser = () => {
                         </Typography>
                     </Box>
                 </DialogTitle>
-                <form onSubmit={e => handleSubmit(e)} noValidate >
+                <form onSubmit={e => handleSubmit(e)} noValidate>
                     <DialogContent dividers>
                         {errors &&
                         <Alert className={classes.alert} message={errors} variant="error"
@@ -159,6 +146,20 @@ const AddUser = () => {
                         <TextField margin="dense" variant="outlined" fullWidth disabled={adding} autoComplete="username"
                                    label={<FormattedMessage id="project.global.field.username"/>} value={userName} required
                                    onChange={e => setUserName(e.target.value)}/>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField margin="dense" variant="outlined" type="password" autoComplete="new-password" fullWidth disabled={adding}
+                                           label={<FormattedMessage id="project.global.field.password"/>} value={password}
+                                           onChange={e => setPassword(e.target.value)}/>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField margin="dense" variant="outlined" type="password" autoComplete="new-password" fullWidth disabled={adding}
+                                           label={<FormattedMessage id="project.global.field.repeatPassword"/>} value={repeatPassword}
+                                           onChange={e => setRepeatPassword(e.target.value)} error={!isValidRepeatedPassword}
+                                           helperText={!isValidRepeatedPassword && <FormattedMessage id="project.global.error.passwordMatch"/>}/>
+                            </Grid>
+                        </Grid>
+                        <Box width={1} my={1}><Divider/></Box>
                         <TextField margin="dense" variant="outlined" fullWidth disabled={adding}
                                    label={<FormattedMessage id="project.global.field.name"/>} value={name} required
                                    onChange={e => setName(e.target.value)}/>
@@ -168,32 +169,6 @@ const AddUser = () => {
                         <RoleMultiSelector margin="dense" variant="outlined" fullWidth disabled={adding} required
                                            selectedRoles={roles} handleSelectedRoles={e => setRoles(e.target.value.sort())}
                                            ignoreRoles={[Role.MANAGER]}/>
-                        <ExpansionPanel className={classes.expansionPanel} expanded={changePassword} onChange={handlePassPanel} disabled={adding}>
-                            <ExpansionPanelSummary
-                                expandIcon={<Radio color="primary" checked={changePassword}/>}
-                                aria-label="Expand">
-                                <Box>
-                                    <Typography variant="body1"><FormattedMessage id="project.users.AddUser.customPassword.title"/></Typography>
-                                    <Typography variant="body2"><FormattedMessage id="project.users.AddUser.customPassword.message"/></Typography>
-                                </Box>
-                            </ExpansionPanelSummary>
-                            <Divider/>
-                            <ExpansionPanelDetails>
-                                {changePassword && <Grid container spacing={1}>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField margin="dense" variant="outlined" type="password" autoComplete="new-password" fullWidth disabled={adding}
-                                                   label={<FormattedMessage id="project.global.field.password"/>} value={password}
-                                                   onChange={e => setPassword(e.target.value)}/>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField margin="dense" variant="outlined" type="password" autoComplete="new-password" fullWidth disabled={adding}
-                                                   label={<FormattedMessage id="project.global.field.repeatPassword"/>} value={repeatPassword}
-                                                   onChange={e => setRepeatPassword(e.target.value)} error={!isValidRepeatedPassword}
-                                                   helperText={!isValidRepeatedPassword && <FormattedMessage id="project.global.error.passwordMatch"/>}/>
-                                    </Grid>
-                                </Grid>}
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel>
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" color="secondary" onClick={closeDialog} disableElevation>

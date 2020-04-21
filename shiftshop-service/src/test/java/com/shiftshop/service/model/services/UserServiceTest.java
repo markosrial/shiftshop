@@ -58,21 +58,6 @@ public class UserServiceTest {
 
     }
 
-    @Test
-    public void testRegisterUserNoPasswordAndLogin() throws IncorrectLoginException, UserNotActiveException,
-            DuplicateInstancePropertyException, NoUserRolesException {
-
-        User user = new User(USERNAME, null, NAME, SURNAMES,
-                new HashSet<>(Arrays.asList(RoleType.ADMIN, RoleType.SALESMAN)));
-
-        userService.registerUser(user);
-
-        // Login with default password -> username of the new user
-        User loggedInUser = userService.login(user.getUserName(), USERNAME);
-        assertEquals(user, loggedInUser);
-
-    }
-
     @Test(expected = DuplicateInstancePropertyException.class)
     public void testRegisterUserDuplicatedUserName() throws DuplicateInstancePropertyException, NoUserRolesException {
 
@@ -215,9 +200,6 @@ public class UserServiceTest {
 
         List<User> expectedUsers = new ArrayList<>(Arrays.asList(user1, user2));
         assertEquals(expectedUsers, userService.getUpdatedUsers(null));
-
-
-        expectedUsers = new ArrayList<>(Arrays.asList(user2));
         assertEquals(expectedUsers, userService.getUpdatedUsers(user1.getUpdateTimestamp()));
 
         assertEquals(new ArrayList<>(), userService.getUpdatedUsers(userService.getLastUserUpdatedTimestamp()));

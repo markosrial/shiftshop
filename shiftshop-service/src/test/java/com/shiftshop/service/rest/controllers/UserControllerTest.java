@@ -128,19 +128,6 @@ public class UserControllerTest {
                 .content(mapper.writeValueAsBytes(userParams)))
                 .andExpect(status().isNoContent());
 
-        // Insert user without password
-        userParams = new InsertUserParamsDto();
-        userParams.setUserName(USERNAME + "2");
-        userParams.setName(NAME + "2");
-        userParams.setSurnames(SURNAMES);
-        userParams.setRoles(new HashSet<>(Arrays.asList(RoleType.SALESMAN)));
-
-        mockMvc.perform(post("/users" )
-                .header("Authorization", "Bearer " + user.getServiceToken())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsBytes(userParams)))
-                .andExpect(status().isNoContent());
-
     }
 
     @Test
@@ -152,6 +139,7 @@ public class UserControllerTest {
         // Try insert user without roles / insert user which unique role is MANAGER
         InsertUserParamsDto userParams = new InsertUserParamsDto();
         userParams.setUserName(USERNAME + "1");
+        userParams.setPassword(PASSWORD);
         userParams.setName(NAME + "1");
         userParams.setSurnames(SURNAMES);
         userParams.setRoles(new HashSet<>(Arrays.asList(RoleType.MANAGER)));
@@ -183,6 +171,7 @@ public class UserControllerTest {
         // Try insert user with userName already registered
         InsertUserParamsDto userParams = new InsertUserParamsDto();
         userParams.setUserName(user.getUserLoggedDto().getUserName());
+        userParams.setPassword(PASSWORD);
         userParams.setName(NAME);
         userParams.setSurnames(SURNAMES);
         userParams.setRoles(new HashSet<>(Arrays.asList(RoleType.ADMIN)));

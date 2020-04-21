@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import {fixedDecimal} from '../utils';
 
 const getModuleState = state => state.sales;
 
@@ -27,14 +28,14 @@ export const getShoppingCart = state =>
 export const getShoppingCartCount = createSelector(
     getShoppingCart,
     shoppingCart =>
-        (shoppingCart.map(item => item.quantity)
-            .reduce((a, b) => a + b, 0))
+        shoppingCart.map(item => item.quantity)
+            .reduce((a, b) => a + b, 0)
 );
 
 
 export const getShoppingCartSubtotal = createSelector(
     [ getCatalog, getShoppingCart ],
-    (catalog, shoppingCart) => (shoppingCart.map(item => {
+    (catalog, shoppingCart) => fixedDecimal(shoppingCart.map(item => {
 
             const product = getProductById(catalog, item.id);
 

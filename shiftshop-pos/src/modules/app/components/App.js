@@ -39,8 +39,9 @@ const App = () => {
 
     return (
         <Fragment>
-            {loggedIn && <Main/>}
-            {!loggedIn && <LoginPortal/>}
+            {loggedIn
+                ? <Main/>
+                : <LoginPortal/>}
         </Fragment>
     );
 };

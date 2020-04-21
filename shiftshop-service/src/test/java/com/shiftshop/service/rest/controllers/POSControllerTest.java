@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -103,7 +104,7 @@ public class POSControllerTest {
         mockMvc.perform(get("/pos/lastUpdateTimestamp")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(user.getUpdateTimestamp().toString()));
+                .andExpect(jsonPath("$").value(user.getUpdateTimestamp().format(DateTimeFormatter.ISO_DATE_TIME)));
 
         // Add 2nd product and should get his updateTimestamp
         Product product = createProduct(PRODUCT_NAME + "2", category.getId());
@@ -111,7 +112,7 @@ public class POSControllerTest {
         mockMvc.perform(get("/pos/lastUpdateTimestamp")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(product.getUpdateTimestamp().toString()));
+                .andExpect(jsonPath("$").value(product.getUpdateTimestamp().format(DateTimeFormatter.ISO_DATE_TIME)));
 
     }
 
@@ -141,7 +142,7 @@ public class POSControllerTest {
                 .header("Authorization", "Bearer " + user.getServiceToken())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
+                .andExpect(jsonPath("$.length()").value(3));
 
     }
 
