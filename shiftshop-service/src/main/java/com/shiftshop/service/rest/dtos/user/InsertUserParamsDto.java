@@ -19,7 +19,7 @@ public class InsertUserParamsDto {
     private Set<RoleType> roles;
 
     @NotNull(groups = {AddValidations.class})
-    @Size(min=1, max=60, groups={AddValidations.class, UpdateValidations.class})
+    @Size(min=1, max=60, groups={AddValidations.class})
     public String getUserName() {
         return userName;
     }
@@ -29,7 +29,7 @@ public class InsertUserParamsDto {
     }
 
     @NotNull(groups = {AddValidations.class})
-    @Size(min=1, max=60, groups={AddValidations.class, UpdateValidations.class})
+    @Size(min=1, max=60, groups={AddValidations.class})
     public String getPassword() {
         return password;
     }

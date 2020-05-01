@@ -61,40 +61,31 @@ const getUsersCompleted = usersSearch => ({
     usersSearch
 });
 
-export const getUsers = (page, atFinally) => dispatch => {
+export const getUsers = (criteria, atFinally) => dispatch => {
 
     dispatch(clearUsersSearch());
 
-    backend.userService.getUsers(page,
-        result => dispatch(getUsersCompleted({page, result})),
+    backend.userService.getUsers(criteria,
+        result => dispatch(getUsersCompleted({criteria, result})),
         atFinally);
 };
 
-export const previousUsersPage = (page, atFinally) =>
-    getUsers(page-1, atFinally);
+export const previousUsersPage = (criteria, atFinally) =>
+    getUsers({...criteria, page: criteria.page-1}, atFinally);
 
-export const nextUsersPage = (page, atFinally) =>
-    getUsers(page+1, atFinally);
+export const nextUsersPage = (criteria, atFinally) =>
+    getUsers({...criteria, page: criteria.page+1}, atFinally);
 
 export const clearUsersSearch = () => ({type: actionTypes.CLEAR_USERS_SEARCH});
 
-const getBlockedUsersCompleted = blockedUsersSearch => ({
-    type: actionTypes.GET_BLOCKED_USERS_COMPLETED,
-    blockedUsersSearch
-});
+export const updateUser = (id, data, onSuccess, onError, atFinally) =>
+    backend.userService.updateUser(id, data,
+        user => onSuccess(`${user.name} ${user.surnames}`),
+        onError,
+        atFinally);
 
-export const getBlockedUsers = (page, atFinally) => dispatch => {
+export const blockUser = (id, onSuccess, onError) =>
+    backend.userService.blockUser(id, onSuccess, onError);
 
-    dispatch(clearBlockedUsersSearch());
-
-    backend.userService.getBlockedUsers(page,
-        result => dispatch(getBlockedUsersCompleted({page, result})),
-        atFinally);};
-
-export const previousBlockedUsersPage = (page, atFinally) =>
-    getUsers(page-1, atFinally);
-
-export const nextBlockedUsersPage = (page, atFinally) =>
-    getUsers(page+1, atFinally);
-
-export const clearBlockedUsersSearch = () => ({type: actionTypes.CLEAR_BLOCKED_USERS_SEARCH});
+export const unblockUser = (id, onSuccess, onError) =>
+    backend.userService.unblockUser(id, onSuccess, onError);

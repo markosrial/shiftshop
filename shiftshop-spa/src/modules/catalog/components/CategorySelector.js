@@ -1,4 +1,4 @@
-import React, {Fragment,useEffect, useRef, useState} from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import PropTypes from 'prop-types';

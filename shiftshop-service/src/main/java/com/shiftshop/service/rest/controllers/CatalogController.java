@@ -20,7 +20,8 @@ import java.util.List;
 import static com.shiftshop.service.rest.common.RolesChecker.getRolesFromAuthentication;
 import static com.shiftshop.service.rest.dtos.catalog.CategoryConversor.toCategoryDto;
 import static com.shiftshop.service.rest.dtos.catalog.CategoryConversor.toCategoryDtos;
-import static com.shiftshop.service.rest.dtos.catalog.ProductConversor.*;
+import static com.shiftshop.service.rest.dtos.catalog.ProductConversor.toProductDto;
+import static com.shiftshop.service.rest.dtos.catalog.ProductConversor.toProductSummaryDtos;
 
 @RestController
 @RequestMapping("/catalog")

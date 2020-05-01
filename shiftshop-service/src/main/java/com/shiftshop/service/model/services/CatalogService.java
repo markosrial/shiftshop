@@ -4,7 +4,6 @@ import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyEx
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.entities.Category;
 import com.shiftshop.service.model.entities.Product;
-import com.shiftshop.service.model.entities.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -25,11 +25,24 @@ export const getRoleName = (roles, id) => {
 
 };
 
+export const getRoleByName = (roles, name) => {
+
+    if (!roles) {
+        return null;
+    }
+
+    const role = roles.find(role => role.name === name);
+
+    if (!role) {
+        return null;
+    }
+
+    return role;
+
+}
+
 export const hasRole = (user, roles) =>
     user.roles.some(role => roles.includes(role));
 
 export const getUsersSearch = state =>
     getModuleState(state).usersSearch;
-
-export const getBlockedUsersSearch = state =>
-    getModuleState(state).blockedUsersSearch;
