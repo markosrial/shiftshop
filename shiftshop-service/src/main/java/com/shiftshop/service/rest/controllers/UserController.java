@@ -31,6 +31,7 @@ public class UserController {
 	private static final String INCORRECT_LOGIN_EXCEPTION_CODE = "project.exceptions.IncorrectLoginException";
 	private static final String USER_NOT_ACTIVE_EXCEPTION_CODE = "project.exceptions.UserNotActiveException";
 	private static final String NO_USER_ROLES_EXCEPTION_CODE = "project.exceptions.NoUserRolesException";
+	private static final String BLOCK_USER_EXCEPTION_CODE = "project.exceptions.BlockUserException";
 
 	@Autowired
 	private ErrorConversor errorConversor;
@@ -62,6 +63,13 @@ public class UserController {
 	@ResponseBody
 	public ErrorsDto handleNoUserRolesException(NoUserRolesException exception, Locale locale) {
 		return errorConversor.toErrorsDtoFromException(NO_USER_ROLES_EXCEPTION_CODE, locale);
+	}
+
+	@ExceptionHandler(BlockUserException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorsDto handleBlockUserException(BlockUserException exception, Locale locale) {
+		return errorConversor.toErrorsDtoFromException(BLOCK_USER_EXCEPTION_CODE, locale);
 	}
 
 	// Controller methods
@@ -105,24 +113,34 @@ public class UserController {
 
 	@GetMapping
 	public BlockDto<UserDto> getUsers(
+			@RequestParam(defaultValue = "true", required = false) boolean onlyActive,
 			@RequestParam(defaultValue = "0", required = false) @Min(0) int page,
 			@RequestParam(defaultValue = "15", required = false) @Min(0) int size) {
 
-		Block<User> userBlock = userService.getUsers(page, size);
+		Block<User> userBlock = userService.getUsers(onlyActive, page, size);
 
 		return new BlockDto<>(toUserDtos(userBlock.getItems()), userBlock.getExistMoreItems());
 
 	}
 
-	@GetMapping("/blocked")
-	public BlockDto<UserSummaryDto> getBlokedUsers(
-			@RequestParam(defaultValue = "0", required = false) @Min(0) int page,
-			@RequestParam(defaultValue = "15", required = false) @Min(0) int size) {
+	@PutMapping("/{id}")
+	public UserDto updateUser(@PathVariable Long id,
+							  @Validated @RequestBody InsertUserParamsDto updateUser)
+			throws NoUserRolesException, InstanceNotFoundException {
+		return toUserDto(userService.updateUser(id, updateUser.getName(), updateUser.getSurnames(),
+				updateUser.getRoles()));
+	}
 
-		Block<User> userBlock = userService.getBlockedUsers(page, size);
+	@PutMapping("/{id}/active")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void setActiveUser(@PathVariable Long id) throws BlockUserException, InstanceNotFoundException {
+		userService.setActiveUser(id, true);
+	}
 
-		return new BlockDto<>(toUserSummaryDtos(userBlock.getItems()), userBlock.getExistMoreItems());
-
+	@PutMapping("/{id}/inactive")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
+	public void setInactiveUser(@PathVariable Long id) throws BlockUserException, InstanceNotFoundException {
+		userService.setActiveUser(id, false);
 	}
 
 	private String generateServiceToken(User user) {

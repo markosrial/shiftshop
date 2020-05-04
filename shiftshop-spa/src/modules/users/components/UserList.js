@@ -1,7 +1,10 @@
 import React, {Fragment} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {useSnackbar} from 'notistack';
 import {
+    Badge,
     Box,
+    Button,
     Card,
     CardContent,
     CardHeader,
@@ -18,13 +21,14 @@ import {
     TableRow
 } from '@material-ui/core';
 import {FormattedMessage} from 'react-intl';
-import {Block, Edit, NavigateBefore, NavigateNext} from '@material-ui/icons';
+import {Edit, Lock, LockOpen, NavigateBefore, NavigateNext} from '@material-ui/icons';
 
 import useStyles from '../styles/UserList';
 
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 import Role from '../constants/Role';
+import {ErrorContent} from '../../common';
 
 const RoleList = ({userRoles, justify = 'center'}) => {
 
@@ -68,21 +72,56 @@ const RoleList = ({userRoles, justify = 'center'}) => {
 
 };
 
-const UserList = ({users, page, startSearch, stopSearch}) => {
+const UserList = ({users, criteria, editUser, startSearch, stopSearch}) => {
 
     const classes = useStyles();
 
+    const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+
     const dispatch = useDispatch();
+
+    const refreshPage = () => {
+        startSearch();
+        dispatch(actions.getUsers(criteria, stopSearch));
+    }
 
     const handlePrevious = () => {
         startSearch();
-        dispatch(actions.previousUsersPage(page, stopSearch));
+        dispatch(actions.previousUsersPage(criteria, stopSearch));
     };
 
     const handleNext = () => {
         startSearch();
-        dispatch(actions.nextUsersPage(page, stopSearch));
+        dispatch(actions.nextUsersPage(criteria, stopSearch));
     };
+
+    const blockUser = id => {
+        actions.blockUser(id, refreshPage,
+            errors => {
+                enqueueSnackbar(<ErrorContent errors={errors}/>,
+                    {
+                        variant: 'error',
+                        persist: 'true',
+                        action: key => (<Button color="inherit" variant="outlined" onClick={() => closeSnackbar(key)}>
+                            <FormattedMessage id="project.global.button.close"/>
+                        </Button>)
+                    });
+            });
+    }
+
+    const unblockUser = id => {
+        actions.unblockUser(id, refreshPage,
+            errors => {
+                enqueueSnackbar(<ErrorContent errors={errors}/>,
+                    {
+                        variant: 'error',
+                        persist: 'true',
+                        action: key => (<Button color="inherit" variant="outlined" onClick={() => closeSnackbar(key)}>
+                            <FormattedMessage id="project.global.button.close"/>
+                        </Button>)
+                    });
+            });
+    }
 
     return (
         <Fragment>
@@ -93,6 +132,7 @@ const UserList = ({users, page, startSearch, stopSearch}) => {
                             <TableRow>
                                 <TableCell align="left"><FormattedMessage id="project.global.field.username"/></TableCell>
                                 <TableCell align="left"><FormattedMessage id="project.global.field.name"/></TableCell>
+                                <TableCell align="center"><FormattedMessage id="project.global.field.state"/></TableCell>
                                 <TableCell align="center"><FormattedMessage id="project.global.field.roles"/></TableCell>
                                 <TableCell align="center"><FormattedMessage id="project.global.field.actions"/></TableCell>
                             </TableRow>
@@ -103,22 +143,25 @@ const UserList = ({users, page, startSearch, stopSearch}) => {
                                     <TableCell align="left">{user.userName}</TableCell>
                                     <TableCell align="left">{user.name} {user.surnames}</TableCell>
                                     <TableCell align="center">
+                                        <Badge color={user.active ? "primary" : "error"} variant="dot"></Badge>
+                                    </TableCell>
+                                    <TableCell align="center">
                                         <RoleList userRoles={user.roles}/>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <IconButton size="small" onClick={null/*editUser(user.id)*/}>
+                                        <IconButton size="small" onClick={() => editUser(user)}>
                                             <Edit/>
                                         </IconButton>
-                                        <IconButton size="small" onClick={null/*blockUser(user.id)*/}>
-                                            <Block/>
-                                        </IconButton>
+                                        {user.active
+                                            ? <IconButton size="small" onClick={() => blockUser(user.id)}><Lock/></IconButton>
+                                            : <IconButton size="small" onClick={() => unblockUser(user.id)}><LockOpen/></IconButton>}
                                     </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                     <Box display="flex" justifyContent="flex-end">
-                        <IconButton size="medium" disabled={page === 0} onClick={handlePrevious}>
+                        <IconButton size="medium" disabled={criteria.page === 0} onClick={handlePrevious}>
                             <NavigateBefore/>
                         </IconButton>
                         <IconButton size="medium" disabled={!users.existMoreItems} onClick={handleNext}>
@@ -132,10 +175,15 @@ const UserList = ({users, page, startSearch, stopSearch}) => {
                     <Card key={user.id} className={classes.card}>
                         <CardHeader className={classes.header}
                                     title={<Box color="black">{user.name} {user.surnames}</Box>}
-                                    subheader={<Box fontStyle="italic">{user.userName}</Box>}
+                                    subheader={<Box display="flex" alignItems="center">
+                                        <Box mr={1} fontStyle="italic">{user.userName}</Box>
+                                        <Badge color={user.active ? "primary" : "error"} variant="dot"></Badge>
+                                    </Box>}
                                     action={<Box>
-                                        <IconButton onClick={null/*editUser(user.id)*/}><Edit/></IconButton>
-                                        <IconButton onClick={null/*blockUser(user.id)*/}><Block/></IconButton>
+                                        <IconButton onClick={() => editUser(user)}><Edit/></IconButton>
+                                        {user.active
+                                            ? <IconButton onClick={() => blockUser(user.id)}><Lock/></IconButton>
+                                            : <IconButton onClick={() => unblockUser(user.id)}><LockOpen/></IconButton>}
                                     </Box>}/>
                         <Divider/>
                         <CardContent className={classes.content}>
@@ -144,7 +192,7 @@ const UserList = ({users, page, startSearch, stopSearch}) => {
                     </Card>
                 ))}
                 <Box display="flex" justifyContent="flex-end">
-                    <IconButton size="medium" disabled={page === 0} onClick={handlePrevious}>
+                    <IconButton size="medium" disabled={criteria.page === 0} onClick={handlePrevious}>
                         <NavigateBefore/>
                     </IconButton>
                     <IconButton size="medium" disabled={!users.existMoreItems} onClick={handleNext}>

@@ -54,28 +54,10 @@ const usersSearch = (state = initialState.usersSearch, action) => {
 
 };
 
-const blockedUsersSearch = (state = initialState.blockedUsersSearch, action) => {
-
-    switch (action.type) {
-
-        case actionTypes.GET_BLOCKED_USERS_COMPLETED:
-            return action.blockedUsersSearch;
-
-        case actionTypes.CLEAR_BLOCKED_USERS_SEARCH:
-            return initialState.blockedUsersSearch;
-
-        default:
-            return state;
-    }
-
-};
-
-
 const reducer = combineReducers({
     roles,
     user,
-    usersSearch,
-    blockedUsersSearch
+    usersSearch
 });
 
 export default reducer;

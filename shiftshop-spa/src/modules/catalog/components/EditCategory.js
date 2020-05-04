@@ -10,7 +10,8 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    TextField, Typography
+    TextField,
+    Typography
 } from '@material-ui/core';
 
 import useStyles from '../styles/EditCategory';

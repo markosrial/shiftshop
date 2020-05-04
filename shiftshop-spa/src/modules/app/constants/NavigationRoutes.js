@@ -1,4 +1,4 @@
-import {Category, Group, Receipt, ShoppingBasket, Dashboard} from '@material-ui/icons';
+import {Category, Dashboard, Group, Receipt, ShoppingBasket} from '@material-ui/icons';
 import {Role} from '../../users';
 
 export default [

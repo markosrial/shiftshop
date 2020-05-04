@@ -3,13 +3,13 @@ import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
 import {
     Box,
-    Divider,
     Button,
     CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
+    Divider,
     Grid,
     TextField,
     Typography
@@ -144,19 +144,22 @@ const AddUser = () => {
                         <TextField margin="dense" variant="outlined" fullWidth disabled={adding} autoComplete="username"
                                    label={<FormattedMessage id="project.global.field.username"/>} value={userName} required
                                    onChange={e => setUserName(e.target.value)}/>
-                        <Grid container spacing={1}>
+                        <Grid container>
                             <Grid item xs={12} sm={6}>
                                 <TextField margin="dense" variant="outlined" type="password" autoComplete="new-password" fullWidth disabled={adding}
                                            label={<FormattedMessage id="project.global.field.password"/>} value={password}
                                            onChange={e => setPassword(e.target.value)}/>
                             </Grid>
-                            <Grid item xs={12} sm={6}>
+                            <Grid className={classes.repeatPassword} item xs={12} sm={6}>
                                 <TextField margin="dense" variant="outlined" type="password" autoComplete="new-password" fullWidth disabled={adding}
                                            label={<FormattedMessage id="project.global.field.repeatPassword"/>} value={repeatPassword}
                                            onChange={e => setRepeatPassword(e.target.value)} error={!isValidRepeatedPassword}
                                            helperText={!isValidRepeatedPassword && <FormattedMessage id="project.global.error.passwordMatch"/>}/>
                             </Grid>
                         </Grid>
+                        <RoleMultiSelector margin="dense" variant="outlined" fullWidth disabled={adding} required
+                                           selectedRoles={roles} handleSelectedRoles={e => setRoles(e.target.value.sort())}
+                                           ignoreRoles={[Role.MANAGER]}/>
                         <Box width={1} my={1}><Divider/></Box>
                         <TextField margin="dense" variant="outlined" fullWidth disabled={adding}
                                    label={<FormattedMessage id="project.global.field.name"/>} value={name} required
@@ -164,9 +167,6 @@ const AddUser = () => {
                         <TextField margin="dense" variant="outlined" fullWidth disabled={adding}
                                    label={<FormattedMessage id="project.global.field.surnames"/>} value={surnames} required
                                    onChange={e => setSurnames(e.target.value)}/>
-                        <RoleMultiSelector margin="dense" variant="outlined" fullWidth disabled={adding} required
-                                           selectedRoles={roles} handleSelectedRoles={e => setRoles(e.target.value.sort())}
-                                           ignoreRoles={[Role.MANAGER]}/>
                     </DialogContent>
                     <DialogActions>
                         <Button variant="contained" color="secondary" onClick={closeDialog} disableElevation>

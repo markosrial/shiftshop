@@ -97,7 +97,7 @@ RoleMultiSelector.defaultProps = {
 RoleMultiSelector.propTypes = {
     selectedRoles: PropTypes.array.isRequired,
     handleSelectedRoles: PropTypes.func.isRequired,
-    ignoreRoles: PropTypes.array
+    ignoreRoles: PropTypes.array.isRequired
 };
 
 export default RoleMultiSelector;

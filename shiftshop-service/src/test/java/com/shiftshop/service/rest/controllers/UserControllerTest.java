@@ -30,8 +30,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -112,7 +111,7 @@ public class UserControllerTest {
     public void testPostRegisterUser_Ok() throws Exception {
 
         AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
-        ObjectMapper mapper = new ObjectMapper();
+
 
         // Insert user with password
         InsertUserParamsDto userParams = new InsertUserParamsDto();
@@ -121,6 +120,8 @@ public class UserControllerTest {
         userParams.setName(NAME + "1");
         userParams.setSurnames(SURNAMES);
         userParams.setRoles(new HashSet<>(Arrays.asList(RoleType.ADMIN)));
+
+        ObjectMapper mapper = new ObjectMapper();
 
         mockMvc.perform(post("/users" )
                 .header("Authorization", "Bearer " + user.getServiceToken())
@@ -316,19 +317,6 @@ public class UserControllerTest {
 
         AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
 
-        mockMvc.perform(get("/users" )
-                .header("Authorization", "Bearer " + user.getServiceToken())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.items.length()").value(1));
-
-    }
-
-    @Test
-    public void testGetBlockedUsers_Ok() throws Exception {
-
-        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
-
         // Add blocked user
         User blockedUser = new User("user", PASSWORD, NAME, SURNAMES, new HashSet<>());
 
@@ -337,12 +325,123 @@ public class UserControllerTest {
 
         userDao.save(blockedUser);
 
-        // Get result
-        mockMvc.perform(get("/users/blocked" )
+        mockMvc.perform(get("/users" )
                 .header("Authorization", "Bearer " + user.getServiceToken())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.items.length()").value(1));
+
+        mockMvc.perform(get("/users?onlyActive=false" )
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items.length()").value(2));
+
+    }
+
+    @Test
+    public void testPutUpdateUser_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+        ObjectMapper mapper = new ObjectMapper();
+
+        User testUser = userService.registerUser(new User("newUser", PASSWORD, NAME, SURNAMES,
+                new HashSet<>(Arrays.asList(RoleType.ADMIN))));
+
+        // Update user params
+        InsertUserParamsDto userParams = new InsertUserParamsDto();
+        userParams.setName(NAME + "X");
+        userParams.setSurnames(SURNAMES  + "X");
+        userParams.setRoles(new HashSet<>(Arrays.asList(RoleType.SALESMAN)));
+
+        mockMvc.perform(put("/users/" + testUser.getId() )
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(userParams)))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void testPutUpdateUser_NotFound() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Update user params
+        InsertUserParamsDto userParams = new InsertUserParamsDto();
+
+        mockMvc.perform(put("/users/" + NON_EXISTENT_ID )
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(userParams)))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void testPutInactiveUser_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+
+        User testUser = userService.registerUser(new User("newUser", PASSWORD, NAME, SURNAMES,
+                new HashSet<>(Arrays.asList(RoleType.ADMIN))));
+
+        // Block user
+        mockMvc.perform(put("/users/" + testUser.getId() + "/inactive")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNoContent());
+
+    }
+
+    @Test
+    public void testPutInactiveUser_BadRequest() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+
+        // Block user
+        mockMvc.perform(put("/users/" + user.getUserLoggedDto().getId() + "/inactive")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testPutInactiveUser_NotFound() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+
+        // Block user
+        mockMvc.perform(put("/users/" + NON_EXISTENT_ID + "/inactive")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void testPutActiveUser_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+
+        User testUser = userService.registerUser(new User("newUser", PASSWORD, NAME, SURNAMES,
+                new HashSet<>(Arrays.asList(RoleType.ADMIN))));
+
+        // Unblock user
+        mockMvc.perform(put("/users/" + testUser.getId() + "/active")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNoContent());
+
+    }
+
+    @Test
+    public void testPutActiveUser_NotFound() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedManagerUser("manager");
+
+        // Block user
+        mockMvc.perform(put("/users/" + NON_EXISTENT_ID + "/active")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNotFound());
 
     }
 
