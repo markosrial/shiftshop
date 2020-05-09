@@ -1,4 +1,5 @@
 import * as actionTypes from './actionTypes';
+import backend from '../../backend';
 
 import {SalesDB} from '../../databases';
 
@@ -59,3 +60,6 @@ export const getSalesByDate = (dbInstance, date, onError, atFinally) => dispatch
         .finally(atFinally);
 
 };
+
+export const registerSale = (sale, onSuccess, onError) =>
+    backend.saleService.registerSale(sale, onSuccess, onError);

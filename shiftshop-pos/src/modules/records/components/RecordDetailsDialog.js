@@ -68,7 +68,11 @@ const RecordsDetailsDialog = ({record, printRecord, closeDialog}) => {
                             <Box fontWeight={700} fontStyle="italic" flexGrow={1}>
                                 <FormattedMessage id="project.records.RecordDetailsDialog.numItems"/>&nbsp;
                             </Box>
-                            <Box>{record.items.length}</Box>
+                            <Box>
+                                {record.items
+                                    .map(item => item.quantity)
+                                    .reduce((a, b) => a + b, 0)}
+                            </Box>
                         </Box>
                     </ListItem>
                     <ListItem>

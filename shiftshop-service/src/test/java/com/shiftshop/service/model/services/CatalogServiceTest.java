@@ -2,7 +2,10 @@ package com.shiftshop.service.model.services;
 
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
-import com.shiftshop.service.model.entities.*;
+import com.shiftshop.service.model.entities.Category;
+import com.shiftshop.service.model.entities.CategoryDao;
+import com.shiftshop.service.model.entities.OrderAscDesc;
+import com.shiftshop.service.model.entities.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +40,6 @@ public class CatalogServiceTest {
 
     @Autowired
     private CategoryDao categoryDao;
-
-    @Autowired
-    private ProductDao productDao;
 
     @Autowired
     private CatalogService catalogService;

@@ -23,7 +23,8 @@ export const instantiate = async () => {
 
     const extraFuncs = {
         getByBarcode: getByBarcode(db),
-        getByDate: getByDate(db)
+        getByDate: getByDate(db),
+        getPendingSales: getPendingSales(db)
     }
 
     return ({
@@ -66,6 +67,19 @@ const getByDate = db => async (date) => {
 
     } catch (err) {
         throw ErrorTypes.NotFound;
+    }
+
+}
+
+const getPendingSales = db => async () => {
+
+    try {
+
+        const pendingSales = await db.find({selector: {uploaded: false}})
+        return pendingSales.docs;
+
+    } catch (err) {
+        throw ErrorTypes.NotIndexedSearch;
     }
 
 }
