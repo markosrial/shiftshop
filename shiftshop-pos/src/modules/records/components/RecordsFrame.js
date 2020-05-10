@@ -10,6 +10,7 @@ import useStyles from '../styles/RecordsFrame';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 import RecordsCard from './RecordsCard';
+import UploadSalesDialog from './UploadSalesDialog';
 
 const RecordsFrame = () => {
 
@@ -50,7 +51,9 @@ const RecordsFrame = () => {
 
     return (
         <Box className={classes.content}>
-            <Box width={1} mb={1} display="flex" justifyContent="flex-end">
+            <Box width={1} mb={1} display="flex" alignItems="center">
+                <UploadSalesDialog/>
+                <Box flexGrow={1}/>
                 <DatePicker inputVariant="outlined" margin="dense" format="dd/MM/yyyy"
                             label={<FormattedMessage id="project.global.field.saleDate"/>}
                             variant="inline" disabled={loading} disableFuture

@@ -1,8 +1,8 @@
-import {appFetch, appFetchOffline, config} from './appFetch';
+import {appFetch, config} from './appFetch';
 
 export const getLastUpdateTimestamp = (onSuccess, atFinally) =>
-    appFetchOffline('/pos/lastUpdateTimestamp', config('GET'),
-        onSuccess, null, atFinally, false);
+    appFetch('/pos/lastUpdateTimestamp', config('GET'),
+        onSuccess, null, atFinally, true, false);
 
 export const syncUsers = (lastUpdate, onSuccess, onErrors) => {
 

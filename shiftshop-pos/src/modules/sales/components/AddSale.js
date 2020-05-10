@@ -111,7 +111,6 @@ const AddSale = ({discount, closeDialog}) => {
             },
             error => {
                 enqueueSnackbar(<FormattedMessage id="project.sales.AddSale.error"/>, {variant: 'error'});
-                console.log(error);
                 setSaving(false);
             });
 
