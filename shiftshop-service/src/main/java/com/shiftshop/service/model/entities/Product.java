@@ -24,6 +24,7 @@ public class Product {
                 case "date":
                 case "creationDate":
                     type = creationTimestamp.name();
+                    break;
                 default:
                     break;
             }

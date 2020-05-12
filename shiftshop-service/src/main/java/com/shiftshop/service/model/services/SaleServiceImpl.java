@@ -81,7 +81,7 @@ public class SaleServiceImpl implements SaleService {
                 .reduce(new BigDecimal(0), (a, b) -> a.add(b.getTotalPrice()), BigDecimal::add)
                 .subtract(sale.getDiscount()).setScale(2, RoundingMode.HALF_EVEN));
 
-        if (sale.getCash() != null && sale.getCash().compareTo(sale.getTotal()) == -1) {
+        if (sale.getCash() != null && sale.getCash().compareTo(sale.getTotal()) < 0) {
             throw new CashAmountException(sale.getCash(), sale.getTotal());
         }
 
