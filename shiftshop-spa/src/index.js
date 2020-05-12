@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {MuiThemeProvider} from '@material-ui/core';
 import {SnackbarProvider} from 'notistack';
 import {IntlProvider} from 'react-intl';
+import {MuiThemeProvider} from '@material-ui/core';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+
+import { enUS, esES } from '@material-ui/core/locale';
+import DateFnsUtils from '@date-io/date-fns';
+import esLocale from "date-fns/locale/es";
+import enLocale from "date-fns/locale/en-US";
 
 import 'react-app-polyfill/stable';
 
@@ -21,15 +27,21 @@ const store = configureStore();
 
 /* Configure i18n. */
 const {locale, messages} = initReactIntl();
+const localeMap = {
+    en: {fns: enLocale, theme: enUS},
+    es: {fns: esLocale, theme: esES},
+};
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
         <Provider store={store}>
             <IntlProvider locale={locale} messages={messages}>
-                <SnackbarProvider anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-                                  autoHideDuration={2500}>
-                    <App/>
-                </SnackbarProvider>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={localeMap[locale].fns}>
+                    <SnackbarProvider anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+                                      autoHideDuration={2500}>
+                        <App/>
+                    </SnackbarProvider>
+                </MuiPickersUtilsProvider>
             </IntlProvider>
         </Provider>
     </MuiThemeProvider>,

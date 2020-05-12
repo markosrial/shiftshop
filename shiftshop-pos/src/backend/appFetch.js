@@ -78,7 +78,7 @@ const handle4xxResponse = async (response, onErrors) => {
         return false;
     }
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
         removeServiceToken();
         return true;
     }

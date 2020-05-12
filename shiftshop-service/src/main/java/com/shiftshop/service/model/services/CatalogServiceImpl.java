@@ -2,10 +2,14 @@ package com.shiftshop.service.model.services;
 
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
+import com.shiftshop.service.model.common.utils.EntitiesOrder;
 import com.shiftshop.service.model.common.utils.MessageConstants;
 import com.shiftshop.service.model.common.utils.UUIDGenerator;
-import com.shiftshop.service.model.entities.*;
+import com.shiftshop.service.model.entities.Category;
+import com.shiftshop.service.model.entities.CategoryDao;
+import com.shiftshop.service.model.entities.Product;
 import com.shiftshop.service.model.entities.Product.ProductOrderType;
+import com.shiftshop.service.model.entities.ProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -129,10 +133,12 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     @Transactional(readOnly = true)
     public Block<Product> findProducts(Long categoryId, String keywords, boolean onlyActive,
-                                       String orderType, String order, int page, int size) {
+                                       String orderBy, String direction, int page, int size) {
 
         Slice<Product> slice = productDao.find(categoryId, keywords, onlyActive,
-                ProductOrderType.fromString(orderType), OrderAscDesc.fromString(order), page, size);
+                ProductOrderType.fromStringOrDefault(orderBy),
+                EntitiesOrder.directionFromStringOrDefault(direction),
+                page, size);
 
         return new Block<>(slice.getContent(), slice.hasNext());
 

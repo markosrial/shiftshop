@@ -49,6 +49,11 @@ export default {
     'project.catalog.ProductsSearchResult.emptySearch': 'Esto está muy vacío, ¡prueba a buscar algo!',
     'project.catalog.ProductsSearchResult.emptyProducts': 'No se encontraron productos',
 
+    'project.sales.SalesPage.title': 'Registros de venta',
+    'project.sales.SalesSearch.title': 'Buscar ventas registradas',
+    'project.sales.SalesSearchResult.emptySales': 'No se encontraron ventas',
+    'project.sales.SalesSearchResult.emptySearch': 'Esto está muy vacío, ¡prueba a realizar una búsqueda!',
+
     'project.users.AddUser.addButton': 'Nuevo',
     'project.users.AddUser.customPassword.title': 'Cambiar contraseña inicial',
     'project.users.AddUser.customPassword.message': 'Por defecto se utiliza el nombre de usuario como contraseña inicial',
@@ -66,10 +71,12 @@ export default {
 
     'project.global.button.add': 'Añadir',
     'project.global.button.accept': 'Aceptar',
+    'project.global.button.asc': 'Ascendente',
     'project.global.button.back': 'Volver',
     'project.global.button.cancel': 'Cancelar',
     'project.global.button.close': 'Cerrar',
     'project.global.button.continue': 'Continuar',
+    'project.global.button.desc': 'Descendente',
     'project.global.button.login': 'Iniciar sesión',
     'project.global.button.new': 'Nueva',
     'project.global.button.refresh': 'Actualizar',
@@ -83,6 +90,7 @@ export default {
     'project.global.field.barcode': 'Código de barras',
     'project.global.field.creationDate': 'Fecha de inserción',
     'project.global.field.date': 'Fecha',
+    'project.global.field.from': 'Desde',
     'project.global.field.keywords': 'Palabras clave',
     'project.global.field.name': 'Nombre',
     'project.global.field.password': 'Contraseña',
@@ -95,10 +103,13 @@ export default {
     'project.global.field.roles.?': 'Sin definir',
     'project.global.field.salePrice': 'Precio de venta',
     'project.global.field.salePrice.short': 'PVP',
+    'project.global.field.seller': 'Vendedor',
     'project.global.field.state': 'Estado',
     'project.global.field.state.active': 'Activo',
     'project.global.field.state.inactive': 'Inactivo',
     'project.global.field.surnames': 'Apellidos',
+    'project.global.field.to': 'Hasta',
+    'project.global.field.total': 'Total',
     'project.global.field.username': 'Nombre de usuario',
     'project.global.field.userName': 'Nombre de usuario'
 

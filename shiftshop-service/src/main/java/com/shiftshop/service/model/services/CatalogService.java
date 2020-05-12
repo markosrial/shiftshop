@@ -25,7 +25,7 @@ public interface CatalogService {
     Product findProductById(Long id) throws InstanceNotFoundException;
 
     Block<Product> findProducts(Long categoryId, String keywords, boolean onlyActive,
-                                String orderType, String order, int page, int size);
+                                String orderBy, String direction, int page, int size);
 
     Product updateProduct(Long id, String name, BigDecimal providerPrice, BigDecimal salePrice,
                           String barcode, Long categoryId)

@@ -2,12 +2,20 @@ package com.shiftshop.service.model.services;
 
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.common.exceptions.InstancePropertyNotFoundException;
+import com.shiftshop.service.model.common.utils.EntitiesOrder;
 import com.shiftshop.service.model.entities.*;
+import com.shiftshop.service.model.entities.Sale.SaleOrderType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.Set;
 
@@ -71,16 +79,39 @@ public class SaleServiceImpl implements SaleService {
         // Calculate sale total price and cost
         sale.setTotal(sale.getItems().stream()
                 .reduce(new BigDecimal(0), (a, b) -> a.add(b.getTotalPrice()), BigDecimal::add)
-                .subtract(sale.getDiscount()));
+                .subtract(sale.getDiscount()).setScale(2, RoundingMode.HALF_EVEN));
 
         if (sale.getCash() != null && sale.getCash().compareTo(sale.getTotal()) == -1) {
             throw new CashAmountException(sale.getCash(), sale.getTotal());
         }
 
         sale.setCost(sale.getItems().stream()
-                .reduce(new BigDecimal(0), (a, b) -> a.add(b.getTotalCost()), BigDecimal::add));
+                .reduce(new BigDecimal(0), (a, b) -> a.add(b.getTotalCost()), BigDecimal::add)
+                .setScale(2, RoundingMode.HALF_EVEN));
 
         return sale;
+
+    }
+
+    @Override
+    public Block<Sale> findSales(LocalDate initDate, LocalDate endDate, String orderBy, String direction,
+                                 int page, int size)
+            throws InvalidDateRangeException {
+
+        if (endDate == null) {
+            endDate = initDate;
+        }
+
+        if (endDate.isBefore(initDate)) {
+            throw new InvalidDateRangeException();
+        }
+
+        Slice<Sale> slice = saleDao.findAllByDateBetween(initDate.atStartOfDay(), endDate.atTime(LocalTime.MAX),
+                PageRequest.of(page, size,
+                        Sort.by(EntitiesOrder.directionFromStringOrDefault(direction),
+                                SaleOrderType.fromStringOrDefault(orderBy).name())));
+
+        return new Block<>(slice.getContent(), slice.hasNext());
 
     }
 

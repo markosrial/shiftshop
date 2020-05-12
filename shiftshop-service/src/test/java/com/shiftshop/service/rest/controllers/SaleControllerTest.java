@@ -1,12 +1,9 @@
 package com.shiftshop.service.rest.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
-import com.shiftshop.service.model.entities.Category;
-import com.shiftshop.service.model.entities.Product;
-import com.shiftshop.service.model.entities.User;
+import com.shiftshop.service.model.entities.*;
 import com.shiftshop.service.model.services.*;
 import com.shiftshop.service.rest.dtos.sale.InsertSaleItemParamsDto;
 import com.shiftshop.service.rest.dtos.sale.InsertSaleParamsDto;
@@ -24,12 +21,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -55,6 +55,9 @@ public class SaleControllerTest {
 
     @Autowired
     private CatalogService catalogService;
+
+    @Autowired
+    private SaleService saleService;
 
     @Autowired
     private UserService userService;
@@ -88,15 +91,44 @@ public class SaleControllerTest {
         return createAuthenticatedUser(userName, roles);
     }
 
+    private AuthenticatedUserDto createAuthenticatedAdminUser(String userName)
+            throws IncorrectLoginException, UserNotActiveException,
+            DuplicateInstancePropertyException, NoUserRolesException {
+
+        Set<User.RoleType> roles = new HashSet<>();
+        roles.add(User.RoleType.ADMIN);
+
+        return createAuthenticatedUser(userName, roles);
+    }
+
     private Category createCategory(String name) throws DuplicateInstancePropertyException {
         return catalogService.addCategory(name);
     }
 
     private Product createProduct(String name, Long categoryId)
             throws DuplicateInstancePropertyException, InstanceNotFoundException {
-
         return catalogService.addProduct(name, PROV_PRICE, SALE_PRICE, categoryId);
+    }
 
+    private Sale createSale(String barcode, LocalDateTime date, BigDecimal discount, BigDecimal cash,
+                            BigDecimal salePrice, int quantity, Long productId, Long userId)
+            throws EmptySaleException, InstanceNotFoundException, CashAmountException {
+
+        Sale sale = new Sale(barcode, date, discount, cash);
+
+        Set<SaleItem> saleItems = new HashSet<>();
+
+        Product product = new Product();
+        product.setId(productId);
+        saleItems.add(new SaleItem(salePrice, quantity, product));
+
+        return saleService.registerSale(userId, sale, saleItems);
+
+    }
+
+    private Sale createBaseSale(String barcode, LocalDateTime date, Long productId, Long userId)
+            throws EmptySaleException, InstanceNotFoundException, CashAmountException {
+        return createSale(barcode, date, null, null, SALE_PRICE, 1, productId, userId);
     }
 
     @Test
@@ -107,7 +139,6 @@ public class SaleControllerTest {
         Product product = createProduct(PRODUCT_NAME, category.getId());
 
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
         // Sale items params
         InsertSaleItemParamsDto paramItems = new InsertSaleItemParamsDto();
@@ -146,7 +177,6 @@ public class SaleControllerTest {
         Product product = createProduct(PRODUCT_NAME, category.getId());
 
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
         // Sale items params
         InsertSaleItemParamsDto paramItems = new InsertSaleItemParamsDto();
@@ -247,7 +277,6 @@ public class SaleControllerTest {
         Product product = createProduct(PRODUCT_NAME, category.getId());
 
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
         // Sale items params
         InsertSaleItemParamsDto paramItems = new InsertSaleItemParamsDto();
@@ -278,6 +307,73 @@ public class SaleControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsBytes(params)))
                 .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void testGetSale_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(USERNAME);
+        Category category = createCategory(CATEGORY_NAME);
+        Product product = createProduct(PRODUCT_NAME, category.getId());
+
+        LocalDateTime date = LocalDate.now().atStartOfDay();
+
+        Sale sale = createBaseSale(BARCODE + "1", date.plusHours(1),
+                product.getId(), user.getUserLoggedDto().getId());
+        createBaseSale(BARCODE + "2", date.plusHours(2),
+                product.getId(), user.getUserLoggedDto().getId());
+        createBaseSale(BARCODE + "3", date.plusHours(3),
+                product.getId(), user.getUserLoggedDto().getId());
+
+        // Test with only required params
+        mockMvc.perform(get("/sales")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("initDate", date.toLocalDate().toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items.length()").value(3));
+
+        mockMvc.perform(get("/sales")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("initDate", date.toLocalDate().plusDays(1).toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items.length()").value(0));
+
+        // Test with all params
+        mockMvc.perform(get("/sales")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("initDate", date.toLocalDate().toString())
+                .param("endDate", date.toLocalDate().plusDays(1).toString())
+                .param("orderBy", "total")
+                .param("direction", "asc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].barcode").value(sale.getBarcode()));
+
+    }
+
+    @Test
+    public void testGetSale_BadRequest() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(USERNAME);
+
+        LocalDate date = LocalDate.now();
+
+        mockMvc.perform(get("/sales")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("initDate", date.toString())
+                .param("endDate", date.minusDays(1).toString()))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testGetSale_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedSalesmanUser(USERNAME);
+
+        mockMvc.perform(get("/sales")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
 
     }
 

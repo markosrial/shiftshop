@@ -49,6 +49,11 @@ export default {
     'project.catalog.ProductsSearchResult.emptySearch': 'This is too empty, try to search something!',
     'project.catalog.ProductsSearchResult.emptyProducts': 'No products were found',
 
+    'project.sales.SalesPage.title': 'Sale records',
+    'project.sales.SalesSearch.title': 'Search sale records',
+    'project.sales.SalesSearchResult.emptySales': 'No sales were found',
+    'project.sales.SalesSearchResult.emptySearch': 'This is too empty, try to search something!',
+
     'project.users.AddUser.addButton': 'New',
     'project.users.AddUser.customPassword.title': 'Change initial password',
     'project.users.AddUser.customPassword.message': 'By default, username is used as the initial password',
@@ -66,10 +71,12 @@ export default {
 
     'project.global.button.add': 'Add',
     'project.global.button.accept': 'Accept',
+    'project.global.button.asc': 'Ascendant',
     'project.global.button.back': 'Back',
     'project.global.button.cancel': 'Cancel',
     'project.global.button.close': 'Close',
     'project.global.button.continue': 'Continue',
+    'project.global.button.desc': 'Descendant',
     'project.global.button.login': 'Login',
     'project.global.button.new': 'New',
     'project.global.button.refresh': 'Refresh',
@@ -83,6 +90,7 @@ export default {
     'project.global.field.barcode': 'Barcode',
     'project.global.field.creationDate': 'Insertion date',
     'project.global.field.date': 'Date',
+    'project.global.field.from': 'From',
     'project.global.field.keywords': 'Keywords',
     'project.global.field.name': 'Name',
     'project.global.field.password': 'Password',
@@ -95,10 +103,13 @@ export default {
     'project.global.field.roles.?': 'Undefined',
     'project.global.field.salePrice': 'Sale price',
     'project.global.field.salePrice.short': 'PVP',
+    'project.global.field.seller': 'Seller',
     'project.global.field.state': 'State',
     'project.global.field.state.active': 'Active',
     'project.global.field.state.inactive': 'Inactive',
     'project.global.field.surnames': 'Surnames',
+    'project.global.field.to': 'To',
+    'project.global.field.total': 'Total',
     'project.global.field.username': 'Username',
     'project.global.field.userName': 'Username'
 

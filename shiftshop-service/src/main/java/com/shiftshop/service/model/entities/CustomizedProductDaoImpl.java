@@ -4,6 +4,7 @@ import com.shiftshop.service.model.entities.Product.ProductOrderType;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.Sort.Direction;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,7 +29,7 @@ public class CustomizedProductDaoImpl implements CustomizedProductDao {
     @SuppressWarnings("unchecked")
     @Override
     public Slice<Product> find(Long categoryId, String keywords, boolean onlyActive,
-                               ProductOrderType orderType, OrderAscDesc order, int page, int size) {
+                               ProductOrderType orderType, Direction order, int page, int size) {
 
         String[] tokens = getTokens(keywords);
         String queryString = "FROM Product p";
@@ -68,10 +69,10 @@ public class CustomizedProductDaoImpl implements CustomizedProductDao {
             orderType = ProductOrderType.getDefault();
         }
 
-        queryString += " ORDER BY p." + orderType.getType();
+        queryString += " ORDER BY p." + orderType.name();
 
         if (order != null)
-            queryString += " " + order.toString();
+            queryString += " " + order.name();
 
         Query query = entityManager.createQuery(queryString).setFirstResult(page * size).setMaxResults(size + 1);
 

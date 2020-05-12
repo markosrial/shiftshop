@@ -5,16 +5,16 @@ import {FormattedMessage} from 'react-intl';
 import {Button, Divider, Drawer, FormControlLabel, Radio, RadioGroup, Switch} from '@material-ui/core';
 import {Close, Delete} from '@material-ui/icons';
 
-import SearchOrderBy from '../constants/SearchOrderBy';
-import SearchOrder from '../constants/SearchOrder';
+import {SearchDirection} from '../../common';
+import ProductOrderBy from '../constants/ProductOrderBy';
 
 import useStyles from '../styles/ProductsSearchFilter';
 
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 
-const orderByTypes = Object.values(SearchOrderBy);
-const orderTypes = Object.values(SearchOrder);
+const orderByTypes = Object.values(ProductOrderBy);
+const orderTypes = Object.values(SearchDirection);
 
 const ProductsSearchFilter = ({filterOpen, closeFilter}) => {
     const classes = useStyles();

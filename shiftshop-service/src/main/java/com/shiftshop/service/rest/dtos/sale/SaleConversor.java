@@ -5,6 +5,7 @@ import com.shiftshop.service.model.entities.Sale;
 import com.shiftshop.service.model.entities.SaleItem;
 
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,15 @@ public class SaleConversor {
 
     public static final Set<SaleItem> toSaleItems(Set<InsertSaleItemParamsDto> listDto) {
         return listDto.stream().map(SaleConversor::toSaleItem).collect(Collectors.toSet());
+    }
+
+    public static final SaleSummaryDto toSaleSummaryDto(Sale sale) {
+        return new SaleSummaryDto(sale.getBarcode(), sale.getDate(), sale.getTotal(),
+                sale.getSeller().getUserName());
+    }
+
+    public static final List<SaleSummaryDto> toSaleSummaryDtos(List<Sale> sales) {
+        return sales.stream().map(SaleConversor::toSaleSummaryDto).collect(Collectors.toList());
     }
 
 }

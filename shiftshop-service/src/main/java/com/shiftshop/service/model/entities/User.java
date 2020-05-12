@@ -1,5 +1,6 @@
 package com.shiftshop.service.model.entities;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@BatchSize(size = 15)
 public class User {
 
     public enum RoleType {
