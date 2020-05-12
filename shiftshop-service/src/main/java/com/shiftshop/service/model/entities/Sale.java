@@ -12,6 +12,26 @@ import java.util.Set;
 @Entity
 public class Sale {
 
+    public enum SaleOrderType {
+
+        barcode, date, total;
+
+        public static SaleOrderType fromStringOrDefault(String type) {
+
+            try {
+                return SaleOrderType.valueOf(type);
+            } catch (IllegalArgumentException | NullPointerException e) {
+                return getDefault();
+            }
+
+        }
+
+        public static SaleOrderType getDefault() {
+            return date;
+        }
+
+    }
+
     private Long id;
     private String barcode;
     private LocalDateTime date;

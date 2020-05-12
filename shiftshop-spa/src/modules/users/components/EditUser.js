@@ -120,8 +120,6 @@ const EditUser = ({user, onEdit, onClose}) => {
         return null;
     }
 
-    console.log(isManager);
-
     return (
         <Dialog open fullWidth scroll="body" onClose={onClose}>
             <DialogTitle>

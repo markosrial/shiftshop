@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 @SuppressWarnings("serial")
 public class CashAmountException extends Exception {
 
-    private BigDecimal cash;
-    private BigDecimal total;
+    private final BigDecimal cash;
+    private final BigDecimal total;
 
     public CashAmountException(BigDecimal cash, BigDecimal total) {
 

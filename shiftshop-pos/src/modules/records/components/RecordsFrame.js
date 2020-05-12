@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button} from '@material-ui/core';
+import {Box} from '@material-ui/core';
 import {useDispatch, useSelector} from 'react-redux';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
@@ -17,7 +17,7 @@ const RecordsFrame = () => {
     const classes = useStyles();
 
     const dispatch = useDispatch();
-    const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+    const {enqueueSnackbar} = useSnackbar();
 
     const salesDB = useSelector(selectors.getSalesDB)
     const recordsDateFilter = useSelector(selectors.getRecordsDateFilter);

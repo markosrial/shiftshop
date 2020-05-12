@@ -4,12 +4,12 @@ import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyEx
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.entities.Category;
 import com.shiftshop.service.model.entities.CategoryDao;
-import com.shiftshop.service.model.entities.OrderAscDesc;
 import com.shiftshop.service.model.entities.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -194,23 +194,25 @@ public class CatalogServiceTest {
 
         Block<Product> expectedBlock = new Block<>(Arrays.asList(product3, product1, product2), false);
         assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
-                Product.ProductOrderType.name.getType(), null, 0, 3));
+                "name", null, 0, 3));
 
         expectedBlock = new Block<>(Arrays.asList(product1, product2, product3), false);
         assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
-                Product.ProductOrderType.creationDate.getType(), OrderAscDesc.ASC.name(), 0, 3));
+                "date", Direction.ASC.name(), 0, 3));
 
         expectedBlock = new Block<>(Arrays.asList(product3, product2, product1), false);
         assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
-                Product.ProductOrderType.creationDate.getType(), OrderAscDesc.DESC.name(), 0, 3));
+                "creationDate", Direction.DESC.name(), 0, 3));
 
         expectedBlock = new Block<>(Arrays.asList(product3, product1, product2), false);
         assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
-                Product.ProductOrderType.name.getType(), OrderAscDesc.ASC.name(), 0, 3));
+                "name", Direction.ASC.name(), 0, 3));
+        assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
+                "", "", 0, 3));
 
         expectedBlock = new Block<>(Arrays.asList(product2, product1, product3), false);
         assertEquals(expectedBlock, catalogService.findProducts(null, null, false,
-                Product.ProductOrderType.name.getType(), OrderAscDesc.DESC.name(), 0, 3));
+                "name", Direction.DESC.name(), 0, 3));
 
     }
 

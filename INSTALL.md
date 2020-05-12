@@ -32,7 +32,10 @@ Enviroment SO: **Ubuntu 18.04 LTS**.
 
 - *MySQL*:
 ```bash
-  apt install mysql-server
+  sudo dpkg -i /PATH/version-specific-package-name.deb
+  sudo dpkg -i mysql-apt-config_w.x.y-z_all.deb
+  sudo apt-get update
+  sudo apt-get install mysql-server
 ```
 
 ***Database creation:***
@@ -194,4 +197,4 @@ In our case the LAN DNS name is "*home*", so all request to our machine will go 
 
 [Java11]: https://www.digitalocean.com/community/tutorials/como-instalar-java-con-apt-en-ubuntu-18-04-es	"Install Java 11 - Ubuntu 18.04"
 [NodeJS]: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04	"Install NodeJS - Ubuntu 18.04"
-[MySQL]: https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04	"Install MySQL - Ubuntu 18.04"
+[MySQL]: https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-fresh-install	"Install MySQL - Ubuntu with ATP"

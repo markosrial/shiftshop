@@ -39,6 +39,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
     >
       <div
         className="MuiChip-root"
+        onKeyDown={[Function]}
         onKeyUp={[Function]}
       >
         <span
@@ -89,6 +90,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
          
         <div
           className="MuiChip-root makeStyles-neutral-143"
+          onKeyDown={[Function]}
           onKeyUp={[Function]}
         >
           <span
@@ -98,18 +100,13 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
               className="MuiBox-root MuiBox-root-184"
             >
               <svg
-                aria-hidden="true"
+                aria-hidden={true}
                 className="MuiSvgIcon-root"
                 focusable="false"
-                role="presentation"
                 viewBox="0 0 24 24"
               >
                 <path
                   d="M10 17l5-5-5-5v10z"
-                />
-                <path
-                  d="M0 24V0h24v24H0z"
-                  fill="none"
                 />
               </svg>
               0.00
@@ -235,6 +232,7 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
     >
       <div
         className="MuiChip-root"
+        onKeyDown={[Function]}
         onKeyUp={[Function]}
       >
         <span
@@ -285,6 +283,7 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
          
         <div
           className="MuiChip-root makeStyles-positive-142"
+          onKeyDown={[Function]}
           onKeyUp={[Function]}
         >
           <span
@@ -294,10 +293,9 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
               className="MuiBox-root MuiBox-root-145"
             >
               <svg
-                aria-hidden="true"
+                aria-hidden={true}
                 className="MuiSvgIcon-root"
                 focusable="false"
-                role="presentation"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -427,6 +425,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
     >
       <div
         className="MuiChip-root"
+        onKeyDown={[Function]}
         onKeyUp={[Function]}
       >
         <span
@@ -477,6 +476,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
          
         <div
           className="MuiChip-root makeStyles-negative-144"
+          onKeyDown={[Function]}
           onKeyUp={[Function]}
         >
           <span
@@ -486,10 +486,9 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
               className="MuiBox-root MuiBox-root-195"
             >
               <svg
-                aria-hidden="true"
+                aria-hidden={true}
                 className="MuiSvgIcon-root"
                 focusable="false"
-                role="presentation"
                 viewBox="0 0 24 24"
               >
                 <path

@@ -2,8 +2,8 @@ import messages from './messages';
 
 export const initReactIntl = () => {
 
-    let locale = (navigator.languages && navigator.languages[0]) ||
-        navigator.language || navigator.userLanguage || 'en';
+    let locale = (navigator.languages && navigator.languages[0].split('-')[0]) ||
+        navigator.language.split('-')[0] || navigator.userLanguage || 'en';
     const localeWithoutRegionCode = locale.toLowerCase().split(/[_-]+/)[0];
     const localeMessages = messages[locale] ||
         messages[localeWithoutRegionCode] || messages['en'];

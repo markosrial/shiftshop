@@ -25,9 +25,8 @@ const useStyles = makeStyles(theme => ({
     },
     searchButton: {
         flex: '0',
-        height: theme.spacing(5),
         marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(0),
+        marginBottom: theme.spacing(0.5),
         boxShadow: 'none !important',
         [theme.breakpoints.down('sm')]: {
             width: '100%'
