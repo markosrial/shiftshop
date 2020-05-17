@@ -21,9 +21,9 @@ import useStyles from '../styles/ProductResult';
 
 import {formulas} from '../../../utils'
 import users, {Role} from '../../users';
+import {ProfitText} from '../../common';
 import ProductDetails from './ProductDetails';
 import EditProduct from './EditProduct';
-import ProductProfitText from './ProductProfitText';
 import ProductChangeState from './ProductChangeState';
 
 const ProductResult = ({product}) => {
@@ -67,7 +67,7 @@ const ProductResult = ({product}) => {
                 <Fragment>
                     <Divider/>
                     <CardActions>
-                        <ProductProfitText profit={formulas.getROI(product.salePrice, product.providerPrice)} isROI/>
+                        <ProfitText profit={formulas.getROI(product.salePrice, product.providerPrice)} isROI/>
                         <Box display="flex" flexGrow={1} justifyContent="flex-end"><ProductChangeState id={product.id} active={product.active}/></Box>
                     </CardActions>
                 </Fragment>}

@@ -2,12 +2,14 @@ package com.shiftshop.service.rest.controllers;
 
 
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
+import com.shiftshop.service.model.common.exceptions.InstancePropertyNotFoundException;
 import com.shiftshop.service.model.entities.Sale;
 import com.shiftshop.service.model.services.*;
 import com.shiftshop.service.rest.dtos.common.BlockDto;
 import com.shiftshop.service.rest.dtos.common.ErrorConversor;
 import com.shiftshop.service.rest.dtos.common.ErrorsDto;
 import com.shiftshop.service.rest.dtos.sale.InsertSaleParamsDto;
+import com.shiftshop.service.rest.dtos.sale.SaleDto;
 import com.shiftshop.service.rest.dtos.sale.SaleSummaryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,8 +18,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import static com.shiftshop.service.rest.dtos.sale.SaleConversor.*;
 
@@ -77,6 +83,20 @@ public class SaleController {
 
         return new BlockDto<>(toSaleSummaryDtos(sales.getItems()),sales.getExistMoreItems());
 
+    }
+
+    @GetMapping("/barcodes/{barcode}")
+    public SaleDto findSaleByBarcode(@PathVariable String barcode)
+            throws InstancePropertyNotFoundException {
+        return toSaleDto(saleService.findSaleByBarcode(barcode));
+    }
+
+    @GetMapping("/barcodes")
+    public List<String> findFirstExistingSaleBarcodes(
+            @RequestParam @NotNull @Size(min = 1) String startingCode,
+            @RequestParam(defaultValue = "15", required = false) @Min(0) int size) {
+        return saleService.findFirstSalesByBarcode(startingCode.toUpperCase(), size)
+                .stream().map(Sale::getBarcode).collect(Collectors.toList());
     }
 
 }

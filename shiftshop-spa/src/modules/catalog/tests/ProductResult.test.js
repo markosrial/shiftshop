@@ -14,7 +14,7 @@ import ProductResult from '../components/ProductResult';
 import {Role} from '../../users';
 
 jest.mock('../components/ProductDetails', () => () => (<mockProductDetails/>));
-jest.mock('../components/ProductProfitText', () => () => (<mockProductProfitText/>));
+jest.mock('../../common/components/ProfitText', () => () => (<mockProfitText/>));
 jest.mock('../components/ProductChangeState', () => () => (<mockProductChangeState/>));
 
 const {messages} = initReactIntl();

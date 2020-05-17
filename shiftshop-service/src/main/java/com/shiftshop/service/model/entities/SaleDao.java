@@ -11,6 +11,8 @@ public interface SaleDao extends PagingAndSortingRepository<Sale, Long> {
 
     Optional<Sale> findByBarcode(String barcode);
 
+    Slice<Sale> findByBarcodeStartingWith(String code, Pageable page);
+
     Slice<Sale> findAllByDateBetween(LocalDateTime initDate, LocalDateTime endDate, Pageable page);
 
 }

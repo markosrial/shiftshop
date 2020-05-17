@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {Box} from '@material-ui/core';
 import {ArrowDropDown, ArrowDropUp, ArrowRight} from '@material-ui/icons';
 
-import useStyles from '../styles/ProductProfitText';
+import useStyles from '../styles/ProfitText';
 
-const ProductProfitText = ({profit, isROI}) => {
+const ProfitText = ({profit, isROI}) => {
 
     const classes = useStyles();
 
@@ -38,9 +38,9 @@ const ProductProfitText = ({profit, isROI}) => {
 
 };
 
-ProductProfitText.propTypes = {
+ProfitText.propTypes = {
     profit: PropTypes.number.isRequired,
     isROI: PropTypes.bool
 };
 
-export default ProductProfitText;
+export default ProfitText;

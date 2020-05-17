@@ -11,6 +11,7 @@ const initialState = {
         direction: SearchDirection.DESC
     },
     salesSearch: null,
+    sale: null
 };
 
 const searchFilter = (state = initialState.searchFilter, action) => {
@@ -46,9 +47,28 @@ const salesSearch = (state = initialState.salesSearch, action) => {
 
 };
 
+
+const sale  = (state = initialState.sale, action) => {
+
+    switch (action.type) {
+
+        case actionTypes.GET_SALE_COMPLETED:
+            return action.sale;
+
+        case actionTypes.CLEAR_SALE:
+            return initialState.sale;
+
+        default:
+            return state;
+
+    }
+
+};
+
 const reducer = combineReducers({
     searchFilter,
-    salesSearch
+    salesSearch,
+    sale
 });
 
 export default reducer;

@@ -8,38 +8,53 @@ import {useSelector} from 'react-redux';
 
 const upload = (pendingSales, setCounter, onSuccess, onError, onFinish) => {
 
+    const MAX_UPLOAD_SALES = 50;
+
     let sales = [...pendingSales];
 
     const run = async () => {
 
-        let next;
+        let nextUpload;
         let count = 0;
         let successUploads = 0;
         let errors = [];
 
-        while ((next = nextSale()) !== undefined) {
+        while (sales.length > 0) {
 
-            const {barcode, date, discount, cash, sellerId, items} = next;
+            nextUpload = nextSales();
 
-            const sale = {barcode, date, discount, cash, sellerId,
-                items: items.map(item => {
-                    const {id, salePrice, quantity} = item;
-                    return ({productId: id, salePrice, quantity});
+            // If sales is cleared when taking nextSales
+            if (nextUpload.length === 0) {
+                return;
+            }
+
+            await Promise.all(
+                nextUpload.map(sale => {
+
+                    const {barcode, date, discount, cash, sellerId, items} = sale;
+
+                    const data = {barcode, date, discount, cash, sellerId,
+                        items: items.map(item => {
+                            const {id, salePrice, quantity} = item;
+                            return ({productId: id, salePrice, quantity});
+                        })
+                    };
+
+                    return actions.registerSale(data,
+                        () => {
+                            setCounter(++count);
+                            successUploads++;
+                            onSuccess(sale._id);
+                        },
+                        error => {
+                            setCounter(++count);
+                            errors = [...errors, ({barcode: sale.barcode, content: error})];
+                            onError(errors.length);
+                        }
+                    );
+
                 })
-            };
-
-            await actions.registerSale(sale,
-                () => {
-                    setCounter(++count);
-                    successUploads++;
-                    onSuccess(next._id);
-                },
-                error => {
-                    setCounter(++count);
-                    errors = [...errors, ({barcode: next.barcode, content: error})];
-                    onError(errors.length);
-                }
-            )
+            );
         }
 
         // Low delay before go into next step
@@ -49,7 +64,7 @@ const upload = (pendingSales, setCounter, onSuccess, onError, onFinish) => {
 
     }
 
-    const nextSale = () => sales.pop();
+    const nextSales = () => sales.splice(0, MAX_UPLOAD_SALES);
     const stop = () => sales.length = 0;
 
     return {run, stop};

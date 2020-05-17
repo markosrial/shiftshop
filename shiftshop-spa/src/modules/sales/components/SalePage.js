@@ -1,43 +1,36 @@
 import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom'
-import {Box, CircularProgress, Grid, Typography} from '@material-ui/core';
 import {FormattedMessage} from 'react-intl';
+import {Box, CircularProgress, Grid, Typography} from '@material-ui/core';
 
-import useStyles from '../styles/ProductPage';
+import useStyles from '../styles/SalePage';
 
 import * as actions from '../actions';
 import * as selectors from '../selectors';
-import ProductResult from './ProductResult';
 import {BackButton} from '../../common';
+import SaleResult from './SaleResult';
 
-const ProductPage = () => {
+const SalePage = () => {
 
     // Styles
     const classes = useStyles();
 
     // State & store
     const dispatch = useDispatch();
-    const product = useSelector(selectors.getProduct);
+    const sale = useSelector(selectors.getSale);
 
     const [loading, setLoading] = useState(true);
 
     // Path
-    const {id} = useParams();
+    const {barcode} = useParams();
 
     // Effects
     useEffect(() => {
 
-        const productId = Number.parseInt(id);
+        dispatch(actions.getSale(barcode, () => setLoading(false)));
 
-        if (isNaN(productId)) {
-            setLoading(false);
-            return;
-        }
-
-        dispatch(actions.getProduct(productId, () => setLoading(false)));
-
-        return () => dispatch(actions.clearProduct());
+        return () => dispatch(actions.clearSale());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -46,10 +39,10 @@ const ProductPage = () => {
             <Grid className={classes.header} alignItems="flex-end" container justify="space-between" spacing={2}>
                 <Grid item>
                     <Typography variant="overline">
-                        <FormattedMessage id="project.app.nav.catalog"/>
+                        <FormattedMessage id="project.app.nav.sales"/>
                     </Typography>
                     <Typography variant="h3">
-                        <FormattedMessage id="project.catalog.ProductPage.title"/>
+                        <FormattedMessage id="project.sales.SalePage.title"/>
                     </Typography>
                 </Grid>
                 <Grid item><BackButton/></Grid>
@@ -60,13 +53,13 @@ const ProductPage = () => {
                         <CircularProgress/>
                     </Box>
                     : <Grid item md={8} xs={12}>
-                        <ProductResult product={product}/>
+                        <SaleResult sale={sale}/>
                     </Grid>
                 }
             </Grid>
         </div>
     );
 
-};
+}
 
-export default ProductPage;
+export default SalePage;

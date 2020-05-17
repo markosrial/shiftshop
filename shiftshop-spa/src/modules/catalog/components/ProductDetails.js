@@ -7,7 +7,7 @@ import {Box, Chip, Grid} from '@material-ui/core';
 import useStyles from '../styles/ProductDetails';
 
 import * as selectors from '../selectors';
-import ProductProfitChip from './ProductProfitChip';
+import {ProfitChip} from '../../common';
 import ProductState from './ProductState';
 
 const RowItem = ({label, content}) => {
@@ -16,12 +16,14 @@ const RowItem = ({label, content}) => {
     return (
         <Grid className={classes.gridRow} container item spacing={1} alignItems="center">
             <Grid item xs={12} sm={4} lg={3}>
-                <Box fontWeight={500} fontStyle="italic">
+                <Box fontWeight={500} fontSize="body1.fontSize" fontStyle="italic">
                     <FormattedMessage id={label}/>
                 </Box>
             </Grid>
             <Grid className={classes.rowContent} item xs>
-                {content}
+                <Box fontSize="body1.fontSize">
+                    {content}
+                </Box>
             </Grid>
         </Grid>
     );
@@ -42,7 +44,7 @@ const ProductDetails = ({product}) => {
                 <Box display="flex" alignItems="center">
                     {product.salePrice.toFixed(2) + ' €'}
                     &nbsp;
-                    {(product.providerPrice != null) && <ProductProfitChip profit={(product.salePrice - product.providerPrice)}/>}
+                    {(product.providerPrice != null) && <ProfitChip profit={(product.salePrice - product.providerPrice)}/>}
                 </Box>
             }/>
             <RowItem label="project.global.field.creationDate" content={<FormattedDate value={product.creationDate}/>}/>

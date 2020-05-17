@@ -44,4 +44,19 @@ public class SaleConversor {
         return sales.stream().map(SaleConversor::toSaleSummaryDto).collect(Collectors.toList());
     }
 
+    public static final SaleItemDto toSaleItemDto(SaleItem saleItem) {
+        return new SaleItemDto(saleItem.getId(), saleItem.getSalePrice(), saleItem.getCost(),
+                saleItem.getQuantity(), saleItem.getProduct().getId(), saleItem.getProduct().getName());
+    }
+
+    public static final List<SaleItemDto> toSaleItemDtos(Set<SaleItem> saleItems) {
+        return saleItems.stream().map(SaleConversor::toSaleItemDto).collect(Collectors.toList());
+    }
+
+    public static final SaleDto toSaleDto(Sale sale) {
+        return new SaleDto(sale.getId(),sale.getBarcode(), sale.getDate(),
+                sale.getTotal(), sale.getCost(), sale.getDiscount(), sale.getCash(),
+                sale.getSeller().getUserName(), toSaleItemDtos(sale.getItems()));
+    }
+
 }

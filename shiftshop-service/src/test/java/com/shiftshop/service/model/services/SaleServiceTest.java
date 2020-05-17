@@ -2,6 +2,7 @@ package com.shiftshop.service.model.services;
 
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
+import com.shiftshop.service.model.common.exceptions.InstancePropertyNotFoundException;
 import com.shiftshop.service.model.entities.*;
 import com.shiftshop.service.model.entities.Sale.SaleOrderType;
 import org.junit.Test;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -38,9 +40,6 @@ public class SaleServiceTest {
     private final String SURNAMES = "Test Tester";
     private final String PASSWORD = "password";
     private final String SALE_BARCODE = "ABCD1234";
-
-    @Autowired
-    private SaleDao saleDao;
 
     @Autowired
     private CatalogService catalogService;
@@ -99,7 +98,7 @@ public class SaleServiceTest {
 
     @Test
     public void testRegisterAndFindSale() throws CashAmountException, DuplicateInstancePropertyException, EmptySaleException,
-            InstanceNotFoundException, NoUserRolesException {
+            InstanceNotFoundException, InstancePropertyNotFoundException, NoUserRolesException {
 
         Category category = createCategory(CATEGORY_NAME);
         Product product1 = createProduct(PRODUCT_NAME + "1", category.getId());
@@ -113,7 +112,6 @@ public class SaleServiceTest {
         Product itemProduct = new Product();
         itemProduct.setId(product1.getId());
         SaleItem saleItem1 = new SaleItem(product1.getSalePrice(), 2, itemProduct);
-
 
         // Sale item 2 -> Product sold with sale price bigger than actual product price
         itemProduct = new Product();
@@ -130,7 +128,7 @@ public class SaleServiceTest {
         sale = saleService.registerSale(user.getId(), sale, items);
 
         // Assertions
-        assertEquals(sale, saleDao.findById(sale.getId()).get());
+        assertEquals(sale, saleService.findSaleByBarcode(sale.getBarcode()));
 
         // Check correct total
         BigDecimal totalPrice = saleItem1.getTotalPrice().add(saleItem2.getTotalPrice()).subtract(discount);
@@ -276,6 +274,51 @@ public class SaleServiceTest {
     @Test(expected = InvalidDateRangeException.class)
     public void testGetSalesInvalidDateRange() throws InvalidDateRangeException {
         saleService.findSales(LocalDate.now(), LocalDate.now().minusDays(1), null, null, 0, 1);
+    }
+
+    @Test(expected = InstancePropertyNotFoundException.class)
+    public void testFindByBarcodeNonExistent() throws InstancePropertyNotFoundException {
+        saleService.findSaleByBarcode("");
+    }
+
+    @Test
+    public void testFindBarcodes() throws DuplicateInstancePropertyException, InstanceNotFoundException,
+            NoUserRolesException, CashAmountException, EmptySaleException {
+
+        Category category = createCategory(CATEGORY_NAME);
+        Product product = createProduct(PRODUCT_NAME, category.getId());
+        User user = createUser(USERNAME);
+
+        // Register sale
+        Sale saleA = createBaseSale("AAA" + SALE_BARCODE, product.getId(), user.getId());
+        Sale saleB = createBaseSale("AAB" + SALE_BARCODE, product.getId(), user.getId());
+        Sale saleC = createBaseSale("ABC" + SALE_BARCODE, product.getId(), user.getId());
+
+        // Find matching all sales
+        List<Sale> expectedList = List.of(saleA, saleB, saleC);
+        List<Sale> sales = saleService.findFirstSalesByBarcode("A", 3);
+        assertEquals(expectedList, sales);
+
+        // Find matching all but skipping last sale
+        expectedList = List.of(saleA, saleB);
+        sales = saleService.findFirstSalesByBarcode("A", 2);
+        assertEquals(expectedList, sales);
+
+        // Find matching 2/3 sales
+        expectedList = List.of(saleA, saleB);
+        sales = saleService.findFirstSalesByBarcode("AA", 3);
+        assertEquals(expectedList, sales);
+
+        // Find matching 1/3 sales
+        expectedList = List.of(saleA);
+        sales = saleService.findFirstSalesByBarcode("AAA", 3);
+        assertEquals(expectedList, sales);
+
+        // Find matching 0/3 sales
+        expectedList = List.of();
+        sales = saleService.findFirstSalesByBarcode("X", 3);
+        assertEquals(expectedList, sales);
+
     }
 
 }

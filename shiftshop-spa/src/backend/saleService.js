@@ -20,3 +20,9 @@ export const findSales = ({initDate, endDate, orderBy, direction, page}, onSucce
 
 }
 
+export const findSaleByBarcode = (barcode, onSuccess, atFinally) =>
+    appFetch(`/sales/barcodes/${barcode}`, config('GET'), onSuccess, null, atFinally);
+
+
+export const findFirstSaleBarcodes = (startingCode, onSuccess, atFinally) =>
+    appFetch(`/sales/barcodes?startingCode=${startingCode}`, config('GET'), onSuccess, null, atFinally);
