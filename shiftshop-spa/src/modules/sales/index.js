@@ -3,6 +3,7 @@ import * as actionTypes from './actionTypes';
 import reducer from './reducer';
 import * as selectors from './selectors';
 
+export {default as SalePage} from './components/SalePage';
 export {default as SalesPage} from './components/SalesPage';
 
 export default {actions, actionTypes, reducer, selectors};

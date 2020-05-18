@@ -71,7 +71,7 @@ exports[`ProductResult snapshot Product not null with edit permissions 1`] = `
   <div
     className="MuiCardActions-root MuiCardActions-spacing"
   >
-    <mockProductProfitText />
+    <mockProfitText />
     <div
       className="MuiBox-root MuiBox-root-132"
     >

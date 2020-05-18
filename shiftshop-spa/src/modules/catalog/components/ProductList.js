@@ -79,7 +79,7 @@ const ProductList = ({products, criteria, startSearch, stopSearch}) => {
                                 <TableRow key={product.id}>
                                     <TableCell align="left">
                                         <Link to={`/catalog/products/${product.id}`}>
-                                            {product.name}
+                                            <Box color="primary.dark">{product.name}</Box>
                                         </Link>
                                     </TableCell>
                                     <TableCell align="left">

@@ -34,3 +34,18 @@ export const nextFindSalesPage = (criteria, onError, atFinally) =>
     findSales({...criteria, page: criteria.page+1}, onError, atFinally);
 
 export const clearSalesSearch = () => ({type: actionTypes.CLEAR_SALES_SEARCH});
+
+const getSaleSuccess = sale => ({
+    type: actionTypes.GET_SALE_COMPLETED,
+    sale
+});
+
+export const getSale = (barcode, atFinally) => dispatch =>
+    backend.saleService.findSaleByBarcode(barcode,
+        sale => dispatch(getSaleSuccess(sale)),
+        atFinally);
+
+export const clearSale = () => ({type: actionTypes.CLEAR_SALE});
+
+export const findFirstSaleBarcodes = (startingCode, onSuccess, atFinally) =>
+    backend.saleService.findFirstSaleBarcodes(startingCode, onSuccess, atFinally);

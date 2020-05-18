@@ -33,6 +33,15 @@ const SalesSearchBar = ({searching, startSearch, stopSearch}) => {
         // eslint-disable-next-line
     }, []);
 
+    const handleChangeFrom = from => {
+
+        if (from > to) {
+            setTo(from);
+        }
+        setFrom(from);
+
+    }
+
     const search = () => {
 
         if (searching) return;
@@ -67,7 +76,7 @@ const SalesSearchBar = ({searching, startSearch, stopSearch}) => {
                         margin="dense" format="dd/MM/yyyy" fullWidth
                         label={<FormattedMessage id="project.global.field.from"/>}
                         variant="inline" disabled={searching} disableFuture
-                        value={from} onChange={setFrom} autoOk/>
+                        value={from} onChange={handleChangeFrom} autoOk/>
             <DatePicker className={classes.dayTo} inputVariant="outlined"
                         margin="dense" format="dd/MM/yyyy" fullWidth
                         label={<FormattedMessage id="project.global.field.to"/>}

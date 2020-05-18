@@ -74,6 +74,9 @@ const product  = (state = initialState.product, action) => {
         case actionTypes.SET_PRODUCT_INACTIVE_COMPLETED:
             return state ? {...state, active: false} : initialState.product;
 
+        case actionTypes.CLEAR_PRODUCT:
+            return initialState.product;
+
         default:
             return state;
 

@@ -9,6 +9,7 @@ import com.shiftshop.service.rest.dtos.sale.InsertSaleItemParamsDto;
 import com.shiftshop.service.rest.dtos.sale.InsertSaleParamsDto;
 import com.shiftshop.service.rest.dtos.user.AuthenticatedUserDto;
 import com.shiftshop.service.rest.dtos.user.LoginParamsDto;
+import org.apache.tomcat.jni.Local;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -126,9 +128,14 @@ public class SaleControllerTest {
 
     }
 
-    private Sale createBaseSale(String barcode, LocalDateTime date, Long productId, Long userId)
+    private Sale createBaseSaleWithDate(String barcode, LocalDateTime date, Long productId, Long userId)
             throws EmptySaleException, InstanceNotFoundException, CashAmountException {
         return createSale(barcode, date, null, null, SALE_PRICE, 1, productId, userId);
+    }
+
+    private Sale createBaseSale(String barcode, Long productId, Long userId)
+            throws EmptySaleException, InstanceNotFoundException, CashAmountException {
+        return createSale(barcode, LocalDateTime.now(), null, null, SALE_PRICE, 1, productId, userId);
     }
 
     @Test
@@ -319,11 +326,11 @@ public class SaleControllerTest {
 
         LocalDateTime date = LocalDate.now().atStartOfDay();
 
-        Sale sale = createBaseSale(BARCODE + "1", date.plusHours(1),
+        Sale sale = createBaseSaleWithDate(BARCODE + "1", date.plusHours(1),
                 product.getId(), user.getUserLoggedDto().getId());
-        createBaseSale(BARCODE + "2", date.plusHours(2),
+        createBaseSaleWithDate(BARCODE + "2", date.plusHours(2),
                 product.getId(), user.getUserLoggedDto().getId());
-        createBaseSale(BARCODE + "3", date.plusHours(3),
+        createBaseSaleWithDate(BARCODE + "3", date.plusHours(3),
                 product.getId(), user.getUserLoggedDto().getId());
 
         // Test with only required params
@@ -374,6 +381,64 @@ public class SaleControllerTest {
         mockMvc.perform(get("/sales")
                 .header("Authorization", "Bearer " + user.getServiceToken()))
                 .andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    public void testGetSaleByBarcode_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(USERNAME);
+
+        Category category = createCategory(CATEGORY_NAME);
+        Product product = createProduct(PRODUCT_NAME, category.getId());
+
+        createBaseSale(BARCODE, product.getId(), user.getUserLoggedDto().getId());
+
+        mockMvc.perform(get("/sales/barcodes/" + BARCODE)
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void testGetSaleByBarcode_NotFound() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(USERNAME);
+
+        mockMvc.perform(get("/sales/barcodes/X")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void testGetFirstSaleByBarcode_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(USERNAME);
+
+        Category category = createCategory(CATEGORY_NAME);
+        Product product = createProduct(PRODUCT_NAME, category.getId());
+
+        createBaseSale("AA" + BARCODE, product.getId(), user.getUserLoggedDto().getId());
+        createBaseSale("AB" + BARCODE, product.getId(), user.getUserLoggedDto().getId());
+
+        mockMvc.perform(get("/sales/barcodes")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("startingCode", "A"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
+
+        mockMvc.perform(get("/sales/barcodes")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("startingCode", "AA"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        mockMvc.perform(get("/sales/barcodes")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("startingCode", "X"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
 
     }
 

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {Box, Chip} from '@material-ui/core';
 import {ArrowDropDown, ArrowDropUp, ArrowRight} from '@material-ui/icons';
 
-import useStyles from '../styles/ProductProfitChip';
+import useStyles from '../styles/ProfitChip';
 
-const ProductProfitChip = ({profit, isROI}) => {
+const ProfitChip = ({profit, isROI}) => {
 
     const classes = useStyles();
 
@@ -29,7 +29,7 @@ const ProductProfitChip = ({profit, isROI}) => {
     }
 
     return (
-        <Chip className={chip.classes} label={
+        <Chip className={chip.classes} size="small" label={
             <Box display="flex" alignItems="center">
                 {chip.icon}
                 {isROI ? (isFinite(profit) ? Math.abs(profit).toFixed(2) : '∞' ): Math.abs(profit).toFixed(2)}
@@ -40,9 +40,9 @@ const ProductProfitChip = ({profit, isROI}) => {
 
 };
 
-ProductProfitChip.propTypes = {
+ProfitChip.propTypes = {
     profit: PropTypes.number.isRequired,
     isROI: PropTypes.bool
 };
 
-export default ProductProfitChip;
+export default ProfitChip;

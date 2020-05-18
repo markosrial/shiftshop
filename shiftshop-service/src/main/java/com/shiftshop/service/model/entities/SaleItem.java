@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 public class SaleItem {
 
     private Long id;
-    private BigDecimal productPrice;
+    private BigDecimal salePrice;
     private BigDecimal cost;
     private int quantity;
     private Product product;
@@ -15,8 +15,8 @@ public class SaleItem {
 
     public SaleItem() {}
 
-    public SaleItem(BigDecimal productPrice, int quantity, Product product) {
-        this.productPrice = productPrice;
+    public SaleItem(BigDecimal salePrice, int quantity, Product product) {
+        this.salePrice = salePrice;
         this.quantity = quantity;
         this.product = product;
     }
@@ -28,9 +28,9 @@ public class SaleItem {
     public void setId(Long id) { this.id = id; }
 
     @Column(name = "unitPrice")
-    public BigDecimal getProductPrice() { return productPrice; }
+    public BigDecimal getSalePrice() { return salePrice; }
 
-    public void setProductPrice(BigDecimal productPrice) { this.productPrice = productPrice; }
+    public void setSalePrice(BigDecimal productPrice) { this.salePrice = productPrice; }
 
     @Column(name = "unitCost")
     public BigDecimal getCost() {
@@ -59,7 +59,7 @@ public class SaleItem {
 
     @Transient
     public BigDecimal getTotalPrice() {
-        return productPrice.multiply(new BigDecimal(quantity));
+        return salePrice.multiply(new BigDecimal(quantity));
     }
 
     @Transient

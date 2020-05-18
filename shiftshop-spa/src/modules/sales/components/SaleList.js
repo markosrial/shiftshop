@@ -51,13 +51,13 @@ const SaleListTable = ({sales, criteria, saleDetails, previous, next}) => {
                             <TableRow key={sale.barcode}>
                                 <TableCell align="left">
                                     <Link to={`/sales/records/${sale.barcode}`}>
-                                        {sale.barcode}
+                                        <Box color="primary.dark">{sale.barcode}</Box>
                                     </Link>
                                 </TableCell>
                                 <TableCell align="center">
                                     <Box>
-                                        <Box><FormattedTime value={sale.date} hour="numeric" minute="numeric" second="numeric" /></Box>
                                         <Box><FormattedDate value={sale.date}/></Box>
+                                        <Box><FormattedTime value={sale.date} hour="numeric" minute="numeric" second="numeric" /></Box>
                                     </Box>
                                 </TableCell>
                                 <TableCell align="right">{sale.total}&nbsp;€</TableCell>

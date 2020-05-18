@@ -13,6 +13,7 @@ import Dashboard from './Dashboard';
 const CategoriesPage = React.lazy(() => import('../../catalog/components/CategoriesPage'));
 const ProductsPage = React.lazy(() => import('../../catalog/components/ProductsPage'));
 const ProductPage = React.lazy(() => import('../../catalog/components/ProductPage'));
+const SalePage = React.lazy(() => import('../../sales/components/SalePage'));
 const SalesPage = React.lazy(() => import('../../sales/components/SalesPage'));
 const UsersPage = React.lazy(() => import('../../users/components/UsersPage'));
 
@@ -42,7 +43,10 @@ const Main = () => {
                                     <Route exact path="/catalog/categories"><CategoriesPage/></Route>
                                     <Route exact path="/catalog/products"><ProductsPage/></Route>
                                     <Route exact path="/catalog/products/:id"><ProductPage/></Route>
-                                    <Route exact path="/sales/records"><SalesPage/></Route>
+                                    { hasRole([Role.MANAGER, Role.ADMIN])
+                                        && <Route exact path="/sales/records"><SalesPage/></Route>}
+                                    { hasRole([Role.MANAGER, Role.ADMIN])
+                                        && <Route exact path="/sales/records/:barcode"><SalePage/></Route>}
                                     { hasRole([Role.MANAGER])
                                         && <Route exact path="/staff/users"><UsersPage/></Route> }
                                     <Route><Dashboard/></Route>
