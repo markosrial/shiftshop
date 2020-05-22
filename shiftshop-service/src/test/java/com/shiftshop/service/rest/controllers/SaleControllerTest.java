@@ -9,7 +9,6 @@ import com.shiftshop.service.rest.dtos.sale.InsertSaleItemParamsDto;
 import com.shiftshop.service.rest.dtos.sale.InsertSaleParamsDto;
 import com.shiftshop.service.rest.dtos.user.AuthenticatedUserDto;
 import com.shiftshop.service.rest.dtos.user.LoginParamsDto;
-import org.apache.tomcat.jni.Local;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -439,6 +438,143 @@ public class SaleControllerTest {
                 .param("startingCode", "X"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
+
+    }
+
+    @Test
+    public void testGetFortnightBestSellers_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(USERNAME);
+
+        Category category = createCategory(CATEGORY_NAME);
+        Product product1 = createProduct(PRODUCT_NAME + "1", category.getId());
+        Product product2 = createProduct(PRODUCT_NAME + "2", category.getId());
+
+        LocalDateTime date = LocalDate.now().atStartOfDay().minusDays(1);
+
+        createSale(BARCODE + "A", date, new BigDecimal(0), null,
+                SALE_PRICE, 2, product1.getId(), user.getUserLoggedDto().getId());
+        createSale(BARCODE + "B", date, new BigDecimal(0), null,
+                SALE_PRICE, 1, product2.getId(), user.getUserLoggedDto().getId());
+
+        mockMvc.perform(get("/sales/topBestSellingProducts")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("size", "3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].productName").value(product1.getName()))
+                .andExpect(jsonPath("$[1].productName").value(product2.getName()));
+
+    }
+
+    @Test
+    public void testGetFortnightProfitable_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(USERNAME);
+
+        Category category = createCategory(CATEGORY_NAME);
+        Product product1 = createProduct(PRODUCT_NAME + "1", category.getId());
+        Product product2 = createProduct(PRODUCT_NAME + "2", category.getId());
+
+        LocalDateTime date = LocalDate.now().atStartOfDay().minusDays(1);
+
+        createSale(BARCODE + "A", date, new BigDecimal(0), null,
+                SALE_PRICE, 2, product1.getId(), user.getUserLoggedDto().getId());
+        createSale(BARCODE + "B", date, new BigDecimal(0), null,
+                SALE_PRICE, 1, product2.getId(), user.getUserLoggedDto().getId());
+
+        mockMvc.perform(get("/sales/topProfitableProducts")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].productName").value(product1.getName()))
+                .andExpect(jsonPath("$[1].productName").value(product2.getName()));
+
+    }
+
+    @Test
+    public void testGetFortnightProfitable_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedSalesmanUser(USERNAME);
+
+        mockMvc.perform(get("/sales/topProfitableProducts")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    public void testMonthSalesResume_Ok() throws Exception {
+
+        AuthenticatedUserDto adminUser = createAuthenticatedAdminUser(USERNAME + "A");
+        AuthenticatedUserDto salesmanUser = createAuthenticatedSalesmanUser(USERNAME + "S");
+
+        Category category = createCategory(CATEGORY_NAME);
+        Product product = createProduct(PRODUCT_NAME + "1", category.getId());
+
+        LocalDateTime date = LocalDate.now().atStartOfDay().minusDays(1);
+
+        Sale sale = createSale(BARCODE + "A", date, new BigDecimal(0), null,
+                SALE_PRICE, 3, product.getId(), adminUser.getUserLoggedDto().getId());
+
+        mockMvc.perform(get("/sales/monthSalesResume")
+                .header("Authorization", "Bearer " + adminUser.getServiceToken()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.salesCount").value("1"))
+                .andExpect(jsonPath("$.itemsCount").value("3"))
+                .andExpect(jsonPath("$.total").value(sale.getTotal().stripTrailingZeros().toPlainString()))
+                .andExpect(jsonPath("$.profit").value(sale.getTotal().subtract(sale.getCost())
+                        .stripTrailingZeros().toPlainString()));
+
+        mockMvc.perform(get("/sales/monthSalesResume")
+                .header("Authorization", "Bearer " + salesmanUser.getServiceToken()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.salesCount").value("1"))
+                .andExpect(jsonPath("$.itemsCount").value("3"))
+                .andExpect(jsonPath("$.total").doesNotExist())
+                .andExpect(jsonPath("$.profit").doesNotExist());
+
+    }
+
+    @Test
+    public void testGetYearSalesResume_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(USERNAME);
+
+        Category category = createCategory(CATEGORY_NAME);
+        Product product = createProduct(PRODUCT_NAME, category.getId());
+
+        Sale sale = createBaseSale(BARCODE, product.getId(), user.getUserLoggedDto().getId());
+
+        mockMvc.perform(get("/sales/yearSalesResume")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("year", String.valueOf(sale.getDate().getYear())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].month").value(String.valueOf(sale.getDate().getMonth().getValue())));
+
+    }
+
+    @Test
+    public void testGetYearSalesResume_BadRequest() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser(USERNAME);
+
+        mockMvc.perform(get("/sales/yearSalesResume")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .param("year", "a"))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testGetYearSalesResume_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedSalesmanUser(USERNAME);
+
+        mockMvc.perform(get("/sales/yearSalesResume")
+                .header("Authorization", "Bearer " + user.getServiceToken()))
+                .andExpect(status().isForbidden());
 
     }
 

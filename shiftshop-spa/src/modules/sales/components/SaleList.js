@@ -51,7 +51,7 @@ const SaleListTable = ({sales, criteria, saleDetails, previous, next}) => {
                             <TableRow key={sale.barcode}>
                                 <TableCell align="left">
                                     <Link to={`/sales/records/${sale.barcode}`}>
-                                        <Box color="primary.dark">{sale.barcode}</Box>
+                                        <Box fontFamily="Menlo,Arial" color="primary.dark">{sale.barcode}</Box>
                                     </Link>
                                 </TableCell>
                                 <TableCell align="center">
@@ -88,7 +88,7 @@ const SaleListTable = ({sales, criteria, saleDetails, previous, next}) => {
 }
 
 
-const SaleListCards = ({sales, criteria, saleDetails, previous, next}) => {
+const SaleListCards = ({sales, criteria, previous, next}) => {
 
     const classes = useStyles();
 
@@ -97,15 +97,16 @@ const SaleListCards = ({sales, criteria, saleDetails, previous, next}) => {
             {sales.items.map(sale => (
                 <Card key={sale.barcode} className={classes.card}>
                     <CardHeader className={classes.header}
-                                title={<Link to={`/sales/records/${sale.barcode}`}>{sale.barcode}</Link>}
+                                title={<Link to={`/sales/records/${sale.barcode}`}>
+                                    <Box fontFamily="Menlo,Arial">{sale.barcode}</Box>
+                                </Link>}
                                 subheader={
                                     <Box>
                                         <FormattedTime value={sale.date} hour="numeric" minute="numeric" second="numeric" />
                                         &nbsp;-&nbsp;
                                         <FormattedDate value={sale.date}/>
                                     </Box>
-                                }
-                                action={<IconButton onClick={saleDetails(sale.barcode)}><Visibility/></IconButton>}/>
+                                }/>
                     <Divider/>
                     <CardContent className={classes.content}>
                         <Box display="flex">
@@ -179,7 +180,7 @@ const SaleList = ({sales, criteria, startSearch, stopSearch}) => {
                                previous={handlePrevious} next={handleNext}/>
             </Hidden>
             <Hidden smUp>
-                <SaleListCards sales={sales} criteria={criteria} saleDetails={saleDetails}
+                <SaleListCards sales={sales} criteria={criteria}
                                previous={handlePrevious} next={handleNext}/>
             </Hidden>
         </Fragment>

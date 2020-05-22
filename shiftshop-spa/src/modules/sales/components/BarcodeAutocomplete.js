@@ -23,7 +23,7 @@ const BarcodeAutocomplete = () => {
     const [options, setOptions] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const debounceInputChange = useCallback(debounce(value => getBarcodes(value), 400), []);
+    const debounceInputChange = useCallback(debounce(value => getBarcodes(value), 600), []);
 
     const _isMounted = useRef(true);
     useEffect(() => {
@@ -58,7 +58,7 @@ const BarcodeAutocomplete = () => {
 
 
     return (
-        <Autocomplete options={options} openOnFocus clearOnEscape style={{minWidth: '14rem'}}
+        <Autocomplete options={options} openOnFocus clearOnEscape style={{minWidth: '14rem'}} forcePopupIcon={false}
                       value={null} onChange={(event, value) => onSelect(value)}
                       loading={loading} loadingText={<FormattedMessage id="project.sales.BarcodeAutocomplete.loadingOptions"/>}
                       inputValue={inputValue} onInputChange={onInputChange}

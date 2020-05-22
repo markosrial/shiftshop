@@ -1,7 +1,5 @@
 package com.shiftshop.service.rest.dtos.sale;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

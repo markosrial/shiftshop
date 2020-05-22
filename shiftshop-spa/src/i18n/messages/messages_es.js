@@ -15,6 +15,8 @@ export default {
     'project.app.route.users': 'Usuarios',
 
     'project.app.Dashboard.title': 'Panel principal',
+    'project.app.Dashboard.last15Days': 'Últimos 15 días',
+    'project.app.Dashboard.last30Days': 'Últimos 30 días',
 
     'project.catalog.AddCategory.addButton': 'Nueva',
     'project.catalog.AddCategory.success': 'Categoría añadida',
@@ -52,6 +54,12 @@ export default {
     'project.sales.BarcodeAutocomplete.label': 'Búscar venta',
     'project.sales.BarcodeAutocomplete.loadingOptions': 'Cargando registros...',
     'project.sales.BarcodeAutocomplete.noOptions': 'Sin registros',
+    'project.sales.BestSellingProducts.title': 'TOP más vendidos',
+    'project.sales.MonthProductsSold.title': 'Productos vendidos',
+    'project.sales.MonthSalesCount.title': 'Ventas registradas',
+    'project.sales.MonthSalesProfit.title': 'Beneficio',
+    'project.sales.MonthSalesTotal.title': 'Facturado',
+    'project.sales.ProfitableProducts.title': 'TOP más rentables',
     'project.sales.SalePage.title': 'Registro de venta',
     'project.sales.SalesPage.title': 'Registros de venta',
     'project.sales.SaleResult.details.title': 'Detalle de venta',
@@ -59,6 +67,7 @@ export default {
     'project.sales.SalesSearch.title': 'Buscar ventas registradas',
     'project.sales.SalesSearchResult.emptySales': 'No se encontraron ventas',
     'project.sales.SalesSearchResult.emptySearch': 'Esto está muy vacío, ¡prueba a realizar una búsqueda!',
+    'project.sales.YearSalesResumeCard.title': 'Rendimiento de ventas del año',
 
     'project.users.AddUser.addButton': 'Nuevo',
     'project.users.AddUser.customPassword.title': 'Cambiar contraseña inicial',
@@ -94,6 +103,7 @@ export default {
     'project.global.field.category': 'Categoría',
     'project.global.field.actions': 'Acciones',
     'project.global.field.barcode': 'Código de barras',
+    'project.global.field.billed': 'Facturado',
     'project.global.field.cash': 'Efectivo',
     'project.global.field.change': 'Cambio',
     'project.global.field.cost': 'Coste',
@@ -123,7 +133,21 @@ export default {
     'project.global.field.surnames': 'Apellidos',
     'project.global.field.to': 'Hasta',
     'project.global.field.total': 'Total',
+    'project.global.field.units.short': 'uds.',
     'project.global.field.username': 'Nombre de usuario',
-    'project.global.field.userName': 'Nombre de usuario'
+    'project.global.field.userName': 'Nombre de usuario',
+
+    'project.global.month.january.short': 'Ene',
+    'project.global.month.february.short': 'Feb',
+    'project.global.month.march.short': 'Mar',
+    'project.global.month.april.short': 'Abr',
+    'project.global.month.may.short': 'May',
+    'project.global.month.june.short': 'Jun',
+    'project.global.month.july.short': 'Jul',
+    'project.global.month.august.short': 'Ago',
+    'project.global.month.september.short': 'Sep',
+    'project.global.month.october.short': 'Oct',
+    'project.global.month.november.short': 'Nov',
+    'project.global.month.december.short': 'Dic'
 
 }

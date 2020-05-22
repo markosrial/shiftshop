@@ -34,8 +34,8 @@ public class CatalogServiceTest {
     private final Long NON_EXISTENT_ID = -1L;
     private final String CATEGORY_NAME = "category";
     private final String PRODUCT_NAME = "product";
-    private final BigDecimal PROV_PRICE = new BigDecimal(5.25);
-    private final BigDecimal SALE_PRICE = new BigDecimal(21.95);
+    private final BigDecimal PROV_PRICE = new BigDecimal(5.25).setScale(2, RoundingMode.HALF_EVEN);
+    private final BigDecimal SALE_PRICE = new BigDecimal(21.95).setScale(2, RoundingMode.HALF_EVEN);
     private final String BARCODE = "ABCD1234";
 
     @Autowired
