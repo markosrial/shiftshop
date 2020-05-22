@@ -114,10 +114,9 @@ public class UserController {
 	@GetMapping
 	public BlockDto<UserDto> getUsers(
 			@RequestParam(defaultValue = "true", required = false) boolean onlyActive,
-			@RequestParam(defaultValue = "0", required = false) @Min(0) int page,
-			@RequestParam(defaultValue = "15", required = false) @Min(0) int size) {
+			@RequestParam(defaultValue = "0", required = false) @Min(0) int page) {
 
-		Block<User> userBlock = userService.getUsers(onlyActive, page, size);
+		Block<User> userBlock = userService.getUsers(onlyActive, page, 15);
 
 		return new BlockDto<>(toUserDtos(userBlock.getItems()), userBlock.getExistMoreItems());
 

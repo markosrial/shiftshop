@@ -74,13 +74,14 @@ public class CatalogController {
 
     @GetMapping("/products")
     public BlockDto<ProductSummaryDto> findProducts(
-            @RequestParam(required = false) Long categoryId, @RequestParam(required = false) String keywords,
-            @RequestParam(required = false) String orderBy, @RequestParam(required = false) String order,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String keywords,
+            @RequestParam(required = false) String orderBy,
+            @RequestParam(required = false) String order,
             @RequestParam(defaultValue = "true", required = false) boolean onlyActive,
-            @RequestParam(defaultValue = "0", required = false) @Min(0) int page,
-            @RequestParam(defaultValue = "15", required = false) @Min(0) int size) {
+            @RequestParam(defaultValue = "0", required = false) @Min(0) int page) {
 
-        Block<Product> productBlock = catalogService.findProducts(categoryId, keywords, onlyActive, orderBy, order, page, size);
+        Block<Product> productBlock = catalogService.findProducts(categoryId, keywords, onlyActive, orderBy, order, page, 15);
 
         return new BlockDto<>(toProductSummaryDtos(productBlock.getItems()), productBlock.getExistMoreItems());
 

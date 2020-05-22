@@ -1,11 +1,12 @@
-import React, {Suspense, useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, {Suspense, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {LinearProgress} from '@material-ui/core';
 
 import useStyles from '../styles/Main';
 
 import users, {Role} from '../../users';
+import sales from '../../sales';
 import TopBar from './TopBar';
 import SideBar from './SideBar';
 import Dashboard from './Dashboard';
@@ -20,6 +21,7 @@ const UsersPage = React.lazy(() => import('../../users/components/UsersPage'));
 const Main = () => {
     const classes = useStyles();
 
+    const dispatch = useDispatch();
     const user = useSelector(users.selectors.getUser);
     const hasRole = roles => users.selectors.hasRole(user, roles);
 
@@ -27,6 +29,19 @@ const Main = () => {
 
     const handleSidebarOpen = () => setSidebarActive(true);
     const handleSidebarClose = () => setSidebarActive(false);
+
+    useEffect(() => {
+
+        dispatch(sales.actions.getBestSellingProducts());
+        dispatch(sales.actions.getMonthSalesResume());
+
+        if (hasRole([Role.MANAGER, Role.ADMIN])) {
+            dispatch(sales.actions.getProfitableProducts());
+            dispatch(sales.actions.getYearSalesResume());
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={classes.root}>

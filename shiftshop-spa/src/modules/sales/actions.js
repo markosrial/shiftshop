@@ -49,3 +49,39 @@ export const clearSale = () => ({type: actionTypes.CLEAR_SALE});
 
 export const findFirstSaleBarcodes = (startingCode, onSuccess, atFinally) =>
     backend.saleService.findFirstSaleBarcodes(startingCode, onSuccess, atFinally);
+
+const getBestSellingProductsCompleted = topBestSelling => ({
+    type: actionTypes.GET_BEST_SELLING_PRODUCTS_COMPLETED,
+    topBestSelling
+});
+
+export const getBestSellingProducts = () => dispatch =>
+    backend.saleService.getBestSellingProducts(
+        topBestSelling => dispatch(getBestSellingProductsCompleted(topBestSelling)))
+
+const getProfitableProductsCompleted = topProfitable => ({
+    type: actionTypes.GET_PROFITABLE_PRODUCTS_COMPLETED,
+    topProfitable
+});
+
+export const getProfitableProducts = () => dispatch =>
+    backend.saleService.getProfitableProducts(
+        topProfitable => dispatch(getProfitableProductsCompleted(topProfitable)));
+
+const getMonthSalesResumeCompleted = monthSalesResume => ({
+    type: actionTypes.GET_MONTH_SALES_RESUME_COMPLETED,
+    monthSalesResume
+});
+
+export const getMonthSalesResume = () => dispatch =>
+    backend.saleService.getMonthSalesResume(
+        salesResume => dispatch(getMonthSalesResumeCompleted(salesResume)));
+
+const getYearSalesResumeCompleted = yearSalesResume => ({
+    type: actionTypes.GET_YEAR_SALES_RESUME_COMPLETED,
+    yearSalesResume
+});
+
+export const getYearSalesResume = () => dispatch =>
+    backend.saleService.getYearSalesResume(
+        salesResume => dispatch(getYearSalesResumeCompleted(salesResume)));

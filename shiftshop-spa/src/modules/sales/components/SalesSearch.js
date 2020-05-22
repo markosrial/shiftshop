@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {Box, Card, CardContent, CardHeader, Divider, Grid, Hidden} from '@material-ui/core';
+import {Card, CardContent, CardHeader, Divider, Grid} from '@material-ui/core';
 
 import SalesSearchFilter from './SalesSearchFilter';
 import SalesSearchResult from './SalesSearchResult';
@@ -25,13 +25,10 @@ const SalesSearch = () =>  {
             <Divider/>
             <CardContent>
                 <Grid container spacing={1} justify="center">
-                    <Grid item sm={12} lg={7}>
+                    <Grid item>
                         <SalesSearchBar searching={searching} startSearch={startSearch} stopSearch={stopSearch}/>
                     </Grid>
-                    <Hidden smUp>
-                        <Box my={1}><Divider/></Box>
-                    </Hidden>
-                    <Grid container item sm={12} lg={5} justify="center">
+                    <Grid item>
                         <SalesSearchFilter/>
                     </Grid>
                 </Grid>

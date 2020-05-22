@@ -27,7 +27,7 @@ const RowItem = ({label, content, selected}) => {
 
 const SaleDetails = ({sale}) => (
     <Grid container>
-        <RowItem label="project.global.field.barcode" content={sale.barcode}/>
+        <RowItem label="project.global.field.barcode" content={<Box fontFamily="Menlo,Arial">{sale.barcode}</Box>}/>
         {(sale.discount > 0) && <Fragment>
             <RowItem label="project.global.field.subtotal" selected
                      content={<Box>{(sale.total + sale.discount).toFixed(2)} €</Box>}/>

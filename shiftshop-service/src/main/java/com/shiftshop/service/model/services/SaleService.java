@@ -4,6 +4,7 @@ import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.common.exceptions.InstancePropertyNotFoundException;
 import com.shiftshop.service.model.entities.Sale;
 import com.shiftshop.service.model.entities.SaleItem;
+import com.shiftshop.service.model.entities.projections.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,5 +22,15 @@ public interface SaleService {
     Sale findSaleByBarcode(String barcode) throws InstancePropertyNotFoundException;
 
     List<Sale> findFirstSalesByBarcode(String startingCode, int size);
+
+    List<ProductSales> getFortnightTopBestSellingProduct(int size);
+
+    List<ProductProfit> getFortnightTopProfitableProduct(int size);
+
+    SalesCountResume getMonthSalesCountResume();
+
+    SalesTotalAndProfit getMonthSalesTotalAndProfit();
+
+    List<MonthSalesTotalAndProfit> getMonthlyTotalsAndProfitsFromYear(Integer year);
 
 }

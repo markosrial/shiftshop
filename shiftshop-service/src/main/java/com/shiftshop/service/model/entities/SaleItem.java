@@ -71,4 +71,5 @@ public class SaleItem {
     public BigDecimal getTotalProfit() {
         return getTotalPrice().subtract(getTotalCost());
     }
+
 }

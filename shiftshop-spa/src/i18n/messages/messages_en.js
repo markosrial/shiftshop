@@ -15,6 +15,8 @@ export default {
     'project.app.route.users': 'Users',
 
     'project.app.Dashboard.title': 'Dashboard',
+    'project.app.Dashboard.last15Days': 'Last 15 days',
+    'project.app.Dashboard.last30Days': 'Last 30 days',
 
     'project.catalog.AddCategory.addButton': 'New',
     'project.catalog.AddCategory.success': 'Category added',
@@ -52,6 +54,12 @@ export default {
     'project.sales.BarcodeAutocomplete.label': 'Search sale',
     'project.sales.BarcodeAutocomplete.loadingOptions': 'Loading records...',
     'project.sales.BarcodeAutocomplete.noOptions': 'No records',
+    'project.sales.BestSellingProducts.title': 'TOP best-selling',
+    'project.sales.MonthProductsSold.title': 'Products sold',
+    'project.sales.MonthSalesCount.title': 'Registered sales',
+    'project.sales.MonthSalesProfit.title': 'Profit',
+    'project.sales.MonthSalesTotal.title': 'Billed',
+    'project.sales.ProfitableProducts.title': 'TOP profitable',
     'project.sales.SalePage.title': 'Sale record',
     'project.sales.SalesPage.title': 'Sale records',
     'project.sales.SaleResult.details.title': 'Sale details',
@@ -59,6 +67,7 @@ export default {
     'project.sales.SalesSearch.title': 'Search sale records',
     'project.sales.SalesSearchResult.emptySales': 'No sales were found',
     'project.sales.SalesSearchResult.emptySearch': 'This is too empty, try to search something!',
+    'project.sales.YearSalesResumeCard.title': 'Sales performance of year',
 
     'project.users.AddUser.addButton': 'New',
     'project.users.AddUser.customPassword.title': 'Change initial password',
@@ -94,6 +103,7 @@ export default {
     'project.global.field.category': 'Category',
     'project.global.field.actions': 'Actions',
     'project.global.field.barcode': 'Barcode',
+    'project.global.field.billed': 'Billed',
     'project.global.field.cash': 'Cash',
     'project.global.field.change': 'Change',
     'project.global.field.cost': 'Cost',
@@ -123,7 +133,21 @@ export default {
     'project.global.field.surnames': 'Surnames',
     'project.global.field.to': 'To',
     'project.global.field.total': 'Total',
+    'project.global.field.units.short': 'u.',
     'project.global.field.username': 'Username',
-    'project.global.field.userName': 'Username'
+    'project.global.field.userName': 'Username',
+
+    'project.global.month.january.short': 'Jan',
+    'project.global.month.february.short': 'Feb',
+    'project.global.month.march.short': 'Mar',
+    'project.global.month.april.short': 'Apr',
+    'project.global.month.may.short': 'May',
+    'project.global.month.june.short': 'Jun',
+    'project.global.month.july.short': 'Jul',
+    'project.global.month.august.short': 'Aug',
+    'project.global.month.september.short': 'Sep',
+    'project.global.month.october.short': 'Oct',
+    'project.global.month.november.short': 'Nov',
+    'project.global.month.december.short': 'Dec'
 
 }

@@ -26,3 +26,15 @@ export const findSaleByBarcode = (barcode, onSuccess, atFinally) =>
 
 export const findFirstSaleBarcodes = (startingCode, onSuccess, atFinally) =>
     appFetch(`/sales/barcodes?startingCode=${startingCode}`, config('GET'), onSuccess, null, atFinally);
+
+export const getBestSellingProducts = onSuccess =>
+    appFetch('/sales/topBestSellingProducts', config('GET'), onSuccess);
+
+export const getProfitableProducts = onSuccess =>
+    appFetch('/sales/topProfitableProducts', config('GET'), onSuccess);
+
+export const getMonthSalesResume = onSuccess =>
+    appFetch('/sales/monthSalesResume', config('GET'), onSuccess);
+
+export const getYearSalesResume = onSuccess =>
+    appFetch('/sales/yearSalesResume', config('GET'), onSuccess);

@@ -6,6 +6,7 @@ import com.shiftshop.service.model.common.utils.EntitiesOrder;
 import com.shiftshop.service.model.common.utils.MessageConstants;
 import com.shiftshop.service.model.entities.*;
 import com.shiftshop.service.model.entities.Sale.SaleOrderType;
+import com.shiftshop.service.model.entities.projections.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -17,13 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class SaleServiceImpl implements SaleService {
 
     @Autowired
@@ -36,6 +38,7 @@ public class SaleServiceImpl implements SaleService {
     private SaleItemDao saleItemDao;
 
     @Override
+    @Transactional
     public Sale registerSale(Long sellerId, Sale sale, Set<SaleItem> saleItems)
             throws CashAmountException, EmptySaleException, InstanceNotFoundException {
 
@@ -69,7 +72,7 @@ public class SaleServiceImpl implements SaleService {
 
             // Link product and calculate unit profit
             saleItem.setProduct(permissionChecker.checkProduct(saleItem.getProduct().getId()));
-            saleItem.setCost(saleItem.getSalePrice().subtract(saleItem.getProduct().getProviderPrice()));
+            saleItem.setCost(saleItem.getProduct().getProviderPrice());
 
             // Link saleItem and sale
             sale.addItem(saleItem);
@@ -95,7 +98,6 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Block<Sale> findSales(LocalDate initDate, LocalDate endDate, String orderBy, String direction,
                                  int page, int size)
             throws InvalidDateRangeException {
@@ -118,7 +120,6 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Sale findSaleByBarcode(String barcode) throws InstancePropertyNotFoundException {
 
         Optional<Sale> sale = saleDao.findByBarcode(barcode);
@@ -133,10 +134,58 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Sale> findFirstSalesByBarcode(String startingCode, int size) {
         return saleDao.findByBarcodeStartingWith(startingCode, PageRequest.of(0, size,
                 Sort.by(Direction.ASC, SaleOrderType.barcode.name()))).getContent();
+    }
+
+    @Override
+    public List<ProductSales> getFortnightTopBestSellingProduct(int size) {
+
+        LocalDateTime actual = LocalDate.now().atStartOfDay();
+
+        return saleDao.getTopBestSellingProduct(actual.minusDays(15), actual, PageRequest.of(0, size))
+                .getContent();
+
+    }
+
+    @Override
+    public List<ProductProfit> getFortnightTopProfitableProduct(int size) {
+
+        LocalDateTime actual = LocalDate.now().atStartOfDay();
+
+        return saleDao.getTopProfitableProduct(actual.minusDays(15), actual, PageRequest.of(0, size))
+                .getContent();
+
+    }
+
+    @Override
+    public SalesCountResume getMonthSalesCountResume() {
+
+        LocalDateTime actual = LocalDate.now().atStartOfDay();
+
+        return saleDao.getSalesCountSummary(actual.minusDays(30), actual);
+
+    }
+
+    @Override
+    public SalesTotalAndProfit getMonthSalesTotalAndProfit() {
+
+        LocalDateTime actual = LocalDate.now().atStartOfDay();
+
+        return saleDao.getSalesTotalAndProfit(actual.minusDays(30), actual);
+
+    }
+
+    @Override
+    public List<MonthSalesTotalAndProfit> getMonthlyTotalsAndProfitsFromYear(Integer year) {
+
+        if (year == null) {
+            year = LocalDate.now().getYear();
+        }
+
+        return saleDao.getMonthlyTotalsAndProfitsFromYear(year);
+
     }
 
 }

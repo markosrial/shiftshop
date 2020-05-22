@@ -43,6 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/pos/lastUpdateTimestamp").permitAll()
 				.antMatchers("/pos/**").authenticated()
 				.antMatchers(HttpMethod.PUT, "/sales").authenticated()
+				.antMatchers( "/sales/topBestSellingProducts").authenticated()
+				.antMatchers( "/sales/monthSalesResume").authenticated()
 				.antMatchers( "/sales/**").hasAnyRole(MANAGER, ADMIN)
 				.antMatchers("/**").hasRole(MANAGER);
 

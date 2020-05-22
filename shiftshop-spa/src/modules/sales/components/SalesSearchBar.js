@@ -12,6 +12,15 @@ import * as actions from '../actions';
 import * as selectors from '../selectors';
 import {ErrorContent} from '../../common';
 
+const initFrom = toDate => {
+
+    let date = new Date(toDate);
+    date.setDate(toDate.getDate() - 30);
+
+    return date;
+
+}
+
 const SalesSearchBar = ({searching, startSearch, stopSearch}) => {
 
     const classes = useStyles();
@@ -22,8 +31,8 @@ const SalesSearchBar = ({searching, startSearch, stopSearch}) => {
     const salesSearch = useSelector(selectors.getSalesSearch);
     const searchFilter = useSelector(selectors.getSearchFilter);
 
-    const [from, setFrom] = useState(new Date());
-    const [to, setTo] = useState(from);
+    const [to, setTo] = useState(new Date());
+    const [from, setFrom] = useState(initFrom(to));
 
     useEffect(() => {
         if (salesSearch) {
