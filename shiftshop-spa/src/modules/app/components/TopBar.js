@@ -6,7 +6,7 @@ import {Menu} from '@material-ui/icons';
 
 import useStyles from '../styles/TopBar'
 
-import {LogOut} from '../../users';
+import {LogOut, ProfileMenu} from '../../users';
 
 const TopBar = ({openSidebar}) => {
     const classes = useStyles();
@@ -23,6 +23,8 @@ const TopBar = ({openSidebar}) => {
                     <Link to="/">ShiftShop</Link>
                 </Typography>
                 <div className={classes.flexGrow} />
+                <ProfileMenu/>
+                &nbsp;
                 <LogOut/>
             </Toolbar>
         </AppBar>

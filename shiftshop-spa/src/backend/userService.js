@@ -67,3 +67,8 @@ export const blockUser = (id, onSuccess, onError) =>
 
 export const unblockUser = (id, onSuccess, onError) =>
     appFetch(`/users/${id}/active`, config('PUT'), onSuccess, onError);
+
+export const changePassword = (id, oldPassword, newPassword, onSuccess, onErrors, atFinally) =>
+    appFetch(`/users/${id}/changePassword`,
+        config('POST', {oldPassword, newPassword}),
+        onSuccess, onErrors, atFinally);
