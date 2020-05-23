@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 public class SaleControllerTest {
 
-    private final Long NON_EXISTENT_ID = new Long(-1);
+    private final Long NON_EXISTENT_ID = -1L;
     private final String USERNAME = "user";
     private final static String PASSWORD = "password";
     private final String NAME = "User";

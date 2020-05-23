@@ -102,7 +102,7 @@ const AddUser = () => {
                         variant: 'success',
                         autoHideDuration: 1500,
                     });
-                _isMounted.current && resetForm();
+                resetForm();
             },
             errors => {
                 if (_isMounted.current) {

@@ -183,4 +183,18 @@ public class UserServiceImpl implements UserService {
         user.setActive(active);
 
     }
+
+    @Override
+    public void changePassword(Long id, String oldPassword, String newPassword)
+            throws InstanceNotFoundException, IncorrectPasswordException {
+
+        User user = permissionChecker.checkUser(id);
+
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new IncorrectPasswordException();
+        } else {
+            user.setPassword(passwordEncoder.encode(newPassword));
+        }
+
+    }
 }

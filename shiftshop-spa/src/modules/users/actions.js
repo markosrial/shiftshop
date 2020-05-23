@@ -89,3 +89,6 @@ export const blockUser = (id, onSuccess, onError) =>
 
 export const unblockUser = (id, onSuccess, onError) =>
     backend.userService.unblockUser(id, onSuccess, onError);
+
+export const changePassword = (id, oldPassword, newPassword, onSuccess, onErrors, atFinally) =>
+    backend.userService.changePassword(id, oldPassword, newPassword, onSuccess, onErrors, atFinally);

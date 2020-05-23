@@ -29,6 +29,7 @@ import static com.shiftshop.service.rest.dtos.user.UserConversor.*;
 public class UserController {
 
 	private static final String INCORRECT_LOGIN_EXCEPTION_CODE = "project.exceptions.IncorrectLoginException";
+	private static final String INCORRECT_AUTHENTICATION_EXCEPTION_CODE = "project.exceptions.IncorrectPasswordException";
 	private static final String USER_NOT_ACTIVE_EXCEPTION_CODE = "project.exceptions.UserNotActiveException";
 	private static final String NO_USER_ROLES_EXCEPTION_CODE = "project.exceptions.NoUserRolesException";
 	private static final String BLOCK_USER_EXCEPTION_CODE = "project.exceptions.BlockUserException";
@@ -49,6 +50,14 @@ public class UserController {
 	@ResponseBody
 	public ErrorsDto handleIncorrectLoginException(IncorrectLoginException exception, Locale locale) {
 		return errorConversor.toErrorsDtoFromException(INCORRECT_LOGIN_EXCEPTION_CODE, locale);
+	}
+
+	@ExceptionHandler(IncorrectPasswordException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public ErrorsDto handleIncorrectPasswordException(IncorrectPasswordException exception, Locale locale) {
+		return errorConversor.toErrorsDtoFromException(INCORRECT_AUTHENTICATION_EXCEPTION_CODE, locale);
+
 	}
 
 	@ExceptionHandler(UserNotActiveException.class)
@@ -150,6 +159,21 @@ public class UserController {
 		JwtInfo jwtInfo = new JwtInfo(user.getId(), user.getUserName(), userRoles);
 
 		return jwtGenerator.generate(jwtInfo);
+
+	}
+
+	@PostMapping("/{id}/changePassword")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void changePassword(
+			@RequestAttribute Long userId, @PathVariable Long id,
+			@Validated @RequestBody ChangePasswordParamsDto params)
+			throws PermissionException, InstanceNotFoundException, IncorrectPasswordException {
+
+		if (!id.equals(userId)) {
+			throw new PermissionException();
+		}
+
+		userService.changePassword(id, params.getOldPassword(), params.getNewPassword());
 
 	}
 

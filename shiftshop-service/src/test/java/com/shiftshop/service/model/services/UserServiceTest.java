@@ -271,4 +271,37 @@ public class UserServiceTest {
 
     }
 
+    @Test
+    public void testChangePassword() throws DuplicateInstancePropertyException, IncorrectLoginException,
+            IncorrectPasswordException, InstanceNotFoundException, NoUserRolesException, UserNotActiveException {
+
+        User user = createUser(USERNAME);
+        String newPassword = 'X' + PASSWORD;
+
+        userService.changePassword(user.getId(), PASSWORD, newPassword);
+
+        User expectedUser = userService.login(user.getUserName(), newPassword);
+
+        assertEquals(expectedUser, user);
+        
+    }
+
+    @Test(expected = InstanceNotFoundException.class)
+    public void testChangePasswordWithNonExistentId() throws InstanceNotFoundException, IncorrectPasswordException {
+
+        userService.changePassword(NON_EXISTENT_ID, "X", "Y");
+
+    }
+
+    @Test(expected = IncorrectPasswordException.class)
+    public void testChangePasswordWithIncorrectPassword() throws DuplicateInstancePropertyException, IncorrectLoginException,
+            IncorrectPasswordException, InstanceNotFoundException, NoUserRolesException {
+
+        User user = createUser(USERNAME);
+        String newPassword = 'X' + PASSWORD;
+
+        userService.changePassword(user.getId(), 'Y' + PASSWORD, newPassword);
+
+    }
+
 }

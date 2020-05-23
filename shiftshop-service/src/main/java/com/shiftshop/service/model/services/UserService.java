@@ -28,4 +28,7 @@ public interface UserService {
 
     void setActiveUser(Long id, boolean active) throws BlockUserException, InstanceNotFoundException;
 
+    void changePassword(Long id, String oldPassword, String newPassword)
+            throws InstanceNotFoundException, IncorrectPasswordException;
+
 }
