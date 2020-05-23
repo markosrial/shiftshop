@@ -3,9 +3,11 @@ package com.shiftshop.service.model.services;
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.entities.User;
+import com.shiftshop.service.model.entities.User.RoleType;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -15,12 +17,18 @@ public interface UserService {
 
     User loginFromId(Long id) throws InstanceNotFoundException, UserNotActiveException;
 
-    Block<User> getUsers(int page, int size);
-
-    Block<User> getBlockedUsers(int page, int size);
+    Block<User> getUsers(boolean onlyActive, int page, int size);
 
     LocalDateTime getLastUserUpdatedTimestamp();
 
     List<User> getUpdatedUsers(LocalDateTime lastUpdate);
+
+    User updateUser(Long id, String name, String surnames, Set<RoleType> roles)
+            throws InstanceNotFoundException, NoUserRolesException;
+
+    void setActiveUser(Long id, boolean active) throws BlockUserException, InstanceNotFoundException;
+
+    void changePassword(Long id, String oldPassword, String newPassword)
+            throws InstanceNotFoundException, IncorrectPasswordException;
 
 }

@@ -18,10 +18,12 @@ Web Service developed with Spring Framework
 Start Mysql server if not running (e.g. mysqld).
 
 mysqladmin -u root create shiftshop
+mysqladmin -u root create shiftshoptest
 
 mysql -u root
     CREATE USER 'ss'@'localhost' IDENTIFIED BY 'ss';
     GRANT ALL PRIVILEGES ON shiftshop.* to 'ss'@'localhost' WITH GRANT OPTION;
+    GRANT ALL PRIVILEGES ON shiftshoptest.* to 'ss'@'localhost' WITH GRANT OPTION;
     exit
 ```
 

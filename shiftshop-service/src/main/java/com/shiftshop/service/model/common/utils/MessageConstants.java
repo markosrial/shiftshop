@@ -4,6 +4,7 @@ public final class MessageConstants {
 
     public static final String ENTITIES_CATEGORY = "project.entities.category";
     public static final String ENTITIES_PRODUCT = "project.entities.product";
+    public static final String ENTITIES_SALE = "project.entities.sale";
     public static final String ENTITIES_USER = "project.entities.user";
 
     public static final String ENTITIES_PROPS_BARCODE = "project.entities.props.barcode";

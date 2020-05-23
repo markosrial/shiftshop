@@ -1,11 +1,12 @@
-import React, {Suspense, useState} from 'react';
-import {useSelector} from 'react-redux';
+import React, {Suspense, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {LinearProgress} from '@material-ui/core';
 
 import useStyles from '../styles/Main';
 
 import users, {Role} from '../../users';
+import sales from '../../sales';
 import TopBar from './TopBar';
 import SideBar from './SideBar';
 import Dashboard from './Dashboard';
@@ -13,11 +14,15 @@ import Dashboard from './Dashboard';
 const CategoriesPage = React.lazy(() => import('../../catalog/components/CategoriesPage'));
 const ProductsPage = React.lazy(() => import('../../catalog/components/ProductsPage'));
 const ProductPage = React.lazy(() => import('../../catalog/components/ProductPage'));
+const ProfilePage = React.lazy(() => import('../../users/components/ProfilePage'));
+const SalePage = React.lazy(() => import('../../sales/components/SalePage'));
+const SalesPage = React.lazy(() => import('../../sales/components/SalesPage'));
 const UsersPage = React.lazy(() => import('../../users/components/UsersPage'));
 
 const Main = () => {
     const classes = useStyles();
 
+    const dispatch = useDispatch();
     const user = useSelector(users.selectors.getUser);
     const hasRole = roles => users.selectors.hasRole(user, roles);
 
@@ -25,6 +30,19 @@ const Main = () => {
 
     const handleSidebarOpen = () => setSidebarActive(true);
     const handleSidebarClose = () => setSidebarActive(false);
+
+    useEffect(() => {
+
+        dispatch(sales.actions.getBestSellingProducts());
+        dispatch(sales.actions.getMonthSalesResume());
+
+        if (hasRole([Role.MANAGER, Role.ADMIN])) {
+            dispatch(sales.actions.getProfitableProducts());
+            dispatch(sales.actions.getYearSalesResume());
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={classes.root}>
@@ -41,6 +59,11 @@ const Main = () => {
                                     <Route exact path="/catalog/categories"><CategoriesPage/></Route>
                                     <Route exact path="/catalog/products"><ProductsPage/></Route>
                                     <Route exact path="/catalog/products/:id"><ProductPage/></Route>
+                                    <Route exact path="/profile"><ProfilePage/></Route>
+                                    { hasRole([Role.MANAGER, Role.ADMIN])
+                                        && <Route exact path="/sales/records"><SalesPage/></Route>}
+                                    { hasRole([Role.MANAGER, Role.ADMIN])
+                                        && <Route exact path="/sales/records/:barcode"><SalePage/></Route>}
                                     { hasRole([Role.MANAGER])
                                         && <Route exact path="/staff/users"><UsersPage/></Route> }
                                     <Route><Dashboard/></Route>

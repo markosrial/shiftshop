@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Box, Button, CircularProgress, Grid, TextField, Typography} from '@material-ui/core';
 import {Error} from '@material-ui/icons';
@@ -7,6 +7,7 @@ import {useStyles} from '../styles/ServiceAuth';
 
 import {formValidator} from '../../../utils';
 import users from '../../users';
+import {tryLoginFromServiceToken} from '../../../backend/userService';
 
 const ServiceAuth = ({nextStep}) => {
 
@@ -14,11 +15,13 @@ const ServiceAuth = ({nextStep}) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [initLog, setInitLog] = useState(false);
     const [isLogging, setIsLogging] = useState(false);
     const [errors, setErrors] = useState(null);
 
-    // TODO Try login servicetoken
-    // useEffect(() => {}, [])
+    useEffect(() => {
+        tryLoginFromServiceToken(nextStep, () => setInitLog(true));
+    }, [])
 
     const checkValid = useMemo(
     () => formValidator.isNotEmpty(username) && formValidator.isNotFullEmpty(password),
@@ -43,6 +46,10 @@ const ServiceAuth = ({nextStep}) => {
             errors => setErrors(errors),
             () => setIsLogging(false));
     };
+
+    if (!initLog) {
+        return (<CircularProgress size={24}/>);
+    }
 
     return (
         <form onSubmit={handleSubmit} noValidate>

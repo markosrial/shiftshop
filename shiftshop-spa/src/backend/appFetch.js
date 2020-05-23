@@ -81,8 +81,12 @@ const handle4xxResponse = async (response, onErrors) => {
         return false;
     }
 
-    if (response.status === 401 && reauthenticationCallback) {
-        reauthenticationCallback();
+    if (response.status === 401 || response.status === 403) {
+
+        if (reauthenticationCallback) {
+            reauthenticationCallback();
+        }
+
         return true;
     }
 

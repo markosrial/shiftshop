@@ -52,7 +52,7 @@ const ProductPage = () => {
                         <FormattedMessage id="project.catalog.ProductPage.title"/>
                     </Typography>
                 </Grid>
-                {product && <Grid item><BackButton/></Grid>}
+                <Grid item><BackButton/></Grid>
             </Grid>
             <Grid className={classes.grid} container spacing={2}>
                 {loading

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import {IconButton, Typography, Paper} from '@material-ui/core';
+import {IconButton, Paper, Typography} from '@material-ui/core';
 import {CheckCircle, Close, Error, Info, Warning} from '@material-ui/icons';
 
 import useStyles from '../styles/Alert';

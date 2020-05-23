@@ -78,7 +78,7 @@ const handle4xxResponse = async (response, onErrors) => {
         return false;
     }
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
         removeServiceToken();
         return true;
     }
@@ -115,17 +115,14 @@ const handleResponse = async (response, onSuccess, onErrors) => {
 
 };
 
-export const appFetch = (path, options, onSuccess, onErrors, atFinally) =>
-    fetch(`${BACKEND_URL}${path}`, options)
-        .then(response => handleResponse(response, onSuccess, onErrors))
-        .catch(networkErrorCallback)
-        .finally(atFinally);
-
-export const appFetchOffline = (path, options, onSuccess, onErrors, atFinally, networkError = true) =>
+export const appFetch = (path, options, onSuccess, onErrors, atFinally, offlineError = false, networkError = true) =>
     fetch(`${BACKEND_URL}${path}`, options)
         .then(response => handleResponse(response, onSuccess, onErrors))
         .catch(() => {
-            onErrors && onErrors();
+            // When there is no code on the response (offline, service down),
+            // then run the error functionality if necessary
+            offlineError && onErrors();
+            // Avoid show network error connection on some service check actions
             networkError && networkErrorCallback();
         })
         .finally(atFinally);

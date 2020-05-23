@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -99,19 +100,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Block<User> getUsers(int page, int size) {
+    public Block<User> getUsers(boolean onlyActive, int page, int size) {
 
-        Slice<User> slice = userDao.findByActiveIsTrueOrderByUserNameAsc(PageRequest.of(page, size));
-
-        return new Block<>(slice.getContent(), slice.hasNext());
-    }
-
-
-    @Override
-    @Transactional(readOnly = true)
-    public Block<User> getBlockedUsers(int page, int size) {
-
-        Slice<User> slice = userDao.findByActiveIsFalseOrderByUserNameAsc(PageRequest.of(page, size));
+        Slice<User> slice = onlyActive
+                ? userDao.findByActiveIsTrueOrderByUserNameAsc(PageRequest.of(page, size))
+                : userDao.findByOrderByUserNameAsc(PageRequest.of(page, size));
 
         return new Block<>(slice.getContent(), slice.hasNext());
     }
@@ -140,6 +133,68 @@ public class UserServiceImpl implements UserService {
         }
 
         return userDao.findAllByActiveIsTrueAndRolesContains(RoleType.SALESMAN);
+
+    }
+
+    @Override
+    public User updateUser(Long id, String name, String surnames, Set<RoleType> roles)
+            throws InstanceNotFoundException, NoUserRolesException {
+
+        User user = permissionChecker.checkUser(id);
+
+        if (roles != null) {
+
+            if (user.getRoles().contains(RoleType.MANAGER)) {
+                // Force to keep Manager role on managers
+                roles.add(RoleType.MANAGER);
+            } else {
+                // Remove Manager role from no manager users
+                roles.remove(RoleType.MANAGER);
+            }
+
+            if (roles.isEmpty()) {
+                throw new NoUserRolesException();
+            }
+
+            user.setRoles(roles);
+        }
+
+        if (name != null) {
+            user.setName(name);
+        }
+
+        if (surnames != null) {
+            user.setSurnames(surnames);
+        }
+
+        return user;
+
+    }
+
+    @Override
+    public void setActiveUser(Long id, boolean active) throws BlockUserException, InstanceNotFoundException {
+
+        User user = permissionChecker.checkUser(id);
+
+        if (user.getRoles().contains(RoleType.MANAGER)) {
+            throw new BlockUserException();
+        }
+
+        user.setActive(active);
+
+    }
+
+    @Override
+    public void changePassword(Long id, String oldPassword, String newPassword)
+            throws InstanceNotFoundException, IncorrectPasswordException {
+
+        User user = permissionChecker.checkUser(id);
+
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new IncorrectPasswordException();
+        } else {
+            user.setPassword(passwordEncoder.encode(newPassword));
+        }
 
     }
 }

@@ -15,6 +15,7 @@ exports[`LoginForm snapshot Initial state 1`] = `
     >
       Username
       <span
+        aria-hidden={true}
         className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
       >
          
@@ -40,28 +41,15 @@ exports[`LoginForm snapshot Initial state 1`] = `
       />
       <fieldset
         aria-hidden={true}
-        className="PrivateNotchedOutline-root-66 MuiOutlinedInput-notchedOutline"
-        style={
-          Object {
-            "paddingLeft": 8,
-          }
-        }
+        className="PrivateNotchedOutline-root-64 MuiOutlinedInput-notchedOutline"
       >
         <legend
-          className="PrivateNotchedOutline-legend-67"
-          style={
-            Object {
-              "width": 0.01,
-            }
-          }
+          className="PrivateNotchedOutline-legendLabelled-66"
         >
-          <span
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "&#8203;",
-              }
-            }
-          />
+          <span>
+            Username
+             *
+          </span>
         </legend>
       </fieldset>
     </div>
@@ -75,6 +63,7 @@ exports[`LoginForm snapshot Initial state 1`] = `
     >
       Password
       <span
+        aria-hidden={true}
         className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
       >
          
@@ -100,28 +89,15 @@ exports[`LoginForm snapshot Initial state 1`] = `
       />
       <fieldset
         aria-hidden={true}
-        className="PrivateNotchedOutline-root-66 MuiOutlinedInput-notchedOutline"
-        style={
-          Object {
-            "paddingLeft": 8,
-          }
-        }
+        className="PrivateNotchedOutline-root-64 MuiOutlinedInput-notchedOutline"
       >
         <legend
-          className="PrivateNotchedOutline-legend-67"
-          style={
-            Object {
-              "width": 0.01,
-            }
-          }
+          className="PrivateNotchedOutline-legendLabelled-66"
         >
-          <span
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "&#8203;",
-              }
-            }
-          />
+          <span>
+            Password
+             *
+          </span>
         </legend>
       </fieldset>
     </div>

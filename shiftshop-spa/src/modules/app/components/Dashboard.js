@@ -1,11 +1,21 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {Grid, Typography} from '@material-ui/core';
 
-import useStyles from '../styles/Dashboard'
+import useStyles from '../styles/Dashboard';
+
+import users, {Role} from '../../users';
+import AdminDashboard from './AdminDashboard';
+import SalesmanDashboard from './SalesmanDashboard';
+
 
 const Dashboard = () => {
+
     const classes = useStyles();
+
+    const user = useSelector(users.selectors.getUser);
+    const hasRole = roles => users.selectors.hasRole(user, roles);
 
     return (
         <div>
@@ -18,15 +28,8 @@ const Dashboard = () => {
                         <FormattedMessage id="project.app.Dashboard.title"/>
                     </Typography>
                 </Grid>
-                <Grid item>
-                    <div/>
-                </Grid>
             </Grid>
-            <Grid className={classes.grid} container spacing={2}>
-                <Grid item md={10} xs={12}>
-                    <div/>
-                </Grid>
-            </Grid>
+            {hasRole([Role.MANAGER, Role.ADMIN]) ? <AdminDashboard/> : <SalesmanDashboard/>}
         </div>
     );
 };

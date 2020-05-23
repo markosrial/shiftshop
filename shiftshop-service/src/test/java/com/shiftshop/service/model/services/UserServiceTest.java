@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -145,7 +143,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testGetActiveUsersWithPagination() throws DuplicateInstancePropertyException, NoUserRolesException {
+    public void testGetUsersWithPagination() throws DuplicateInstancePropertyException, NoUserRolesException {
 
         User user1 = createUser(USERNAME + "1");
         User user2 = createUser(USERNAME + "2");
@@ -155,31 +153,14 @@ public class UserServiceTest {
         userDao.save(user3);
 
         Block<User> expectedBlock = new Block<>(Arrays.asList(user1, user2), false);
-        assertEquals(expectedBlock, userService.getUsers(0, 3));
+        assertEquals(expectedBlock, userService.getUsers(true,0, 3));
 
         expectedBlock = new Block<>(Arrays.asList(user1), true);
-        assertEquals(expectedBlock, userService.getUsers(0, 1));
+        assertEquals(expectedBlock, userService.getUsers(true,0, 1));
 
-    }
-
-    @Test
-    public void testGetBlockedUsersWithPagination() throws DuplicateInstancePropertyException, NoUserRolesException {
-
-        User user1 = createUser(USERNAME + "1");
-        User user2 = createUser(USERNAME + "2");
-        createUser(USERNAME + "3");
-
-        user1.setActive(false);
-        userDao.save(user1);
-
-        user2.setActive(false);
-        userDao.save(user2);
-
-        Block<User> expectedBlock = new Block<>(Arrays.asList(user1, user2), false);
-        assertEquals(expectedBlock, userService.getBlockedUsers(0, 3));
-
-        expectedBlock = new Block<>(Arrays.asList(user1), true);
-        assertEquals(expectedBlock, userService.getBlockedUsers(0, 1));
+        // Get all
+        expectedBlock = new Block<>(Arrays.asList(user1, user2, user3), false);
+        assertEquals(expectedBlock, userService.getUsers(false,0, 3));
 
     }
 
@@ -203,6 +184,123 @@ public class UserServiceTest {
         assertEquals(expectedUsers, userService.getUpdatedUsers(user1.getUpdateTimestamp()));
 
         assertEquals(new ArrayList<>(), userService.getUpdatedUsers(userService.getLastUserUpdatedTimestamp()));
+
+    }
+
+    @Test
+    public void testUpdateUser() throws DuplicateInstancePropertyException, InstanceNotFoundException, NoUserRolesException {
+
+        User user = createUser(USERNAME );
+
+        // Update with no changes
+        user = userService.updateUser(user.getId(), null, null, null);
+
+        assertEquals(NAME, user.getName());
+        assertEquals(SURNAMES, user.getSurnames());
+
+        // Update with all changes except roles
+        String newName = NAME + "X";
+        String newSurnames = SURNAMES + "X";
+
+        user = userService.updateUser(user.getId(), newName, newSurnames, null);
+
+        assertEquals(newName, user.getName());
+        assertEquals(newSurnames, user.getSurnames());
+
+        // Update roles
+        Set<RoleType> newRoles = new HashSet<>(Arrays.asList(RoleType.ADMIN));
+        user = userService.updateUser(user.getId(), null, null, newRoles);
+
+        assertEquals(newRoles, user.getRoles());
+
+        // Update manager user
+        // Add all roles
+        user.getRoles().addAll(Arrays.asList(RoleType.MANAGER, RoleType.ADMIN, RoleType.SALESMAN));
+        userDao.save(user);
+
+        // Set empty roles
+        user = userService.updateUser(user.getId(), null, null, new HashSet<>());
+
+        assertEquals(new HashSet<>(Arrays.asList(RoleType.MANAGER)), user.getRoles());
+
+    }
+
+    @Test(expected = InstanceNotFoundException.class)
+    public void testUpdateUserNoExistent() throws NoUserRolesException, InstanceNotFoundException {
+        userService.updateUser(NON_EXISTENT_ID, null, null, null);
+    }
+
+    @Test(expected = NoUserRolesException.class)
+    public void testUpdateUserNoRoles() throws DuplicateInstancePropertyException, InstanceNotFoundException, NoUserRolesException {
+
+        User user = createUser(USERNAME);
+
+        userService.updateUser(user.getId(), NAME + "X", SURNAMES + "X", new HashSet<>(Arrays.asList(RoleType.MANAGER)));
+
+    }
+
+    @Test
+    public void testActiveInactiveUser() throws BlockUserException, DuplicateInstancePropertyException,
+            InstanceNotFoundException, NoUserRolesException {
+
+        User user = createUser(USERNAME);
+
+        // Block user
+        userService.setActiveUser(user.getId(), false);
+
+        assertEquals(false, user.isActive());
+
+        // Unblock user
+        userService.setActiveUser(user.getId(), true);
+
+        assertEquals(true, user.isActive());
+
+    }
+
+    @Test(expected = BlockUserException.class)
+    public void testBlockManagerUser() throws BlockUserException, DuplicateInstancePropertyException,
+            InstanceNotFoundException, NoUserRolesException {
+
+        // Create manager user
+        User user = createUser(USERNAME);
+        user.getRoles().addAll(Arrays.asList(RoleType.MANAGER, RoleType.ADMIN, RoleType.SALESMAN));
+        userDao.save(user);
+
+        // Block user
+        userService.setActiveUser(user.getId(), false);
+
+    }
+
+    @Test
+    public void testChangePassword() throws DuplicateInstancePropertyException, IncorrectLoginException,
+            IncorrectPasswordException, InstanceNotFoundException, NoUserRolesException, UserNotActiveException {
+
+        User user = createUser(USERNAME);
+        String newPassword = 'X' + PASSWORD;
+
+        userService.changePassword(user.getId(), PASSWORD, newPassword);
+
+        User expectedUser = userService.login(user.getUserName(), newPassword);
+
+        assertEquals(expectedUser, user);
+        
+    }
+
+    @Test(expected = InstanceNotFoundException.class)
+    public void testChangePasswordWithNonExistentId() throws InstanceNotFoundException, IncorrectPasswordException {
+
+        userService.changePassword(NON_EXISTENT_ID, "X", "Y");
+
+    }
+
+    @Test(expected = IncorrectPasswordException.class)
+    public void testChangePasswordWithIncorrectPassword() throws DuplicateInstancePropertyException, IncorrectLoginException,
+            IncorrectPasswordException, InstanceNotFoundException, NoUserRolesException {
+
+        User user = createUser(USERNAME);
+        String newPassword = 'X' + PASSWORD;
+
+        userService.changePassword(user.getId(), 'Y' + PASSWORD, newPassword);
 
     }
 

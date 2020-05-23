@@ -46,9 +46,29 @@ export const getRoles = onSuccess =>
 export const addUser = (user, onSuccess, onError, atFinally) =>
     appFetch('/users', config('POST', user), onSuccess, onError, atFinally);
 
-export const getUsers = (page, onSuccess, atFinally) =>
-    appFetch(`/users?page=${page}`, config('GET'), onSuccess, null, atFinally);
+export const getUsers = ({onlyActive, page}, onSuccess, atFinally) => {
 
+    let path = `/users?page=${page}`;
 
-export const getBlockedUsers = (page, onSuccess, atFinally) =>
-    appFetch(`/users/blocked?page=${page}`, config('GET'), onSuccess, null, atFinally);
+    if (!onlyActive) {
+        path += `&onlyActive=false`;
+    }
+
+    appFetch(path, config('GET'), onSuccess, null, atFinally);
+
+}
+
+export const updateUser = (id, user, onSuccess, onError, atFinally) =>
+    appFetch(`/users/${id}`, config('PUT', user),
+        onSuccess, onError, atFinally);
+
+export const blockUser = (id, onSuccess, onError) =>
+    appFetch(`/users/${id}/inactive`, config('PUT'), onSuccess, onError);
+
+export const unblockUser = (id, onSuccess, onError) =>
+    appFetch(`/users/${id}/active`, config('PUT'), onSuccess, onError);
+
+export const changePassword = (id, oldPassword, newPassword, onSuccess, onErrors, atFinally) =>
+    appFetch(`/users/${id}/changePassword`,
+        config('POST', {oldPassword, newPassword}),
+        onSuccess, onErrors, atFinally);

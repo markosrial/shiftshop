@@ -34,28 +34,14 @@ exports[`ProductsSearchBar snapshot Disabled search 1`] = `
       />
       <fieldset
         aria-hidden={true}
-        className="PrivateNotchedOutline-root-65 MuiOutlinedInput-notchedOutline"
-        style={
-          Object {
-            "paddingLeft": 8,
-          }
-        }
+        className="PrivateNotchedOutline-root-63 MuiOutlinedInput-notchedOutline"
       >
         <legend
-          className="PrivateNotchedOutline-legend-66"
-          style={
-            Object {
-              "width": 0.01,
-            }
-          }
+          className="PrivateNotchedOutline-legendLabelled-65"
         >
-          <span
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "&#8203;",
-              }
-            }
-          />
+          <span>
+            Keywords
+          </span>
         </legend>
       </fieldset>
     </div>
@@ -81,10 +67,9 @@ exports[`ProductsSearchBar snapshot Disabled search 1`] = `
       className="MuiButton-label"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
         focusable="false"
-        role="presentation"
         viewBox="0 0 24 24"
       >
         <path
@@ -130,28 +115,14 @@ exports[`ProductsSearchBar snapshot With values and enabled search 1`] = `
       />
       <fieldset
         aria-hidden={true}
-        className="PrivateNotchedOutline-root-65 MuiOutlinedInput-notchedOutline"
-        style={
-          Object {
-            "paddingLeft": 8,
-          }
-        }
+        className="PrivateNotchedOutline-root-63 MuiOutlinedInput-notchedOutline"
       >
         <legend
-          className="PrivateNotchedOutline-legend-66"
-          style={
-            Object {
-              "width": 0.01,
-            }
-          }
+          className="PrivateNotchedOutline-legendLabelled-65"
         >
-          <span
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "&#8203;",
-              }
-            }
-          />
+          <span>
+            Keywords
+          </span>
         </legend>
       </fieldset>
     </div>
@@ -177,10 +148,9 @@ exports[`ProductsSearchBar snapshot With values and enabled search 1`] = `
       className="MuiButton-label"
     >
       <svg
-        aria-hidden="true"
+        aria-hidden={true}
         className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
         focusable="false"
-        role="presentation"
         viewBox="0 0 24 24"
       >
         <path

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button} from '@material-ui/core';
+import {Box} from '@material-ui/core';
 import {useDispatch, useSelector} from 'react-redux';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
@@ -10,13 +10,14 @@ import useStyles from '../styles/RecordsFrame';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 import RecordsCard from './RecordsCard';
+import UploadSalesDialog from './UploadSalesDialog';
 
 const RecordsFrame = () => {
 
     const classes = useStyles();
 
     const dispatch = useDispatch();
-    const {enqueueSnackbar, closeSnackbar} = useSnackbar();
+    const {enqueueSnackbar} = useSnackbar();
 
     const salesDB = useSelector(selectors.getSalesDB)
     const recordsDateFilter = useSelector(selectors.getRecordsDateFilter);
@@ -50,7 +51,9 @@ const RecordsFrame = () => {
 
     return (
         <Box className={classes.content}>
-            <Box width={1} mb={1} display="flex" justifyContent="flex-end">
+            <Box width={1} mb={1} display="flex" alignItems="center">
+                <UploadSalesDialog/>
+                <Box flexGrow={1}/>
                 <DatePicker inputVariant="outlined" margin="dense" format="dd/MM/yyyy"
                             label={<FormattedMessage id="project.global.field.saleDate"/>}
                             variant="inline" disabled={loading} disableFuture

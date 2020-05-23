@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
-import {Button, Typography, CircularProgress, TextField} from '@material-ui/core';
+import {Button, CircularProgress, TextField, Typography} from '@material-ui/core';
 import {Error} from '@material-ui/icons';
 
 import useStyles from '../styles/LoginForm';

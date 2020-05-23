@@ -47,12 +47,6 @@ const ServiceSync = ({localUpdateTimestamp, lastUpdateTimestamp, nextStep, onCan
 
     };
 
-    const sleep = (delay) => {
-        return new Promise(resolve => {
-            setTimeout(resolve, delay)
-        });
-    }
-
     const addUsers = async (users) => {
 
         if (users.length === 0) {

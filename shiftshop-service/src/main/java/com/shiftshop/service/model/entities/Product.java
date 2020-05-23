@@ -12,39 +12,33 @@ public class Product {
 
     public enum ProductOrderType {
 
-        name("name"),
-        creationDate("creationTimestamp");
+        name, creationTimestamp;
 
-        private String type;
-
-        ProductOrderType(String type) {
-            this.type = type;
-        }
-
-        public static ProductOrderType fromString(String type) {
+        public static ProductOrderType fromStringOrDefault(String type) {
 
             if (type == null) {
-                return ProductOrderType.getDefault();
+                return getDefault();
             }
 
             switch (type) {
                 case "date":
                 case "creationDate":
-                case "creationTimestamp":
-                    return ProductOrderType.creationDate;
-                case "name":
+                    type = creationTimestamp.name();
+                    break;
                 default:
-                    return ProductOrderType.name;
+                    break;
+            }
+
+            try {
+                return ProductOrderType.valueOf(type);
+            } catch (IllegalArgumentException e) {
+                return getDefault();
             }
 
         }
 
         public static ProductOrderType getDefault() {
             return name;
-        }
-
-        public String getType() {
-            return this.type;
         }
 
     }

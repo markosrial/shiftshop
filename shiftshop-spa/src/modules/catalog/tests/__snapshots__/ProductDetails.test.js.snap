@@ -11,7 +11,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-179"
+        className="MuiBox-root MuiBox-root-186"
       >
         Name
       </div>
@@ -19,7 +19,11 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
     <div
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
-      Product
+      <div
+        className="MuiBox-root MuiBox-root-187"
+      >
+        Product
+      </div>
     </div>
   </div>
   <div
@@ -29,7 +33,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-180"
+        className="MuiBox-root MuiBox-root-188"
       >
         Category
       </div>
@@ -38,83 +42,17 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiChip-root"
-        onKeyUp={[Function]}
+        className="MuiBox-root MuiBox-root-189"
       >
-        <span
-          className="MuiChip-label"
-        >
-          
-        </span>
-      </div>
-    </div>
-  </div>
-  <div
-    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
-  >
-    <div
-      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
-    >
-      <div
-        className="MuiBox-root MuiBox-root-181"
-      >
-        Provider price
-      </div>
-    </div>
-    <div
-      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
-    >
-      2.00 €
-    </div>
-  </div>
-  <div
-    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
-  >
-    <div
-      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
-    >
-      <div
-        className="MuiBox-root MuiBox-root-182"
-      >
-        Sale price
-      </div>
-    </div>
-    <div
-      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
-    >
-      <div
-        className="MuiBox-root MuiBox-root-183"
-      >
-        2.00 €
-         
         <div
-          className="MuiChip-root makeStyles-neutral-143"
+          className="MuiChip-root"
+          onKeyDown={[Function]}
           onKeyUp={[Function]}
         >
           <span
             className="MuiChip-label"
           >
-            <div
-              className="MuiBox-root MuiBox-root-184"
-            >
-              <svg
-                aria-hidden="true"
-                className="MuiSvgIcon-root"
-                focusable="false"
-                role="presentation"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M10 17l5-5-5-5v10z"
-                />
-                <path
-                  d="M0 24V0h24v24H0z"
-                  fill="none"
-                />
-              </svg>
-              0.00
-               €
-            </div>
+            
           </span>
         </div>
       </div>
@@ -127,15 +65,19 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-185"
+        className="MuiBox-root MuiBox-root-190"
       >
-        Insertion date
+        Provider price
       </div>
     </div>
     <div
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
-      3/12/2020
+      <div
+        className="MuiBox-root MuiBox-root-191"
+      >
+        2.00 €
+      </div>
     </div>
   </div>
   <div
@@ -145,7 +87,82 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-186"
+        className="MuiBox-root MuiBox-root-192"
+      >
+        Sale price
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-193"
+      >
+        <div
+          className="MuiBox-root MuiBox-root-194"
+        >
+          2.00 €
+           
+          <div
+            className="MuiChip-root makeStyles-neutral-147 MuiChip-sizeSmall"
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+          >
+            <span
+              className="MuiChip-label MuiChip-labelSmall"
+            >
+              <div
+                className="MuiBox-root MuiBox-root-195"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M10 17l5-5-5-5v10z"
+                  />
+                </svg>
+                0.00
+                 €
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-196"
+      >
+        Insertion date
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-197"
+      >
+        3/12/2020
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-198"
       >
         Barcode
       </div>
@@ -154,8 +171,12 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-187"
-      />
+        className="MuiBox-root MuiBox-root-199"
+      >
+        <div
+          className="MuiBox-root MuiBox-root-200"
+        />
+      </div>
     </div>
   </div>
   <div
@@ -165,7 +186,7 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-188"
+        className="MuiBox-root MuiBox-root-201"
       >
         State
       </div>
@@ -174,22 +195,26 @@ exports[`ProductDetails snapshot Product active and with neutral ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-189 makeStyles-active-159"
+        className="MuiBox-root MuiBox-root-202"
       >
-        <span
-          className="MuiBadge-root makeStyles-statusBadge-161"
+        <div
+          className="MuiBox-root MuiBox-root-203 makeStyles-active-166"
         >
           <span
-            className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorPrimary"
+            className="MuiBadge-root makeStyles-statusBadge-168"
           >
-             
+            <span
+              className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorPrimary"
+            >
+               
+            </span>
           </span>
-        </span>
-        <span
-          className="makeStyles-statusMessage-162"
-        >
-          Active
-        </span>
+          <span
+            className="makeStyles-statusMessage-169"
+          >
+            Active
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -215,7 +240,11 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
     <div
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
-      Product
+      <div
+        className="MuiBox-root MuiBox-root-108"
+      >
+        Product
+      </div>
     </div>
   </div>
   <div
@@ -225,7 +254,7 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-108"
+        className="MuiBox-root MuiBox-root-109"
       >
         Category
       </div>
@@ -234,79 +263,17 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiChip-root"
-        onKeyUp={[Function]}
+        className="MuiBox-root MuiBox-root-110"
       >
-        <span
-          className="MuiChip-label"
-        >
-          
-        </span>
-      </div>
-    </div>
-  </div>
-  <div
-    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
-  >
-    <div
-      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
-    >
-      <div
-        className="MuiBox-root MuiBox-root-139"
-      >
-        Provider price
-      </div>
-    </div>
-    <div
-      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
-    >
-      2.00 €
-    </div>
-  </div>
-  <div
-    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
-  >
-    <div
-      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
-    >
-      <div
-        className="MuiBox-root MuiBox-root-140"
-      >
-        Sale price
-      </div>
-    </div>
-    <div
-      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
-    >
-      <div
-        className="MuiBox-root MuiBox-root-141"
-      >
-        7.50 €
-         
         <div
-          className="MuiChip-root makeStyles-positive-142"
+          className="MuiChip-root"
+          onKeyDown={[Function]}
           onKeyUp={[Function]}
         >
           <span
             className="MuiChip-label"
           >
-            <div
-              className="MuiBox-root MuiBox-root-145"
-            >
-              <svg
-                aria-hidden="true"
-                className="MuiSvgIcon-root"
-                focusable="false"
-                role="presentation"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7 14l5-5 5 5z"
-                />
-              </svg>
-              5.50
-               €
-            </div>
+            
           </span>
         </div>
       </div>
@@ -319,15 +286,19 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-155"
+        className="MuiBox-root MuiBox-root-141"
       >
-        Insertion date
+        Provider price
       </div>
     </div>
     <div
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
-      3/12/2020
+      <div
+        className="MuiBox-root MuiBox-root-142"
+      >
+        2.00 €
+      </div>
     </div>
   </div>
   <div
@@ -337,7 +308,82 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-156"
+        className="MuiBox-root MuiBox-root-143"
+      >
+        Sale price
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-144"
+      >
+        <div
+          className="MuiBox-root MuiBox-root-145"
+        >
+          7.50 €
+           
+          <div
+            className="MuiChip-root makeStyles-positive-146 MuiChip-sizeSmall"
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+          >
+            <span
+              className="MuiChip-label MuiChip-labelSmall"
+            >
+              <div
+                className="MuiBox-root MuiBox-root-149"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7 14l5-5 5 5z"
+                  />
+                </svg>
+                5.50
+                 €
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-159"
+      >
+        Insertion date
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-160"
+      >
+        3/12/2020
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-161"
       >
         Barcode
       </div>
@@ -346,8 +392,12 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-157"
-      />
+        className="MuiBox-root MuiBox-root-162"
+      >
+        <div
+          className="MuiBox-root MuiBox-root-163"
+        />
+      </div>
     </div>
   </div>
   <div
@@ -357,7 +407,7 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-158"
+        className="MuiBox-root MuiBox-root-164"
       >
         State
       </div>
@@ -366,22 +416,26 @@ exports[`ProductDetails snapshot Product active and with positive ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-163 makeStyles-active-159"
+        className="MuiBox-root MuiBox-root-165"
       >
-        <span
-          className="MuiBadge-root makeStyles-statusBadge-161"
+        <div
+          className="MuiBox-root MuiBox-root-170 makeStyles-active-166"
         >
           <span
-            className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorPrimary"
+            className="MuiBadge-root makeStyles-statusBadge-168"
           >
-             
+            <span
+              className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorPrimary"
+            >
+               
+            </span>
           </span>
-        </span>
-        <span
-          className="makeStyles-statusMessage-162"
-        >
-          Active
-        </span>
+          <span
+            className="makeStyles-statusMessage-169"
+          >
+            Active
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -399,7 +453,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-190"
+        className="MuiBox-root MuiBox-root-204"
       >
         Name
       </div>
@@ -407,7 +461,11 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
     <div
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
-      Product
+      <div
+        className="MuiBox-root MuiBox-root-205"
+      >
+        Product
+      </div>
     </div>
   </div>
   <div
@@ -417,7 +475,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-191"
+        className="MuiBox-root MuiBox-root-206"
       >
         Category
       </div>
@@ -426,79 +484,17 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiChip-root"
-        onKeyUp={[Function]}
+        className="MuiBox-root MuiBox-root-207"
       >
-        <span
-          className="MuiChip-label"
-        >
-          
-        </span>
-      </div>
-    </div>
-  </div>
-  <div
-    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
-  >
-    <div
-      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
-    >
-      <div
-        className="MuiBox-root MuiBox-root-192"
-      >
-        Provider price
-      </div>
-    </div>
-    <div
-      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
-    >
-      2.00 €
-    </div>
-  </div>
-  <div
-    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
-  >
-    <div
-      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
-    >
-      <div
-        className="MuiBox-root MuiBox-root-193"
-      >
-        Sale price
-      </div>
-    </div>
-    <div
-      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
-    >
-      <div
-        className="MuiBox-root MuiBox-root-194"
-      >
-        1.75 €
-         
         <div
-          className="MuiChip-root makeStyles-negative-144"
+          className="MuiChip-root"
+          onKeyDown={[Function]}
           onKeyUp={[Function]}
         >
           <span
             className="MuiChip-label"
           >
-            <div
-              className="MuiBox-root MuiBox-root-195"
-            >
-              <svg
-                aria-hidden="true"
-                className="MuiSvgIcon-root"
-                focusable="false"
-                role="presentation"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7 10l5 5 5-5z"
-                />
-              </svg>
-              0.25
-               €
-            </div>
+            
           </span>
         </div>
       </div>
@@ -511,15 +507,19 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-196"
+        className="MuiBox-root MuiBox-root-208"
       >
-        Insertion date
+        Provider price
       </div>
     </div>
     <div
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
-      3/12/2020
+      <div
+        className="MuiBox-root MuiBox-root-209"
+      >
+        2.00 €
+      </div>
     </div>
   </div>
   <div
@@ -529,7 +529,82 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-197"
+        className="MuiBox-root MuiBox-root-210"
+      >
+        Sale price
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-211"
+      >
+        <div
+          className="MuiBox-root MuiBox-root-212"
+        >
+          1.75 €
+           
+          <div
+            className="MuiChip-root makeStyles-negative-148 MuiChip-sizeSmall"
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+          >
+            <span
+              className="MuiChip-label MuiChip-labelSmall"
+            >
+              <div
+                className="MuiBox-root MuiBox-root-213"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7 10l5 5 5-5z"
+                  />
+                </svg>
+                0.25
+                 €
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-214"
+      >
+        Insertion date
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-215"
+      >
+        3/12/2020
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root makeStyles-gridRow-104 MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-216"
       >
         Barcode
       </div>
@@ -538,8 +613,12 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-198"
-      />
+        className="MuiBox-root MuiBox-root-217"
+      >
+        <div
+          className="MuiBox-root MuiBox-root-218"
+        />
+      </div>
     </div>
   </div>
   <div
@@ -549,7 +628,7 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-lg-3"
     >
       <div
-        className="MuiBox-root MuiBox-root-199"
+        className="MuiBox-root MuiBox-root-219"
       >
         State
       </div>
@@ -558,22 +637,26 @@ exports[`ProductDetails snapshot Product inactive and with negative ROI 1`] = `
       className="MuiGrid-root makeStyles-rowContent-105 MuiGrid-item MuiGrid-grid-xs-true"
     >
       <div
-        className="MuiBox-root MuiBox-root-200 makeStyles-inactive-160"
+        className="MuiBox-root MuiBox-root-220"
       >
-        <span
-          className="MuiBadge-root makeStyles-statusBadge-161"
+        <div
+          className="MuiBox-root MuiBox-root-221 makeStyles-inactive-167"
         >
           <span
-            className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorSecondary"
+            className="MuiBadge-root makeStyles-statusBadge-168"
           >
-             
+            <span
+              className="MuiBadge-badge MuiBadge-anchorOriginTopRightRectangle MuiBadge-colorSecondary"
+            >
+               
+            </span>
           </span>
-        </span>
-        <span
-          className="makeStyles-statusMessage-162"
-        >
-          Inactive
-        </span>
+          <span
+            className="makeStyles-statusMessage-169"
+          >
+            Inactive
+          </span>
+        </div>
       </div>
     </div>
   </div>

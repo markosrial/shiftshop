@@ -27,16 +27,8 @@ public class UserConversor {
 		return roles.stream().map(r -> toRoleDto(r)).collect(Collectors.toList());
 	}
 
-	public static final UserSummaryDto toUserSummaryDto(User user) {
-		return new UserSummaryDto(user.getId(), user.getName(), user.getSurnames());
-	}
-
-	public static final List<UserSummaryDto> toUserSummaryDtos(List<User> users) {
-		return users.stream().map(u -> toUserSummaryDto(u)).collect(Collectors.toList());
-	}
-
 	public static final UserDto toUserDto(User user) {
-		return new UserDto(user.getId(), user.getUserName(), user.getName(), user.getSurnames(),
+		return new UserDto(user.getId(), user.getUserName(), user.getName(), user.getSurnames(), user.isActive(),
 				user.getRoles().stream().map(role -> role.ordinal()).collect(Collectors.toSet()));
 	}
 

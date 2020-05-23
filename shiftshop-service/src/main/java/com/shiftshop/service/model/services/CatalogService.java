@@ -4,7 +4,6 @@ import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyEx
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.entities.Category;
 import com.shiftshop.service.model.entities.Product;
-import com.shiftshop.service.model.entities.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,7 +25,7 @@ public interface CatalogService {
     Product findProductById(Long id) throws InstanceNotFoundException;
 
     Block<Product> findProducts(Long categoryId, String keywords, boolean onlyActive,
-                                String orderType, String order, int page, int size);
+                                String orderBy, String direction, int page, int size);
 
     Product updateProduct(Long id, String name, BigDecimal providerPrice, BigDecimal salePrice,
                           String barcode, Long categoryId)

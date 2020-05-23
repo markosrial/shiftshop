@@ -23,7 +23,7 @@ exports[`CategorySelector snapshot Categories has elements and first is selected
   >
     <div
       aria-haspopup="listbox"
-      aria-labelledby="categorySelector "
+      aria-labelledby="categorySelector"
       className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
       onBlur={[Function]}
       onFocus={[Function]}
@@ -40,10 +40,9 @@ exports[`CategorySelector snapshot Categories has elements and first is selected
       value={1}
     />
     <svg
-      aria-hidden="true"
+      aria-hidden={true}
       className="MuiSvgIcon-root MuiSelect-icon"
       focusable="false"
-      role="presentation"
       viewBox="0 0 24 24"
     >
       <path

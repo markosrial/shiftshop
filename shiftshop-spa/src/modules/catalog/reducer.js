@@ -2,14 +2,14 @@ import {combineReducers} from "redux";
 
 import * as actionTypes from './actionTypes';
 
-import SearchOrder from './constants/SearchOrder';
-import SearchOrderBy from './constants/SearchOrderBy';
+import SearchDirection from '../common/constants/SearchDirection';
+import ProductOrderBy from './constants/ProductOrderBy';
 
 const initialState = {
     categories: [],
     searchFilter: {
-        orderBy: SearchOrderBy.NAME,
-        order: SearchOrder.ASC,
+        orderBy: ProductOrderBy.NAME,
+        order: SearchDirection.ASC,
         onlyActive: true
     },
     productsSearch: null,
@@ -73,6 +73,9 @@ const product  = (state = initialState.product, action) => {
 
         case actionTypes.SET_PRODUCT_INACTIVE_COMPLETED:
             return state ? {...state, active: false} : initialState.product;
+
+        case actionTypes.CLEAR_PRODUCT:
+            return initialState.product;
 
         default:
             return state;

@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/users/login").permitAll()
 				.antMatchers("/users/loginFromServiceToken").permitAll()
-				.antMatchers("/users/changePassword").authenticated()
+				.antMatchers("/users/*/changePassword").authenticated()
 				.antMatchers("/users/**").hasRole(MANAGER)
 				.antMatchers(HttpMethod.POST, "/catalog/categories/**").hasRole(ADMIN)
 				.antMatchers(HttpMethod.PUT, "/catalog/categories/**").hasRole(ADMIN)
@@ -42,6 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/catalog/**").authenticated()
 				.antMatchers("/pos/lastUpdateTimestamp").permitAll()
 				.antMatchers("/pos/**").authenticated()
+				.antMatchers(HttpMethod.PUT, "/sales").authenticated()
+				.antMatchers( "/sales/topBestSellingProducts").authenticated()
+				.antMatchers( "/sales/monthSalesResume").authenticated()
+				.antMatchers( "/sales/**").hasAnyRole(MANAGER, ADMIN)
 				.antMatchers("/**").hasRole(MANAGER);
 
 	}
