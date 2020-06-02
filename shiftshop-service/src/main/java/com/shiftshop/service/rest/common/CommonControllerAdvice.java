@@ -3,6 +3,7 @@ package com.shiftshop.service.rest.common;
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
 import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.common.exceptions.InstancePropertyNotFoundException;
+import com.shiftshop.service.model.services.PermissionException;
 import com.shiftshop.service.rest.dtos.common.ErrorConversor;
 import com.shiftshop.service.rest.dtos.common.ErrorsDto;
 import com.shiftshop.service.rest.dtos.common.FieldErrorDto;
@@ -24,6 +25,7 @@ public class CommonControllerAdvice {
 	private static final String DUPLICATE_INSTANCE_PROPERTY_EXCEPTION_CODE = "project.exceptions.DuplicateInstancePropertyException";
 	private static final String INSTANCE_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.InstanceNotFoundException";
 	private static final String INSTANCE_PROPERTY_NOT_FOUND_EXCEPTION_CODE = "project.exceptions.InstancePropertyNotFoundException";
+	private static final String PERMISSION_EXCEPTION_CODE = "project.exceptions.PermissionException";
 
 	@Autowired
 	private ErrorConversor errorConversor;
@@ -59,6 +61,13 @@ public class CommonControllerAdvice {
 	@ResponseBody
 	public ErrorsDto handleInstancePropertyNotFoundException(InstancePropertyNotFoundException exception, Locale locale) {
 		return errorConversor.toErrorsDtoFromInstancePropertyException(exception, INSTANCE_PROPERTY_NOT_FOUND_EXCEPTION_CODE, locale);
+	}
+
+	@ExceptionHandler(PermissionException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ResponseBody
+	public ErrorsDto handlePermissionException(PermissionException exception, Locale locale) {
+		return errorConversor.toErrorsDtoFromException(PERMISSION_EXCEPTION_CODE, locale);
 	}
 
 }

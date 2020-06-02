@@ -2,16 +2,15 @@ package com.shiftshop.service.rest.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shiftshop.service.model.common.exceptions.DuplicateInstancePropertyException;
+import com.shiftshop.service.model.common.exceptions.InstanceNotFoundException;
 import com.shiftshop.service.model.entities.User;
 import com.shiftshop.service.model.entities.User.RoleType;
 import com.shiftshop.service.model.entities.UserDao;
-import com.shiftshop.service.model.services.IncorrectLoginException;
-import com.shiftshop.service.model.services.NoUserRolesException;
-import com.shiftshop.service.model.services.UserNotActiveException;
-import com.shiftshop.service.model.services.UserService;
+import com.shiftshop.service.model.services.*;
 import com.shiftshop.service.rest.common.JwtGenerator;
 import com.shiftshop.service.rest.common.JwtInfo;
 import com.shiftshop.service.rest.dtos.user.AuthenticatedUserDto;
+import com.shiftshop.service.rest.dtos.user.ChangePasswordParamsDto;
 import com.shiftshop.service.rest.dtos.user.InsertUserParamsDto;
 import com.shiftshop.service.rest.dtos.user.LoginParamsDto;
 import org.junit.Test;
@@ -19,12 +18,15 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -41,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 public class UserControllerTest {
 
-    private final Long NON_EXISTENT_ID = new Long(-1);
+    private final Long NON_EXISTENT_ID = -1L;
     private final String USERNAME = "user";
     private final static String PASSWORD = "password";
     private final String NAME = "User";
@@ -442,6 +444,76 @@ public class UserControllerTest {
         mockMvc.perform(put("/users/" + NON_EXISTENT_ID + "/active")
                 .header("Authorization", "Bearer " + user.getServiceToken()))
                 .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void testPostUserChangePassword_Ok() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+
+        ChangePasswordParamsDto params = new ChangePasswordParamsDto();
+        params.setOldPassword(PASSWORD);
+        params.setNewPassword("NEW" +  PASSWORD);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        mockMvc.perform(post("/users/" + user.getUserLoggedDto().getId() + "/changePassword")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(params)))
+                .andExpect(status().isNoContent());
+
+    }
+
+    @Test
+    public void testPostUserChangePassword_NotFound() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+
+        ChangePasswordParamsDto params = new ChangePasswordParamsDto();
+        params.setOldPassword("X" + PASSWORD);
+        params.setNewPassword(PASSWORD);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        mockMvc.perform(post("/users/" + user.getUserLoggedDto().getId() + "/changePassword")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(params)))
+                .andExpect(status().isNotFound());
+
+        String tokenNonExistentId = jwtGenerator.generate(
+                new JwtInfo(NON_EXISTENT_ID, user.getUserLoggedDto().getUserName(), user.getUserLoggedDto().getRoles()));
+
+        params = new ChangePasswordParamsDto();
+        params.setOldPassword(PASSWORD);
+        params.setNewPassword("NEW" +  PASSWORD);
+
+        mockMvc.perform(post("/users/" + NON_EXISTENT_ID + "/changePassword")
+                .header("Authorization", "Bearer " + tokenNonExistentId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(params)))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void testPostUserChangePassword_Forbidden() throws Exception {
+
+        AuthenticatedUserDto user = createAuthenticatedAdminUser("admin");
+
+        ChangePasswordParamsDto params = new ChangePasswordParamsDto();
+        params.setOldPassword(PASSWORD);
+        params.setNewPassword("NEW" +  PASSWORD);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        mockMvc.perform(post("/users/" + NON_EXISTENT_ID + "/changePassword")
+                .header("Authorization", "Bearer " + user.getServiceToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(params)))
+                .andExpect(status().isForbidden());
 
     }
 
