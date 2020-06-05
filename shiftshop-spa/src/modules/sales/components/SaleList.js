@@ -56,11 +56,11 @@ const SaleListTable = ({sales, criteria, saleDetails, previous, next}) => {
                                 </TableCell>
                                 <TableCell align="center">
                                     <Box>
-                                        <Box><FormattedDate value={sale.date}/></Box>
+                                        <Box><FormattedDate value={sale.date} year="numeric" month="2-digit" day="2-digit"/></Box>
                                         <Box><FormattedTime value={sale.date} hour="numeric" minute="numeric" second="numeric" /></Box>
                                     </Box>
                                 </TableCell>
-                                <TableCell align="right">{sale.total}&nbsp;€</TableCell>
+                                <TableCell align="right">{sale.total.toFixed(2)}&nbsp;€</TableCell>
                                 <Hidden mdDown>
                                     <TableCell align="center">{sale.seller}</TableCell>
                                 </Hidden>
@@ -102,9 +102,9 @@ const SaleListCards = ({sales, criteria, previous, next}) => {
                                 </Link>}
                                 subheader={
                                     <Box>
-                                        <FormattedTime value={sale.date} hour="numeric" minute="numeric" second="numeric" />
+                                        <FormattedDate value={sale.date} year="numeric" month="2-digit" day="2-digit"/>
                                         &nbsp;-&nbsp;
-                                        <FormattedDate value={sale.date}/>
+                                        <FormattedTime value={sale.date} hour="numeric" minute="numeric" second="numeric"/>
                                     </Box>
                                 }/>
                     <Divider/>
@@ -113,7 +113,7 @@ const SaleListCards = ({sales, criteria, previous, next}) => {
                             <Typography className={classes.label} variant="body1">
                                 <FormattedMessage id="project.global.field.total"/>:
                             </Typography>
-                            <Box flexGrow={4}>{sale.total}&nbsp;€</Box>
+                            <Box flexGrow={4}>{sale.total.toFixed(2)}&nbsp;€</Box>
                         </Box>
                         <Box display="flex">
                             <Typography className={classes.label} variant="body1">

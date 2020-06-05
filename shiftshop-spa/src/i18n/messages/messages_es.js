@@ -5,6 +5,7 @@ export default {
 
     'project.app.nav.app': 'Aplicación',
     'project.app.nav.catalog': 'Catálogo',
+    'project.app.nav.profile': 'Perfil',
     'project.app.nav.root': 'ShiftShop',
     'project.app.nav.sales': 'Ventas',
     'project.app.nav.staff': 'Personal',
@@ -80,6 +81,7 @@ export default {
     'project.users.EditUser.title': 'Editar usuario',
     'project.users.Logout.title': 'Salir',
     'project.users.Logout.message': 'Selecciona "Continuar" para confirmar el cierre de la sesión actual',
+    'project.users.ProfilePage.title': 'Ajustes de usuario',
     'project.users.UsersPage.title': 'Usuarios',
     'project.users.UsersSearch.title': 'Lista de usuarios',
     'project.users.UsersSearchResult.backButton': 'Página anterior',

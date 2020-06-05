@@ -19,7 +19,7 @@ const SalesmanDashboard = () => (
                 <MonthProductsSold/>
             </Grid>
         </Grid>
-        <Grid item container spacing={2} xs={12} md={6}>
+        <Grid item container spacing={2} xs={12} md={6} alignContent="flex-start">
             <Grid item xs={12}>
                 <Typography variant="overline">
                     <FormattedMessage id="project.app.Dashboard.last15Days"/>

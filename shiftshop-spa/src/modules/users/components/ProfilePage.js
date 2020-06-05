@@ -14,10 +14,10 @@ const ProfilePage = () => {
             <Grid className={classes.header} alignItems="flex-end" container justify="space-between" spacing={3}>
                 <Grid item>
                     <Typography variant="overline">
-                        <FormattedMessage id="project.app.nav.staff"/>
+                        <FormattedMessage id="project.app.nav.profile"/>
                     </Typography>
                     <Typography variant="h3">
-                        <FormattedMessage id="project.users.UsersPage.title"/>
+                        <FormattedMessage id="project.users.ProfilePage.title"/>
                     </Typography>
                 </Grid>
             </Grid>

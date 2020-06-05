@@ -35,13 +35,15 @@ const BarcodeAutocomplete = () => {
 
     const onInputChange = (e, value) => {
 
-        const startingCode = value.toUpperCase();
+        const startingCode = value.trim().toUpperCase();
 
         setInputValue(startingCode);
         setOptions([]);
 
-        if (startingCode.trim() === "") {
+        if (startingCode === "") {
+            // Clear and cancel pending calls
             setLoading(false);
+            debounceInputChange.cancel();
             return;
         }
 
@@ -54,8 +56,6 @@ const BarcodeAutocomplete = () => {
         actions.findFirstSaleBarcodes(value,
                 barcodes => _isMounted.current && setOptions(barcodes),
             () => _isMounted.current && setLoading(false));
-
-
 
     return (
         <Autocomplete options={options} openOnFocus clearOnEscape style={{minWidth: '14rem'}} forcePopupIcon={false}
