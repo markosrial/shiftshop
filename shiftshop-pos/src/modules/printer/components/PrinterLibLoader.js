@@ -46,7 +46,7 @@ const PrinterLibLoader = () => {
     }
 
     return (
-        <Script url='lib/epos-2.14.0.js' onLoad={onLoadSuccess} onError={onLoadError}/>
+        <Script url='../lib/epos-2.14.0.js' onLoad={onLoadSuccess} onError={onLoadError}/>
     );
 
 }

@@ -26,7 +26,7 @@ const createWindow = () => {
   // Set backend url global variable
   switch (process.env.NODE_ENV) {
     case 'production':
-      global.APP_BACKEND_URL = 'http://shiftshop.home/ws';
+      global.APP_BACKEND_URL = 'https://shiftshop.home/ws';
       break;
     case 'development':
     default:
