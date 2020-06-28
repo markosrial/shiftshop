@@ -20,8 +20,7 @@ const getById = db => async id => {
 
 const getAll = db => async () => {
     try {
-        const result = db.allDocs({include_docs : true});
-        return result;
+        return await db.allDocs({include_docs : true});
     } catch (err) {
         throw ErrorTypes.ReadDocs;
     }

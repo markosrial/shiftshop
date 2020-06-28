@@ -22,6 +22,7 @@ import {Close, Print, Save} from '@material-ui/icons';
 import {generateBarcode, fixedDecimal} from '../../utils';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
+import printer, {PrinterStatus} from '../../printer';
 import records from '../../records';
 import users from '../../users';
 
@@ -35,6 +36,7 @@ const AddSale = ({discount, closeDialog}) => {
     const cartCount = useSelector(selectors.getShoppingCartCount);
     const cartSubtotal = useSelector(selectors.getShoppingCartSubtotal);
     const user = useSelector(users.selectors.getUser);
+    const printerStatus = useSelector(printer.selectors.getPrinterStatus);
 
     const salesDB = useSelector(records.selectors.getSalesDB);
 
@@ -74,6 +76,7 @@ const AddSale = ({discount, closeDialog}) => {
                 return {
                     id: product.id,
                     name: product.name,
+                    barcode: product.barcode,
                     salePrice: product.salePrice,
                     quantity: item.quantity
                 };
@@ -108,6 +111,10 @@ const AddSale = ({discount, closeDialog}) => {
                 enqueueSnackbar(<FormattedMessage id="project.sales.AddSale.success"/>, {variant: 'success'});
                 dispatch(actions.clearCart());
                 closeDialog();
+
+                if (print) {
+                    dispatch(printer.actions.printTicket(sale));
+                }
             },
             error => {
                 enqueueSnackbar(<FormattedMessage id="project.sales.AddSale.error"/>, {variant: 'error'});
@@ -188,13 +195,13 @@ const AddSale = ({discount, closeDialog}) => {
             <DialogActions>
                 {saving && <CircularProgress size={24}/>}
                 <Button color="primary" variant="contained" disableElevation
-                        onClick={() => saveSale(false)} disabled={saving || cashError}>
+                        onClick={() => saveSale()} disabled={saving || cashError}>
                     <Save fontSize="small"/>
                     &nbsp;
                     <FormattedMessage id="project.global.button.save"/>
                 </Button>
                 <Button color="primary" variant="contained" disableElevation
-                        onClick={() => saveSale(true)} disabled={saving  || cashError}>
+                        onClick={() => saveSale(true)} disabled={saving  || cashError || printerStatus !== PrinterStatus.CONNECTED}>
                     <Print fontSize="small"/>
                     &nbsp;
                     <FormattedMessage id="project.global.button.printAndSave"/>

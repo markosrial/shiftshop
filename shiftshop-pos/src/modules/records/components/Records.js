@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {FormattedMessage, FormattedTime} from 'react-intl';
 import {
     Box,
@@ -18,11 +19,17 @@ import {Print, Visibility} from '@material-ui/icons';
 
 import {noRecords} from '../../../assets/images';
 import useStyles from '../styles/Records';
+
+import printer, {PrinterStatus} from '../../printer';
 import RecordsDetailsDialog from './RecordDetailsDialog';
 
 const Records = ({records}) => {
 
     const classes = useStyles();
+
+    const dispatch = useDispatch();
+
+    const printerStatus = useSelector(printer.selectors.getPrinterStatus);
 
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [page, setPage] = useState(0);
@@ -35,7 +42,7 @@ const Records = ({records}) => {
         setPage(0);
     };
 
-    const printRecord = sale => console.log(sale);
+    const disabledPrint = (printerStatus !== PrinterStatus.CONNECTED);
 
     if (records.length === 0) {
         return (
@@ -75,7 +82,8 @@ const Records = ({records}) => {
                                         <Visibility fontSize="small"/>
                                     </Button>
                                     &nbsp;
-                                    <Button variant="outlined" onClick={null} disableElevation>
+                                    <Button variant="outlined" disableElevation disabled={disabledPrint}
+                                            onClick={() => dispatch(printer.actions.printTicket(sale))}>
                                         <Print fontSize="small"/>
                                     </Button>
                                 </TableCell>
@@ -92,8 +100,7 @@ const Records = ({records}) => {
                                  onChangePage={handleChangePage}
                                  onChangeRowsPerPage={handleChangeRowsPerPage}/>
             </Box>
-            {selectedRecord && <RecordsDetailsDialog record={selectedRecord}
-                                                     printRecord={printRecord}
+            {selectedRecord && <RecordsDetailsDialog record={selectedRecord} disabledPrint={disabledPrint}
                                                      closeDialog={() => setSelectedRecord(null)}/>}
         </Paper>
     );

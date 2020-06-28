@@ -35,6 +35,7 @@ const BestSellingProducts = () => {
                                     }/>
                                 </ListItem>
                             ))}
+                            {topProfitable.length === 0 && <Box>-</Box>}
                         </List>
                         : <CircularProgress size={24}/>}
                 </Box>

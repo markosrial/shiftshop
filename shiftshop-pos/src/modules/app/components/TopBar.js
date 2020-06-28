@@ -3,8 +3,9 @@ import {Link} from 'react-router-dom';
 import {AppBar, Box, Chip, Toolbar, Typography} from '@material-ui/core';
 import {ShoppingBasketRounded} from '@material-ui/icons';
 
-import useStyles from '../styles/TopBar'
+import useStyles from '../styles/TopBar';
 
+import {PrinterIndicator} from '../../printer';
 import {CartBadgeCount} from '../../sales';
 import {LogOut} from '../../users';
 
@@ -20,6 +21,8 @@ const TopBar = () => {
                     <Chip size="small" label="POS"/>
                 </Typography>
                 <div className={classes.flexGrow} />
+                <PrinterIndicator/>
+                <Box ml={2}/>
                 <CartBadgeCount Icon={<ShoppingBasketRounded/>}/>
                 <Box className={classes.logoutButton}>
                     <LogOut/>

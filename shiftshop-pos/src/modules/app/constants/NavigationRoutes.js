@@ -1,4 +1,4 @@
-import {Book, SdStorage, ShoppingBasket} from '@material-ui/icons';
+import {Book, SdStorage, ShoppingBasket, PrintOutlined} from '@material-ui/icons';
 
 export default [
     {
@@ -23,6 +23,16 @@ export default [
                 title: 'project.app.route.preOrders',
                 route: '/records/preOrders',
                 icon: Book
+            }
+        ]
+    },
+    {
+        title: 'project.app.nav.config',
+        items: [
+            {
+                title: 'project.app.route.printerConfig',
+                route: '/config/printer',
+                icon: PrintOutlined
             }
         ]
     },
