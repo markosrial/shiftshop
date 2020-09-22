@@ -17,11 +17,11 @@ let notifierCallback = null;
 
 export const setNotifierCallback = callback => notifierCallback = callback;
 
-export const setPrinterIP = ip => sessionStorage.setItem(PRINTER_IP, ip);
-export const getPrinterIP = () => sessionStorage.getItem(PRINTER_IP) || baseConfig.IP;
+export const setPrinterIP = ip => localStorage.setItem(PRINTER_IP, ip);
+export const getPrinterIP = () => localStorage.getItem(PRINTER_IP) || baseConfig.IP;
 
-export const setPrinterDeviceID = deviceID => sessionStorage.setItem(PRINTER_DEVICE_ID, deviceID);
-export const getPrinterDeviceID = () => sessionStorage.getItem(PRINTER_DEVICE_ID) || baseConfig.deviceID;
+export const setPrinterDeviceID = deviceID => localStorage.setItem(PRINTER_DEVICE_ID, deviceID);
+export const getPrinterDeviceID = () => localStorage.getItem(PRINTER_DEVICE_ID) || baseConfig.deviceID;
 
 // Store Actions
 
