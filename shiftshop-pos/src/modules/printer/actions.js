@@ -180,7 +180,7 @@ export const printTicket = ticket => dispatch => {
 
     printer.addText('\n');
     printer.addText('** Gracias por su visita **\n');
-    printer.addText('Visitenos en: www.frikilandshop.com\n');
+    printer.addText('Visitenos en: www.web-site.com\n');
     printer.addText('\n');
     printer.addCut(printer.CUT_FEED);
 
