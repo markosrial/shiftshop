@@ -1,36 +1,25 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Card, CardContent, CardHeader, CircularProgress, Divider, makeStyles, TextField} from '@material-ui/core';
-import {FormattedMessage} from 'react-intl';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import {formValidator} from '../../../utils';
-import Box from '@material-ui/core/Box';
+import {useSelector} from 'react-redux';
 import {useSnackbar} from 'notistack';
-import {ErrorContent} from '../../common';
+import {FormattedMessage} from 'react-intl';
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardHeader,
+    CircularProgress,
+    Divider,
+    Grid,
+    TextField
+} from '@material-ui/core';
 
+import useStyles from '../styles/ChangePassword';
+
+import {formValidator} from '../../../utils';
+import {ErrorContent} from '../../common';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
-import {useSelector} from 'react-redux';
-
-const useStyles = makeStyles(theme => ({
-    root: {padding: theme.spacing(3)},
-    alert: {marginBottom: theme.spacing(2)},
-    repeatPassword: {
-        [theme.breakpoints.up('sm')]: {
-            paddingLeft: theme.spacing(1),
-        },
-    },
-    expansionPanel: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-    },
-    button: {
-        [theme.breakpoints.down('sm')]: {
-            width: '100%',
-        },
-    },
-    buttonProgress: {position: 'absolute'},
-}));
 
 const ChangePassword = () => {
 
@@ -123,7 +112,7 @@ const ChangePassword = () => {
                                            onChange={e => setRepeatPassword(e.target.value)} error={!isValidRepeatedPassword}
                                            helperText={!isValidRepeatedPassword && <FormattedMessage id="project.global.error.passwordMatch"/>}/>
                             </Grid>
-                            <Grid item xs={12} justify="center">
+                            <Grid item xs={12}>
                                 <Button className={classes.button} variant="contained" color="primary" type="submit" disabled={!checkValid || updating} disableElevation>
                                     {updating && <CircularProgress className={classes.buttonProgress} size={24}/>}
                                     <FormattedMessage id="project.global.button.update"/>

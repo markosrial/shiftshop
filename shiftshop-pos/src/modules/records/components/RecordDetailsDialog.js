@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import {useDispatch} from 'react-redux';
 import {FormattedDate, FormattedMessage, FormattedTime} from 'react-intl';
 import {
     Box,
@@ -21,11 +22,15 @@ import {
 } from '@material-ui/core';
 import {Close} from '@material-ui/icons';
 
-import useStyles from '../styles/RecordDeetailsDialog';
+import useStyles from '../styles/RecordDetailsDialog';
 
-const RecordsDetailsDialog = ({record, printRecord, closeDialog}) => {
+import printer from '../../printer';
+
+const RecordsDetailsDialog = ({record, closeDialog, disabledPrint}) => {
 
     const classes = useStyles();
+
+    const dispatch = useDispatch();
 
     if (!record) {
         return null;
@@ -59,7 +64,7 @@ const RecordsDetailsDialog = ({record, printRecord, closeDialog}) => {
                             <Box>
                                 <FormattedTime value={record.date} hour="numeric" minute="numeric" second="numeric"/>
                                 &nbsp;-&nbsp;
-                                <FormattedDate value={record.date}/>
+                                <FormattedDate value={record.date} year="numeric" month="2-digit" day="2-digit"/>
                             </Box>
                         </Box>
                     </ListItem>
@@ -146,7 +151,8 @@ const RecordsDetailsDialog = ({record, printRecord, closeDialog}) => {
                 </List>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" color="primary" autoFocus disableElevation onClick={printRecord}>
+                <Button variant="contained" color="primary" disableElevation
+                        onClick={() => dispatch(printer.actions.printTicket(record))} disabled={disabledPrint}>
                     <FormattedMessage id="project.global.button.print"/>
                 </Button>
             </DialogActions>

@@ -22,6 +22,7 @@ import {App} from './modules/app';
 
 import configureStore from './store';
 import {initReactIntl} from "./i18n";
+import {initPersistStorage} from './databases';
 
 /* Configure store. */
 const store = configureStore();
@@ -32,6 +33,8 @@ const localeMap = {
     en: {fns: enLocale, theme: enUS},
     es: {fns: esLocale, theme: esES},
 };
+
+initPersistStorage().then();
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme(localeMap[locale].theme)}>

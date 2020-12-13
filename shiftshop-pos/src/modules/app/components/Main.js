@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
@@ -9,6 +9,7 @@ import useStyles from '../styles/Main';
 
 import records, {RecordsFrame} from '../../records';
 import sales, {ShoppingFrame} from '../../sales';
+import {PrinterConfigFrame, PrinterLibLoader} from '../../printer';
 import TopBar from './TopBar';
 import SideBar from './SideBar';
 
@@ -44,29 +45,28 @@ const Main = () => {
 
     }, []);
 
-    const [sidebarActive, setSidebarActive] = useState(true);
-
-    const handleSidebarOpen = () => setSidebarActive(true);
-    const handleSidebarClose = () => setSidebarActive(false);
-
     return (
-        <div className={classes.root}>
-            <HashRouter basename="/">
-                <TopBar className={classes.topBar} openSidebar={handleSidebarOpen}/>
-                <div className={classes.container}>
-                    <SideBar className={classes.sideBar} sidebarActive={sidebarActive} closeSidebar={handleSidebarClose}/>
-                    <div className={classes.content}>
-                        <Switch>
-                            <Route exact path="/"><ShoppingFrame/></Route>
-                            <Route exact path="/shopping/cart"><ShoppingFrame/></Route>
-                            <Route exact path="/records/sales"><RecordsFrame/></Route>
-                            <Route exact path="/records/preOrders"><div/></Route>
-                            <Route><ShoppingFrame/></Route>
-                        </Switch>
+        <Fragment>
+            <div className={classes.root}>
+                <HashRouter basename="/">
+                    <TopBar className={classes.topBar}/>
+                    <div className={classes.container}>
+                        <SideBar className={classes.sideBar}/>
+                        <div className={classes.content}>
+                            <Switch>
+                                <Route exact path="/"><ShoppingFrame/></Route>
+                                <Route exact path="/shopping/cart"><ShoppingFrame/></Route>
+                                <Route exact path="/records/sales"><RecordsFrame/></Route>
+                                <Route exact path="/records/preOrders"><div/></Route>
+                                <Route exact path="/config/printer"><PrinterConfigFrame/></Route>
+                                <Route><ShoppingFrame/></Route>
+                            </Switch>
+                        </div>
                     </div>
-                </div>
-            </HashRouter>
-        </div>
+                </HashRouter>
+            </div>
+            <PrinterLibLoader/>
+        </Fragment>
     );
 };
 

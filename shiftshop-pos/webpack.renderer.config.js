@@ -1,4 +1,5 @@
 const rules = require('./webpack.rules');
+const CopyPlugin = require('copy-webpack-plugin');
 
 rules.push({
   test: /\.css$/,
@@ -7,7 +8,7 @@ rules.push({
 
 rules.push({
   test: /\.(js|jsx)$/,
-  exclude: /node_modules/,
+  exclude: [/node_modules/, /lib/],
   use: "babel-loader",
 });
 
@@ -35,6 +36,14 @@ module.exports = {
   module: {
     rules,
   },
+  plugins: [new CopyPlugin({
+    patterns: [
+      {
+        from: 'lib',
+        to: 'lib/[name].[ext]',
+      },
+    ],
+  })],
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
   },
