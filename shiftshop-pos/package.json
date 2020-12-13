@@ -1,7 +1,7 @@
 {
   "name": "shiftshop-pos",
   "productName": "shiftshop-pos",
-  "version": "0.3.1-SNAPSHOT",
+  "version": "1.0.0-RELEASE",
   "description": "ShiftShop Point of Sale App",
   "main": ".webpack/main",
   "scripts": {
@@ -83,7 +83,7 @@
     "node-loader": "^1.0.0",
     "node-sass": "^4.14.1",
     "redux-devtools-extension": "^2.13.8",
-    "resolve-url-loader": "^3.1.1",
+    "resolve-url-loader": "^3.1.2",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.4"
   },
@@ -100,8 +100,8 @@
     "date-fns": "^2.12.0",
     "electron-squirrel-startup": "^1.0.0",
     "notistack": "^0.8.9",
-    "pouchdb": "^7.1.1",
-    "pouchdb-find": "^7.1.1",
+    "pouchdb": "^7.2.2",
+    "pouchdb-find": "^7.2.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-intl": "^3.9.0",
