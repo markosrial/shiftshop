@@ -12,7 +12,7 @@
     "chart.js": "^2.9.4",
     "classnames": "^2.2.6",
     "date-fns": "^2.13.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "node-sass": "^9.0.0",
     "notistack": "^0.8.9",
     "prop-types": "^15.7.2",
